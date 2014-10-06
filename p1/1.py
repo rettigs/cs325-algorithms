@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 def getVisible(slopes, intercepts):
     visibility = [True for n in xrange(len(slopes))]
     for j in xrange(len(slopes)):
@@ -22,5 +24,4 @@ slopes = [-2, -1, 0, 1, 2]
 intercepts = [9, 27, 54, 95, 96]
 
 print getVisible(slopes, intercepts)
-print  [True, False, False, True, True]
-
+print [True, False, False, True, True]
