@@ -6,12 +6,11 @@ def getVisible(slopes, intercepts):
         for i in xrange(j+1, len(slopes)):
             for k in xrange(i+1, len(slopes)):
                 # compute intersection
-                jkIntersectionX = getIntersection(slopes[j], intercepts[j], slopes[k], intercepts[k])
-                jkIntersectionY = getY(slopes[k], intercepts[k], jkIntersectionX)
-                i_Y = getY(slopes[i], intercepts[i], jkIntersectionX)
+                jkIntersectionY = slopes[j] * (intercepts[j] - intercepts[k]) + intercepts[j] * (slopes[k] - slopes[j])
+                i_Y = slopes[i] * (intercepts[j] - intercepts[k]) + intercepts[i] * (slopes[k] - slopes[j])
                 if jkIntersectionY > i_Y:
                     visibility[i] = False
-                return visibility
+    return visibility
 
 def getY(s, i, x):
     return s*x+i
