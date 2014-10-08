@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+import random
+import time
 
 def a1(slopes, intercepts):
     visibility = [True for n in xrange(len(slopes))]
@@ -26,9 +28,24 @@ def a2(slopes, intercepts):
 						visibility[i] = False
     return visibility
 
+def buildRandomNumbersList(size):
+	return random.sample(range(-9000, 9000), size)	#arbitrary range
+	
+slopes1 = buildRandomNumbersList(100)
+intercepts1 = buildRandomNumbersList(100)
+slopes1.sort()
+
 slopes = [-2, -1, 0, 1, 2]
 intercepts = [9, 27, 54, 95, 96]
 
-print a1(slopes, intercepts)
-print a2(slopes, intercepts)
-print [True, False, False, True, True]
+#print a1(slopes, intercepts)
+#print a2(slopes, intercepts)
+#print [True, False, False, True, True]
+a1start = time.time()
+print a1(slopes1, intercepts1)
+a1end = time.time()
+print a1end - a1start
+a2start = time.time()
+print a2(slopes1, intercepts1)
+a2end = time.time()
+print a2end - a2start
