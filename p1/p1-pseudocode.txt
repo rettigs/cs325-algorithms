@@ -28,3 +28,36 @@ getVisibleAlgorithm2(slopes[], intercepts[])
 				}
 	return visibility
 }
+
+getVisibileAlgorithm3(slopes&intercepts[])
+{
+	if (length(tail(slopes&intercepts)) < 2)
+		return slopes&intercepts
+	else 
+		visible[] += head(slopes&intercepts)
+		for (j = 0; j < length(slopes); j++)
+			for (i = j + 1; i < length(slopes); i++)
+	(for (i = 1; i < length(slopes); i++)
+
+if (tail(index) == [])
+	return index
+else concat(head(index), recurse(tail(index)))
+
+
+
+
+a3GetVisible
+	for (i = 0; i < length(array); i ++)
+		possiblyAddToVisibleSet&RemoveCovered(array[i],visible)
+
+
+possiblyAddToVisibleSet&RemoveCovered(line,visible[])
+	k = length(visible.slopes) - 1
+	j = k - 1
+	jkIntersectionY = visible.slopes[j] * (visible.intercepts[j] - visible.intercepts[k]) + visible.intercepts[j] * (visible.slopes[k] - visible.slopes[j])
+	
+	i_Y = line.slopes * (visible.intercepts[j] - visible.intercepts[k]) + line.intercepts * (visible.slopes[k] - visible.slopes[j])
+	if jkIntersectionY > i_Y
+		return concat(visible,line)
+	else
+		return possiblyAddToVisibleSet&RemoveCovered(line,visible[] - last element of visible)
