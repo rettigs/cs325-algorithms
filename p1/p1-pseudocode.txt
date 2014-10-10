@@ -1,33 +1,27 @@
 getVisibleAlgorithm1(slopes[], intercepts[])
-{
-	visibility[] = [True for length(slopes)]
-	for (j = 0; j < length(slopes); j++)
-		for (i = j + 1; i < length(slopes); i++)
-			for (k = i + 1; k < length(slopes); k++) {
+	visibility[] = True for length(slopes)
+	loop from j = 0 to j < the length(slopes)
+		loop from i = j + 1 to i < the length(slopes)
+			loop from k = i + 1 to k < the length(slopes)
 				jkIntersectionY = slopes[j] * (intercepts[j] - intercepts[k]) + intercepts[j] * (slopes[k] - slopes[j])
 				i_Y = slopes[i] * (intercepts[j] - intercepts[k]) + intercepts[i] * (slopes[k] - slopes[j])
 				if jkIntersectionY > i_Y
 					visibility[i] = False
-			}
 	return visibility
-}
 
 getVisibleAlgorithm2(slopes[], intercepts[])
-{
-	visibility[] = [True for length(slopes)]
-	for j in length(slopes)
-		for i in length(slopes)
-			for k in length(slopes)
+	visibility[] = True for length(slopes)
+	loop from j = 0 to j < the length(slopes)
+		loop from i = j + 1 to i < the length(slopes)
+			loop from k = i + 1 to k < the length(slopes)
 				# break if line has already been marked as not visible
-				if visibility[i] != False {
+				if visibility[i] != False
 					# compute intersection
 					jkIntersectionY = slopes[j] * (intercepts[j] - intercepts[k]) + intercepts[j] * (slopes[k] - slopes[j])
 					i_Y = slopes[i] * (intercepts[j] - intercepts[k]) + intercepts[i] * (slopes[k] - slopes[j])
 					if jkIntersectionY > i_Y
 						visibility[i] = False
-				}
 	return visibility
-}
 
 getVisibileAlgorithm3(slopes&intercepts[])
 {
