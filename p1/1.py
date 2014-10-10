@@ -27,6 +27,34 @@ def a2(slopes, intercepts):
 					if jkIntersectionY > i_Y:
 						visibility[i] = False
     return visibility
+	
+def a3(slopes, intercepts):
+	visibleSlopes = []
+	visibleIntercepts = []
+	visibility = [False for n in xrange(len(slopes))]
+	for i in xrange(0, len(slopes)):
+		a3actualWork(slopes[i], intercepts[i], visibleSlopes, visibleIntercepts, visibility, i)
+	return visibility
+	
+def a3actualWork(slope, intercept, visibleSlopes, visibleIntercepts, visibility, i):
+	if len(visibleSlopes) < 2:
+		visibleSlopes.append(slope)
+		visibleIntercepts.append(intercept)
+		visibility[i] = True
+	else:
+		k = len(visibleLines) - 1
+		j = k - 1
+		jkIntersectionY = visibleSlopes[j] * (visibleIntercepts[j] - visibleIntercepts[k]) + visibleIntercepts[j] * (visibleSlopes[k] - visibleSlopes[j])
+		i_Y = slope * (visibleIntercepts[j] - visibleIntercepts[k]) + intercept * (visibleSlopes[k] - visibleSlopes[j])
+		if jkIntersectionY > i_Y:
+			visibleSlopes.append(slope)
+			visibleIntercepts.append(intercept)
+			visibility[i] = True
+		else:
+			visibleSlopes.pop()
+			visibleIntercepts.pop()
+			#visibility[
+			a3actualWork(slope, intercept, visibleSlopes, visibleIntercepts)
 
 def buildRandomNumbersList(size):
 	return random.sample(range(-9000, 9000), size)	#arbitrary range
