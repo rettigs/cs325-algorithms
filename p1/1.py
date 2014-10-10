@@ -58,8 +58,8 @@ def a3actualWork(slope, intercept, visibleSlopes, visibleIntercepts, visibleIndi
 			visibleSlopes.pop()
 			visibleIntercepts.pop()
 			visibility[visibleIndices[k]] = False
-			visibileIndices.pop()
-			a3actualWork(slope, intercept, visibleSlopes, visibleIntercepts)
+			visibleIndices.pop()
+			a3actualWork(slope, intercept, visibleSlopes, visibleIntercepts, visibleIndices, visibility, i)
 
 def buildRandomNumbersList(size):
 	return random.sample(range(-9000, 9000), size)	#arbitrary range
