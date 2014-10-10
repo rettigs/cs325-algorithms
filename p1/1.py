@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import random
+import sys
 import time
 
 def a1(slopes, intercepts):
@@ -58,22 +59,46 @@ def a3actualWork(slope, intercept, visibleSlopes, visibleIntercepts, visibility,
 
 def buildRandomNumbersList(size):
 	return random.sample(range(-9000, 9000), size)	#arbitrary range
-	
-slopes1 = buildRandomNumbersList(100)
-intercepts1 = buildRandomNumbersList(100)
-slopes1.sort()
 
-slopes = [-2, -1, 0, 1, 2]
-intercepts = [9, 27, 54, 95, 96]
+def correctTest():
+    testSets = [
+        [[-1, 0, 1], [3, 0, -1], [True, False, True]],
+        [[-2, -1, 0, 1, 2], [9, 27, 54, 95, 96], [True, False, False, True, True]],
+        [[-2, -1, 0, 1, 2], [0, 0, 0, 0, 0], [True, True, True, True, True]],
+        [[-2, -1, 0, 1, 2], [2, 0, 0, -4, -6], [True, False, True, False, True]],
+        [[-2, -1, 0, 1, 2], [2, 1, 0, 1, 2], [True, False, False, False, True]]
+    ]
 
-#print a1(slopes, intercepts)
-#print a2(slopes, intercepts)
-#print [True, False, False, True, True]
-a1start = time.time()
-print a1(slopes1, intercepts1)
-a1end = time.time()
-print a1end - a1start
-a2start = time.time()
-print a2(slopes1, intercepts1)
-a2end = time.time()
-print a2end - a2start
+    for (i, testSet) in enumerate(testSets):
+        a1res = a1(testSet[0], testSet[1])
+        if a1res != testSet[2]:
+            print "A1 test {} failed:".format(i)
+            print "\tGot {}, should be {}.".format(a1res, testSet[2])
+
+        a2res = a2(testSet[0], testSet[1])
+        if a2res != testSet[2]:
+            print "A2 test {} failed:".format(i)
+            print "\tGot {}, should be {}.".format(a1res, testSet[2])
+
+    print "Correctness tests complete."
+
+def timeTest():
+    slopes = buildRandomNumbersList(200)
+    intercepts = buildRandomNumbersList(200)
+    slopes.sort()
+
+    a1start = time.time()
+    a1res = a1(slopes, intercepts)
+    a1end = time.time()
+    print "A1 time: {} sec".format(a1end - a1start)
+
+    a2start = time.time()
+    a2res = a2(slopes, intercepts)
+    a2end = time.time()
+    print "A2 time: {} sec".format(a2end - a2start)
+
+if __name__ == '__main__':
+    if sys.argv[1] == "test":
+        correctTest()
+    elif sys.argv[1] == "time":
+        timeTest()
