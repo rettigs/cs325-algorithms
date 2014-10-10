@@ -93,7 +93,8 @@ def correctTest():
 
 def timeTest():
     print "Lines\tA1 Time\tA2 Time\tA3 Time"
-    for i in xrange(100, 1100, 100):
+
+    for i in xrange(100, 1000, 100):
         slopes = buildRandomNumbersList(i)
         intercepts = buildRandomNumbersList(i)
         slopes.sort()
@@ -110,7 +111,18 @@ def timeTest():
         a3res = a3(slopes, intercepts)
         a3time = time.time() - a3start
 
-        print "{}\t{.3f}\t{.3f}\t{.3f}".format(i, a1time, a2time, a3time)
+        print "{}\t{:.3f}s\t{:.3f}s\t{:.3f}s".format(i, a1time, a2time, a3time)
+
+    for i in xrange(1000, 10000, 1000):
+        slopes = buildRandomNumbersList(i)
+        intercepts = buildRandomNumbersList(i)
+        slopes.sort()
+
+        a3start = time.time()
+        a3res = a3(slopes, intercepts)
+        a3time = time.time() - a3start
+
+        print "{}\t\t\t{:.3f}s".format(i, a3time)
 
 if __name__ == '__main__':
     if sys.argv[1] == "test":
