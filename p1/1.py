@@ -82,24 +82,35 @@ def correctTest():
         a2res = a2(testSet[0], testSet[1])
         if a2res != testSet[2]:
             print "A2 test {} failed:".format(i)
-            print "\tGot {}, should be {}.".format(a1res, testSet[2])
+            print "\tGot {}, should be {}.".format(a2res, testSet[2])
+
+        a3res = a3(testSet[0], testSet[1])
+        if a3res != testSet[2]:
+            print "A3 test {} failed:".format(i)
+            print "\tGot {}, should be {}.".format(a3res, testSet[2])
 
     print "Correctness tests complete."
 
 def timeTest():
-    slopes = buildRandomNumbersList(200)
-    intercepts = buildRandomNumbersList(200)
-    slopes.sort()
+    print "Lines\tA1 Time\tA2 Time\tA3 Time"
+    for i in xrange(100, 1100, 100):
+        slopes = buildRandomNumbersList(i)
+        intercepts = buildRandomNumbersList(i)
+        slopes.sort()
 
-    a1start = time.time()
-    a1res = a1(slopes, intercepts)
-    a1end = time.time()
-    print "A1 time: {} sec".format(a1end - a1start)
+        a1start = time.time()
+        a1res = a1(slopes, intercepts)
+        a1time = time.time() - a1start
 
-    a2start = time.time()
-    a2res = a2(slopes, intercepts)
-    a2end = time.time()
-    print "A2 time: {} sec".format(a2end - a2start)
+        a2start = time.time()
+        a2res = a2(slopes, intercepts)
+        a2time = time.time() - a2start
+
+        a3start = time.time()
+        a3res = a3(slopes, intercepts)
+        a3time = time.time() - a3start
+
+        print "{}\t{.3f}\t{.3f}\t{.3f}".format(i, a1time, a2time, a3time)
 
 if __name__ == '__main__':
     if sys.argv[1] == "test":
