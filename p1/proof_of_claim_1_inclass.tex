@@ -1,0 +1,48 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{mathtools}
+\usepackage{amssymb}
+
+\usepackage{geometry}
+\geometry{letterpaper, portrait, margin=1in}
+
+\title{CS325 - Project 1}
+\author{Alexander Merrill}
+\date{October 2014}
+
+\begin{document}
+
+\maketitle
+
+\section*{Proof of Claim 1}
+
+Claim 1: $y_i$ is not visible iff $\exists j,k$ such that $j < i < k$ and $y* > m_i x* + b_i$ where $(x*,y*)$ is the intersection of $y_j$ and $j_k$.\\
+\\
+$A \equiv y_i$ is not visible\\
+$B \equiv \exists j,k$ such that $j < i < k$ and $y* < m_i x* + b_i$ where $(x*,y*)$ is the intersection of $y_j$ and $y_k$.\\
+$A \Leftrightarrow B$
+
+\subsection*{First Prove $A \Rightarrow B$}
+Direct Proof:\\
+Let $y_i$ be a line that is not visible.\\
+Then $l < i < n$ because $y_i$ and $y_n$ are always visible.\\
+Let $k$ be the smallest index greater than $i$ such that $y_k$ is visible.\\
+e.g. $y_1,y_2,...,y_k,y_{k+1},...,y_{n-1},y_n$\\
+Let $(x*,y*)$ be the left most point on $y_k$ that is visible.\\
+Let $j$ be the greatest index such that $y_i$ intersects $y_k$ at $(x*,y*)$ is visible.\\
+Because $y_i$ through $y_{k-1}$ are not visible (by definition of $k_j$) $j < i < k$.\\
+Since $x*,y*$ is visible and $y_i$ is not visible, $m_i x + b_i < y*$.
+
+\subsection*{Prove $B \Rightarrow A$}
+Direct Proof:\\
+Since $m_i < m_k$, the intersection point of $y_i$ and $y_k$ is left of $x*$.\\
+Since $m_i < m_k$, $m_i x + b_i < m_k x + b_k$ $\forall{x > \bar{x}}$.\\
+Likewise since $m_i > m_j$, $y_i$ and $y_j$ intersect at $(\bar{\bar{x}}, \bar{\bar{y}})$ right of $x*$ $(\bar{\bar{x}} > x*)$.\\
+$\therefore m_i x + b_i < m_j x + b_j$; $\forall{x < \bar{\bar{x}}}$.\\
+$\therefore y_i$ is not visible.\\
+$y_k + y_j$ intersect at $m_k x + b_k = m_j x + b_j$\\
+$x = \dfrac{(b_j - b_k)}{(m_k - m_j)}$\\
+Is $m_j \left( \dfrac{b_j - b_k}{m_k - m_j}\right) + b_j > m_i \left(\dfrac{b_j - b_k}{m_k - m_j}\right) + b_i$\\
+If $m_k > m_j$ then instead compare $m_j (b_j - b_k) + b_j (m_k - m_j) > m_i (b_j + b_k)$
+
+\end{document}
