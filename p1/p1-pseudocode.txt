@@ -24,22 +24,55 @@ getVisibleAlgorithm2(slopes[], intercepts[])
 	return visibility
 
 getVisibileAlgorithm3(slopes&intercepts[])
-{
 	if (length(tail(slopes&intercepts)) < 2)
 		return slopes&intercepts
 	else 
-		visible[] += head(slopes&intercepts)
-		for (j = 0; j < length(slopes); j++)
-			for (i = j + 1; i < length(slopes); i++)
-	(for (i = 1; i < length(slopes); i++)
+		visible[] concatenate head(slopes&intercepts)
+		loop from j = 0 to j < the length(slopes)
+			loop from i = j + 1 to i < the length(slopes)
+	loop from i = 1 to i < length(slopes)
 
-if (tail(index) == [])
+
+	
+	
+if tail(index) == []
 	return index
-else concat(head(index), recurse(tail(index)))
+else concat the head of index with recurse(tail(index)))
 
 
 
+a3GetVisible(slopes, intercepts)
+	declare visibleSlopes, visibleIntercepts, visibleIndices
+	declare visibility to be false for length(slopes)
+	for i = 0 to i < length(slopes)
+		a3ActualWork passing in slopes[i], intercepts[i], visibleSlopes, visibleIntercepts, visibleIndices, visibility, i
+	return visibility
 
+
+a3ActualWork(slopes, intercepts, visibleSlopes, visibleIntercepts, visibleIndices, visibility, i)
+	if length(visibleSlopes) < 2
+		append slope to visibileSlopes
+		append intercept to visibileIntercepts
+		append i to visibleIndices
+		visibility[i] = true
+	else
+		k = length(visibleSlopes) - 1
+		j = k - 1
+		jkIntersectionY = visibleSlopes[j] * (visibleIntercepts[j] - visibleIntercepts[k]) + visibleIntercepts[j] * (visibleSlopes[k] - visibleSlopes[j])
+		i_Y = slope * (visibleIntercepts[j] - visibleIntercepts[k]) + intercept * (visibleSlopes[k] - visibleSlopes[j])
+		if jkIntersectionY >= i_Y
+			append slope to visibileSlopes
+			append intercept to visibileIntercepts
+			append i to visibleIndices
+			set visibility[i] = true
+		else
+			remove the last item of visibleSlopes
+			remove the last item of visibleIntercepts
+			visibility[visibleIndices[k]] = False
+			remove the last item of visibleIndices
+			a3actualWork(slope, intercept, visibleSlopes, visibleIntercepts, visibleIndices, visibility, i)
+
+	
 a3GetVisible
 	for (i = 0; i < length(array); i ++)
 		possiblyAddToVisibleSet&RemoveCovered(array[i],visible)
