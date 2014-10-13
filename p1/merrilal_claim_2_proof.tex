@@ -17,7 +17,7 @@
 \section*{Proof of Claim 1}
 
 \begin{quote}
-Claim 1: $y_i$ is not visible iff $\exists j,k$ such that $j < i < k$ and $y* > m_i x* + b_i$ where $(x*,y*)$ is the intersection of $y_j$ and $j_k$.
+    Claim 1: $y_i$ is not visible iff $\exists j,k$ such that $j < i < k$ and $y* > m_i x* + b_i$ where $(x*,y*)$ is the intersection of $y_j$ and $j_k$.
 \end{quote}\\
 \\
 $A \equiv y_i$ is not visible\\
@@ -25,36 +25,36 @@ $B \equiv \exists j,k$ such that $j < i < k$ and $y* < m_i x* + b_i$ where $(x*,
 $A \Leftrightarrow B$
 
 \subsection*{First Prove $A \Rightarrow B$}
-Direct Proof:\\
-Let $y_i$ be a line that is not visible.\\
-Then $l < i < n$ because $y_i$ and $y_n$ are always visible.\\
-Let $k$ be the smallest index greater than $i$ such that $y_k$ is visible.\\
-e.g. $y_1,y_2,...,y_k,y_{k+1},...,y_{n-1},y_n$\\
-Let $(x*,y*)$ be the left most point on $y_k$ that is visible.\\
-Let $j$ be the greatest index such that $y_i$ intersects $y_k$ at $(x*,y*)$ is visible.\\
-Because $y_i$ through $y_{k-1}$ are not visible (by definition of $k_j$) $j < i < k$.\\
-Since $x*,y*$ is visible and $y_i$ is not visible, $m_i x + b_i < y*$.
-
+    \subsubsection*{Direct Proof:}
+    Let $y_i$ be a line that is not visible.\\
+    Then $l < i < n$ because $y_i$ and $y_n$ are always visible.\\
+    Let $k$ be the smallest index greater than $i$ such that $y_k$ is visible.\\
+    e.g. $y_1,y_2,...,y_k,y_{k+1},...,y_{n-1},y_n$\\
+    Let $(x*,y*)$ be the left most point on $y_k$ that is visible.\\
+    Let $j$ be the greatest index such that $y_i$ intersects $y_k$ at $(x*,y*)$ is visible.\\
+    Because $y_i$ through $y_{k-1}$ are not visible (by definition of $k_j$) $j < i < k$.\\
+    Since $x*,y*$ is visible and $y_i$ is not visible, $m_i x + b_i < y*$.
+    
 \subsection*{Prove $B \Rightarrow A$}
-Direct Proof:\\
-Since $m_i < m_k$, the intersection point of $y_i$ and $y_k$ is left of $x*$.\\
-Since $m_i < m_k$, $m_i x + b_i < m_k x + b_k$ $\forall{x > \bar{x}}$.\\
-Likewise since $m_i > m_j$, $y_i$ and $y_j$ intersect at $(\bar{\bar{x}}, \bar{\bar{y}})$ right of $x*$ $(\bar{\bar{x}} > x*)$.\\
-$\therefore m_i x + b_i < m_j x + b_j$; $\forall{x < \bar{\bar{x}}}$.\\
-$\therefore y_i$ is not visible.\\
-$y_k + y_j$ intersect at $m_k x + b_k = m_j x + b_j$\\
-$x = \dfrac{(b_j - b_k)}{(m_k - m_j)}$\\
-Is $m_j \left( \dfrac{b_j - b_k}{m_k - m_j}\right) + b_j > m_i \left(\dfrac{b_j - b_k}{m_k - m_j}\right) + b_i$\\
-If $m_k > m_j$ then instead compare $m_j (b_j - b_k) + b_j (m_k - m_j) > m_i (b_j + b_k)$
+    \subsubsection*{Direct Proof:}
+    Since $m_i < m_k$, the intersection point of $y_i$ and $y_k$ is left of $x*$.\\
+    Since $m_i < m_k$, $m_i x + b_i < m_k x + b_k$ $\forall{x > \bar{x}}$.\\
+    Likewise since $m_i > m_j$, $y_i$ and $y_j$ intersect at $(\bar{\bar{x}}, \bar{\bar{y}})$ right of $x*$ $(\bar{\bar{x}} > x*)$.\\
+    $\therefore m_i x + b_i < m_j x + b_j$; $\forall{x < \bar{\bar{x}}}$.\\
+    $\therefore y_i$ is not visible.\\
+    $y_k + y_j$ intersect at $m_k x + b_k = m_j x + b_j$\\
+    $x = \dfrac{(b_j - b_k)}{(m_k - m_j)}$\\
+    Is $m_j \left( \dfrac{b_j - b_k}{m_k - m_j}\right) + b_j > m_i \left(\dfrac{b_j - b_k}{m_k - m_j}\right) + b_i$\\
+    If $m_k > m_j$ then instead compare $m_j (b_j - b_k) + b_j (m_k - m_j) > m_i (b_j + b_k)$
 
 \section*{Proof of Claim 2}
 \begin{quote}
-Claim 2: If $\{y_1, y_2,...,y_{j_{t}}\}$ is the visible subset of $\{y_1, y_2,...,y_{i - 1}\} (t \leq i - 1)$ then $\{y_1, y_2,...,y_{j_{k}}, y_i\}$ is the visible subset of $\{y_1, y_2,...,y_{i}\}$ where $y_{j_{k}}$ is the last line such that $y_{j_{k}} (x*) > y_i (x*)$ where $(x*, y_{j_{k}}(x*))$ is the point of intersection of lines $y_{j_{k}}$ and $y_{j_{k - 1}}$.
+    Claim 2: If $\{y_1, y_2,...,y_{j_{t}}\}$ is the visible subset of $\{y_1, y_2,...,y_{i - 1}\} (t \leq i - 1)$ then $\{y_1, y_2,...,y_{j_{k}}, y_i\}$ is the visible subset of $\{y_1, y_2,...,y_{i}\}$ where $y_{j_{k}}$ is the last line such that $y_{j_{k}} (x*) > y_i (x*)$ where $(x*, y_{j_{k}}(x*))$ is the point of intersection of lines $y_{j_{k}}$ and $y_{j_{k - 1}}$.
 \end{quote}\\
 \\
-Proof by Inductions:\\
+\subsubsection*{Proof by Inductions:}
 Known:\\
-The lines with the greatest and least slope mangitudes are always visible.\\
+The lines with the greatest and least slope magnitudes are always visible.\\
 The array is sorted from least to greatest slope magnitude.\\
 Base Case:\\
 If $i \leq 2$ then all lines are visible.\\
@@ -81,5 +81,32 @@ Then let $y_{2 + 1} (x*) = y_3 (x*)$.\\
 Then let $y_3$ be y coordinate at point $(x*, y_3 (x*))$, above the intersection of $y_2$ and $y_{2 - 1} = y_1$.\\
 If $y_3 (x*) > y_2 (x*)$ then remove $y_2$ from $B_{v_0}$ and \\
 Otherwise add $y_3$ to $B_{v_0}$\\
+
+
+\section*{Group Proof of Claim 2}
+\begin{quote}
+    Claim 2: If $\{y_1, y_2,...,y_{j_{t}}\}$ is the visible subset of $\{y_1, y_2,...,y_{i - 1}\} (t \leq i - 1)$ then $\{y_1, y_2,...,y_{j_{k}}, y_i\}$ is the visible subset of $\{y_1, y_2,...,y_{i}\}$ where $y_{j_{k}}$ is the last line such that $y_{j_{k}} (x*) > y_i (x*)$ where $(x*, y_{j_{k}}(x*))$ is the point of intersection of lines $y_{j_{k}}$ and $y_{j_{k - 1}}$.
+\end{quote}\\
+\\
+\subsubsection*{Proof by Induction:}
+Let $A$ be $\{y_{1}, y_2, ..., y_{i - 1}\}$ and $A^+$ be $\{y_1, y_2, ..., y_{i}\}$.\\
+Let $V$ be $\{y_{j_1}, y_{j_2}, ..., y_{j_t}\}$ and $V^+$ be $\{y_{j_1}, y_{j_2}, ..., y_{j_k}, y_{i}\}$.\\
+\subsubsection*{Base Case:}
+If $size(A) < 2$, $V^+$ trivially contains $V$ and $y_i$ because none of the line's slopes are the same and one or two lines with different slopes cannot cover one another.\\
+\subsubsection*{Inductive Hypothesis:}
+The claim is true when A (and V) have at least two lines.\\
+\subsubsection*{Apply the Axiom of Induction:}
+Pick off smallest with $size(A) = size(V) \geq 2$.\\
+\subsubsubsection{There are two possibilities:}
+\begin{enumerate}
+    \item $y_i$ does not cover a line in $V$\\
+    So, $V = \{y_1, ..., y_{z-1}, y_z\}$ and $y_z(x^*) \geq y_i$ where $x^*$ is the intersection of $y_{z-1}$ and $y_z$\\
+    So, $y_z$ is not covered. $V^+ = V \cup y_i$.
+
+    \item $y_i$ covers a line in $V$\\
+    So $V = \{y_1, ..., y_{z-1}, y_z\}$ and $y_z(x*) < y_i(x*)$\\
+    So $y_z$ is covered.\\
+    To determine visibility, recurse with same $y_i$ and $A$ but remove $y_z$ from $V$.\\
+\end{enumerate}
 
 \end{document}
