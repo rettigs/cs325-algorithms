@@ -58,20 +58,12 @@ def a3(slopes, intercepts):
     lines = toLines(slopes, intercepts, True)
     vlines = []
 
-    #print "-----"
-    #print "lines: ", lines
-    #print "vlines: ", vlines
-    
     # Start with the first two lines since they have to be visible if they're the only ones.
-    #print "append first two lines to vlines"
     vlines.append(lines[0])
     vlines.append(lines[1])
-    #print "vlines: ", vlines
 
     for i in xrange(2, len(lines)):
-        #print "appending next line to vline"
         vlines.append(lines[i])
-        #print "vlines: ", vlines
         _removeCovered(vlines)
 
     return lines
@@ -79,7 +71,6 @@ def a3(slopes, intercepts):
 def _removeCovered(vlines):
     '''Given a list of visible lines for which another line was appended, recursively remove the 2nd to last element if it became covered by the new line.'''
     if len(vlines) < 3: # All lines are visible if there are only 1 or 2.
-        #print "less than 3 lines; all are visible; do nothing"
         return vlines
     else:
         a, b, c = vlines[-3:] # Get the last 3 elements of vlines.
@@ -87,12 +78,9 @@ def _removeCovered(vlines):
         newline_Y = c.slope * (a.intercept - b.intercept) + c.intercept * (b.slope - a.slope)
         if newline_Y > intersectionY: # If line b is covered, remove it and recurse.
             b.visible = False
-            #print "the new line covered the previous one; remove it from vlines and recurse"
             vlines.pop(-2)
-            #print "vlines: ", vlines
             return _removeCovered(vlines)
         else: # If line b is still visible, do nothing.
-            #print "the new line isn't covering anything; all are visible; do nothing"
             return vlines
 	
 def a3_old(slopes, intercepts):
