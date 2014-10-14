@@ -3,31 +3,53 @@ import random
 import sys
 import time
 
+class Line(object):
+    def __init__(self, slope, intercept, visible):
+        self.slope = slope
+        self.intercept = intercept
+        self.visible = visible
+
+def toLines(slopes, intercepts, visible):
+    lines = []
+    for i in xrange(len(slopes)):
+        lines.append(Line(slopes[i], intercepts[i], visible))
+    return lines
+
+def toLists(lines):
+    slopes = []
+    intercepts = []
+    visible = []
+    for l in lines:
+        slopes.append(l.slope)
+        intercepts.append(l.intercept)
+        visible.append(l.visible)
+    return [slopes, intercepts, visible]
+
 def a1(slopes, intercepts):
-    visibility = [True for n in xrange(len(slopes))]
-    for j in xrange(len(slopes)):
-        for i in xrange(j+1, len(slopes)):
-            for k in xrange(i+1, len(slopes)):
+    lines = toLines(slopes, intercepts, True)
+    for nj, j in enumerate(lines):
+        for ni, i in enumerate(lines[nj+1:], nj+1):
+            for nk, k in enumerate(lines[ni+1:], ni+1):
                 # compute intersection
-                jkIntersectionY = slopes[j] * (intercepts[j] - intercepts[k]) + intercepts[j] * (slopes[k] - slopes[j])
-                i_Y = slopes[i] * (intercepts[j] - intercepts[k]) + intercepts[i] * (slopes[k] - slopes[j])
+                jkIntersectionY = j.slope * (j.intercept - k.intercept) + j.intercept * (k.slope - j.slope)
+                i_Y = i.slope * (j.intercept - k.intercept) + i.intercept * (k.slope - j.slope)
                 if jkIntersectionY > i_Y:
-                    visibility[i] = False
-    return visibility
+                    i.visible = False
+    return lines
 	
 def a2(slopes, intercepts):
-    visibility = [True for n in xrange(len(slopes))]
-    for j in xrange(len(slopes)):
-        for i in xrange(j+1, len(slopes)):
-            for k in xrange(i+1, len(slopes)):
-				# break if line has already been marked as not visible
-				if visibility[i] != False:
-					# compute intersection
-					jkIntersectionY = slopes[j] * (intercepts[j] - intercepts[k]) + intercepts[j] * (slopes[k] - slopes[j])
-					i_Y = slopes[i] * (intercepts[j] - intercepts[k]) + intercepts[i] * (slopes[k] - slopes[j])
-					if jkIntersectionY > i_Y:
-						visibility[i] = False
-    return visibility
+    lines = toLines(slopes, intercepts, True)
+    for nj, j in enumerate(lines):
+        for ni, i in enumerate(lines[nj+1:], nj+1):
+            for nk, k in enumerate(lines[ni+1:], ni+1):
+                # break if line has already been marked as not visible
+                if i.visible:
+                    # compute intersection
+                    jkIntersectionY = j.slope * (j.intercept - k.intercept) + j.intercept * (k.slope - j.slope)
+                    i_Y = i.slope * (j.intercept - k.intercept) + i.intercept * (k.slope - j.slope)
+                    if jkIntersectionY > i_Y:
+                        i.visible = False
+    return lines
 	
 def a3(slopes, intercepts):
 	visibleSlopes = []
@@ -74,15 +96,15 @@ def correctTest():
     ]
 
     for (i, testSet) in enumerate(testSets):
-        a1res = a1(testSet[0], testSet[1])
-        if a1res != testSet[2]:
+        a1res = toLists(a1(testSet[0], testSet[1]))
+        if a1res[2] != testSet[2]:
             print "A1 test {} failed:".format(i)
-            print "\tGot {}, should be {}.".format(a1res, testSet[2])
+            print "\tGot {}, should be {}.".format(a1res[2], testSet[2])
 
-        a2res = a2(testSet[0], testSet[1])
-        if a2res != testSet[2]:
+        a2res = toLists(a2(testSet[0], testSet[1]))
+        if a2res[2] != testSet[2]:
             print "A2 test {} failed:".format(i)
-            print "\tGot {}, should be {}.".format(a2res, testSet[2])
+            print "\tGot {}, should be {}.".format(a2res[2], testSet[2])
 
         a3res = a3(testSet[0], testSet[1])
         if a3res != testSet[2]:
