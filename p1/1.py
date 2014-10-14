@@ -53,8 +53,40 @@ def a2(slopes, intercepts):
                     if jkIntersectionY > i_Y:
                         i.visible = False
     return lines
-
+	
 def a3(slopes, intercepts):
+    visibleSlopes = []
+    visibleIntercepts = []
+    visibleIndices = []
+    visibility = [False for n in xrange(len(slopes))]
+    for i in xrange(0, len(slopes)):
+        a3actualWork(slopes[i], intercepts[i], visibleSlopes, visibleIntercepts, visibleIndices, visibility, i)
+    return visibility
+	
+def a3actualWork(slope, intercept, visibleSlopes, visibleIntercepts, visibleIndices, visibility, i):
+	if len(visibleSlopes) < 2:
+		visibleSlopes.append(slope)
+		visibleIntercepts.append(intercept)
+		visibility[i] = True
+		visibleIndices.append(i)
+	else:
+		k = len(visibleSlopes) - 1
+		j = k - 1
+		jkIntersectionY = visibleSlopes[j] * (visibleIntercepts[j] - visibleIntercepts[k]) + visibleIntercepts[j] * (visibleSlopes[k] - visibleSlopes[j])
+		i_Y = slope * (visibleIntercepts[j] - visibleIntercepts[k]) + intercept * (visibleSlopes[k] - visibleSlopes[j])
+		if jkIntersectionY >= i_Y:
+			visibleSlopes.append(slope)
+			visibleIntercepts.append(intercept)
+			visibility[i] = True
+			visibleIndices.append(i)
+		else:
+			visibleSlopes.pop()
+			visibleIntercepts.pop()
+			visibility[visibleIndices[k]] = False
+			visibleIndices.pop()
+			a3actualWork(slope, intercept, visibleSlopes, visibleIntercepts, visibleIndices, visibility, i)
+
+def a4(slopes, intercepts):
     lines = toLines(slopes, intercepts, True)
     vlines = []
 
@@ -82,38 +114,6 @@ def _removeCovered(vlines):
             return _removeCovered(vlines)
         else: # If line b is still visible, do nothing.
             return vlines
-	
-def a3_old(slopes, intercepts):
-	visibleSlopes = []
-	visibleIntercepts = []
-	visibleIndices = []
-	visibility = [False for n in xrange(len(slopes))]
-	for i in xrange(0, len(slopes)):
-		a3actualWork(slopes[i], intercepts[i], visibleSlopes, visibleIntercepts, visibleIndices, visibility, i)
-	return visibility
-	
-def a3_oldactualWork(slope, intercept, visibleSlopes, visibleIntercepts, visibleIndices, visibility, i):
-	if len(visibleSlopes) < 2:
-		visibleSlopes.append(slope)
-		visibleIntercepts.append(intercept)
-		visibility[i] = True
-		visibleIndices.append(i)
-	else:
-		k = len(visibleSlopes) - 1
-		j = k - 1
-		jkIntersectionY = visibleSlopes[j] * (visibleIntercepts[j] - visibleIntercepts[k]) + visibleIntercepts[j] * (visibleSlopes[k] - visibleSlopes[j])
-		i_Y = slope * (visibleIntercepts[j] - visibleIntercepts[k]) + intercept * (visibleSlopes[k] - visibleSlopes[j])
-		if jkIntersectionY >= i_Y:
-			visibleSlopes.append(slope)
-			visibleIntercepts.append(intercept)
-			visibility[i] = True
-			visibleIndices.append(i)
-		else:
-			visibleSlopes.pop()
-			visibleIntercepts.pop()
-			visibility[visibleIndices[k]] = False
-			visibleIndices.pop()
-			a3actualWork(slope, intercept, visibleSlopes, visibleIntercepts, visibleIndices, visibility, i)
 
 def buildRandomNumbersList(size):
 	return random.sample(range(-9000, 9000), size)	#arbitrary range
@@ -138,15 +138,20 @@ def correctTest():
             print "A2 test {} failed:".format(i)
             print "\tGot {}, should be {}.".format(a2res[2], testSet[2])
 
-        a3res = toLists(a3(testSet[0], testSet[1]))
-        if a3res[2] != testSet[2]:
+        a3res = a3(testSet[0], testSet[1])
+        if a3res != testSet[2]:
             print "A3 test {} failed:".format(i)
             print "\tGot {}, should be {}.".format(a3res[2], testSet[2])
+
+        a4res = toLists(a4(testSet[0], testSet[1]))
+        if a4res[2] != testSet[2]:
+            print "A4 test {} failed:".format(i)
+            print "\tGot {}, should be {}.".format(a4res[2], testSet[2])
 
     print "Correctness tests complete."
 
 def timeTest():
-    print "Lines\tA1 Time\tA2 Time\tA3 Time"
+    print "Lines\tA1 Time\tA2 Time\tA3 Time\tA4 Time"
 
     for i in xrange(100, 1000, 100):
         slopes = buildRandomNumbersList(i)
@@ -165,7 +170,11 @@ def timeTest():
         a3res = a3(slopes, intercepts)
         a3time = time.time() - a3start
 
-        print "{}\t{:.3f}s\t{:.3f}s\t{:.3f}s".format(i, a1time, a2time, a3time)
+        a4start = time.time()
+        a4res = a4(slopes, intercepts)
+        a4time = time.time() - a3start
+
+        print "{}\t{:.3f}s\t{:.3f}s\t{:.3f}s\t{:.3f}s".format(i, a1time, a2time, a3time, a4time)
 
     for i in xrange(1000, 10000, 1000):
         slopes = buildRandomNumbersList(i)
@@ -176,7 +185,11 @@ def timeTest():
         a3res = a3(slopes, intercepts)
         a3time = time.time() - a3start
 
-        print "{}\t\t\t{:.3f}s".format(i, a3time)
+        a4start = time.time()
+        a4res = a4(slopes, intercepts)
+        a4time = time.time() - a3start
+
+        print "{}\t\t\t{:.3f}s\t{:.3f}s".format(i, a3time, a4time)
 
 if __name__ == '__main__':
     if sys.argv[1] == "test":
