@@ -7,7 +7,8 @@
 \geometry{letterpaper, portrait, margin=1in}
 
 \title{CS325 - Project 1}
-\author{Alexander Merrill}
+\author{Group #6\\
+William Jernigan, Alexander Merrill, Sean Rettig}
 \date{October 2014}
 
 \begin{document}
@@ -17,7 +18,7 @@
 \section*{Proof of Claim 1}
 
 \begin{quote}
-Claim 1: $y_i$ is not visible iff $\exists j,k$ such that $j < i < k$ and $y* > m_i x* + b_i$ where $(x*,y*)$ is the intersection of $y_j$ and $j_k$.
+    Claim 1: $y_i$ is not visible iff $\exists j,k$ such that $j < i < k$ and $y* > m_i x* + b_i$ where $(x*,y*)$ is the intersection of $y_j$ and $j_k$.
 \end{quote}\\
 \\
 $A \equiv y_i$ is not visible\\
@@ -25,61 +26,64 @@ $B \equiv \exists j,k$ such that $j < i < k$ and $y* < m_i x* + b_i$ where $(x*,
 $A \Leftrightarrow B$
 
 \subsection*{First Prove $A \Rightarrow B$}
-Direct Proof:\\
-Let $y_i$ be a line that is not visible.\\
-Then $l < i < n$ because $y_i$ and $y_n$ are always visible.\\
-Let $k$ be the smallest index greater than $i$ such that $y_k$ is visible.\\
-e.g. $y_1,y_2,...,y_k,y_{k+1},...,y_{n-1},y_n$\\
-Let $(x*,y*)$ be the left most point on $y_k$ that is visible.\\
-Let $j$ be the greatest index such that $y_i$ intersects $y_k$ at $(x*,y*)$ is visible.\\
-Because $y_i$ through $y_{k-1}$ are not visible (by definition of $k_j$) $j < i < k$.\\
-Since $x*,y*$ is visible and $y_i$ is not visible, $m_i x + b_i < y*$.
-
+    \subsubsection*{Direct Proof:}
+    Let $y_i$ be a line that is not visible.\\
+    Then $l < i < n$ because $y_l$ and $y_n$ are always visible.\\
+    Let $k$ be the smallest index greater than $i$ such that $y_k$ is visible.\\
+    e.g. $y_1,y_2,...,y_k,y_{k+1},...,y_{n-1},y_n$\\
+    Let $(x*,y*)$ be the left most point on $y_k$ that is visible.\\
+    Let $j$ be the greatest index such that $y_i$ intersects $y_k$ at $(x*,y*)$ is visible.\\
+    Because $y_i$ through $y_{k-1}$ are not visible (by definition of $k_j$) $j < i < k$.\\
+    Since $x*,y*$ is visible and $y_i$ is not visible, $m_i x + b_i < y*$.
+    
 \subsection*{Prove $B \Rightarrow A$}
-Direct Proof:\\
-Since $m_i < m_k$, the intersection point of $y_i$ and $y_k$ is left of $x*$.\\
-Since $m_i < m_k$, $m_i x + b_i < m_k x + b_k$ $\forall{x > \bar{x}}$.\\
-Likewise since $m_i > m_j$, $y_i$ and $y_j$ intersect at $(\bar{\bar{x}}, \bar{\bar{y}})$ right of $x*$ $(\bar{\bar{x}} > x*)$.\\
-$\therefore m_i x + b_i < m_j x + b_j$; $\forall{x < \bar{\bar{x}}}$.\\
-$\therefore y_i$ is not visible.\\
-$y_k + y_j$ intersect at $m_k x + b_k = m_j x + b_j$\\
-$x = \dfrac{(b_j - b_k)}{(m_k - m_j)}$\\
-Is $m_j \left( \dfrac{b_j - b_k}{m_k - m_j}\right) + b_j > m_i \left(\dfrac{b_j - b_k}{m_k - m_j}\right) + b_i$\\
-If $m_k > m_j$ then instead compare $m_j (b_j - b_k) + b_j (m_k - m_j) > m_i (b_j + b_k)$
+    \subsubsection*{Direct Proof:}
+    Since $m_i < m_k$, the intersection point of $y_i$ and $y_k$ is left of $x*$.\\
+    Since $m_i < m_k$, $m_i x + b_i < m_k x + b_k$ $\forall{x > \bar{x}}$.\\
+    Likewise since $m_i > m_j$, $y_i$ and $y_j$ intersect at $(\bar{\bar{x}}, \bar{\bar{y}})$ right of $x*$ $(\bar{\bar{x}} > x*)$.\\
+    $\therefore m_i x + b_i < m_j x + b_j$; $\forall{x < \bar{\bar{x}}}$.\\
+    $\therefore y_i$ is not visible.\\
+    $y_k + y_j$ intersect at $m_k x + b_k = m_j x + b_j$\\
+    $x = \dfrac{(b_j - b_k)}{(m_k - m_j)}$\\
+    Is $m_j \left( \dfrac{b_j - b_k}{m_k - m_j}\right) + b_j > m_i \left(\dfrac{b_j - b_k}{m_k - m_j}\right) + b_i$\\
+    If $m_k > m_j$ then instead compare $m_j (b_j - b_k) + b_j (m_k - m_j) > m_i (b_j + b_k)$
 
 \section*{Proof of Claim 2}
+
 \begin{quote}
-Claim 2: If $\{y_1, y_2,...,y_{j_{t}}\}$ is the visible subset of $\{y_1, y_2,...,y_{i - 1}\} (t \leq i - 1)$ then $\{y_1, y_2,...,y_{j_{k}}, y_i\}$ is the visible subset of $\{y_1, y_2,...,y_{i}\}$ where $y_{j_{k}}$ is the last line such that $y_{j_{k}} (x*) > y_i (x*)$ where $(x*, y_{j_{k}}(x*))$ is the point of intersection of lines $y_{j_{k}}$ and $y_{j_{k - 1}}$.
-\end{quote}\\
-\\
-Proof by Inductions:\\
-Known:\\
-The lines with the greatest and least slope mangitudes are always visible.\\
-The array is sorted from least to greatest slope magnitude.\\
-Base Case:\\
-If $i \leq 2$ then all lines are visible.\\
-Inductive Hypothesis:\\
-Let $\{y_1, y_2,...,y_{j_{m}}\}$ be the visible subset of $\{y_1, y_2,...,y_{o - 1}\} (t \leq o - 1)$ then $\{y_1, y_2,...,y_{j_{n}}, y_i\}$ is the visible subset of $\{y_1, y_2,...,y_{i}\}$ where $y_{j_{n}}$ is the last line such that $y_{j_{n}} (x*) > y_o (x*)$ where $(x*, y_{j_{n}}(x*))$ is the point of intersection of lines $y_{j_{n}}$ and $y_{j_{n - 1}}$.\\
-\\
-If $y_o (x*) > y_o (x*)$ then 
-$y_{j_n}(x*) < y_o (x*)$ then 
+Claim 2: If $\{y_{j_1}, y_{j_2},...,y_{j_{t}}\}$ is the visible subset of $\{y_1, y_2,...,y_{i - 1}\} (t \leq i - 1)$ then $\{y_{j_1}, y_{j_2},...,y_{j_{k}}, y_i\}$ is the visible subset of $\{y_1, y_2,...,y_{i}\}$ where $y_{j_{k}}$ is the last line such that $y_{j_{k}} (x*) > y_i (x*)$ where $(x*, y_{j_{k}}(x*))$ is the point of intersection of lines $y_{j_{k}}$ and $y_{j_{k - 1}}$.
+\end{quote}
 
-Assume that any array of length n < i is correctly flagged visible.
-Apply the Axiom of Induction:\\
-A is an array of length o.\\
+\subsection*{Direct Proof}
 
-If $y_o (x*) > y_o (x*)$ then \\
-If $y_{j_n}(x*) < y_{o + 1} (x*)$ then remove $y_{j_n}(x*)$ from the visibility array and recurse.\\
-If $y_{j_n}(x*) \geq y_{o + 1} (x*)$\\
-\\
-If $i = 3$ then let A_v $\{y_1, y_2\}$ be the visible subset of set A $\{y_1, y_2\}$.\\
-Let the new set B be $\{y_1, y_2, y_3\}$.\\
-Let the new initial visible set of B, $B_{v_{0}}$, be $A_v + y_3$, that is $\{y_1, y_2, y_3\}$.\\
-It's initial visible subset will be A_v.\\
-Let $(x*, y_2 (x*))$ be the point of intersection of $y_2$ and $y_{2 - 1} = y_1$.\\
-Then let $y_{2 + 1} (x*) = y_3 (x*)$.\\
-Then let $y_3$ be y coordinate at point $(x*, y_3 (x*))$, above the intersection of $y_2$ and $y_{2 - 1} = y_1$.\\
-If $y_3 (x*) > y_2 (x*)$ then remove $y_2$ from $B_{v_0}$ and \\
-Otherwise add $y_3$ to $B_{v_0}$\\
+\subsection{Prove that $y_{i} \in V^+k$}
+Let $A^+ = A \union \{y_i\}$.\\
+Because $m_i > m_n, n < i, y_i$ is visible by the Claim 1 proof in the "Visible Line Notes" handout.\\
+Since $y_i$ is visible and $y_i \in A^+, y_i$ must also be in $V^+$, the visible subset of $A^+$.
+
+\subsection{Prove that $y_{j_k} \in V^+k$}
+Let $(x^*, y_{j_k} (x^*))$ be the point of intersection of the lines $y_{j_k}$ and $y_{j_{k-1}}$.\\
+Since $y_{j_k} (x^*) \gev y_i (x^*)$ by definition, $y_{j_k}$ is visible with respect to $y_i$.\\
+Since $y_{j_k}$ was already in $V$, it is defined to be visible with respect to all other elements.\\
+$\therefore y_{j_k} \in V^+$.
+
+\subsection{Prove that $y_{j_n} \in V^+, 0 < n < k$}
+Because $y_{j_n} \in V$, it is defined to be visible with all other elements.\\
+So we must show that $y_{j_n}$ is visible with respect to $y_i$ as well.\\
+Let $(x^*_n, y_{j_n}(x^*_n))$ be the point of intersection of the lines $y_{j_n}$ and $y_{j_{n+1}}$.\\
+By definition, $m_{j_n} < m_{j_{n+1}}$, so $\forall x_n < x^*_n, y_{j_n} (x_n) > y_{j_{n+1}} (x_n)$.\\
+$\therefore y_{j_{1}}(x^*_{1,2}) = y_{j_{2}}(x^*_{1,2}) \geq y_{j_3}(x^*_{1,2}), y_{j_{2}}(x^*_{2,3}) = y_{j_{3}}(x^*_{2,3}) \geq y_{j_4}(x^*_{2,3}), ..., y_{j_{n-1}}(x^*_{n-1,n}) = y_{j_{n}}(x^*_{n-1,n}) \geq y_{j_{n+1}}(x^*_{n-1,n}), ..., y_{j_{k-1}}(x^*_{k-1,k}) = y_{j_{k}}(x^*_{k-1,k}) \geq y_{j_{i}}(x^*_{k-1,k})$\\
+Since $y_{j_n}$ was already in $V$, it is defined to be visible with respect to all other elements.\\
+$\therefore y_{j_n} \in V^+$.
+
+\subsection{Prove that $y_{j_n} \in V^+, 0 < n < k$}
+Because $y_{j_n} \in V$, it is defined to be visible with all other elements.\\
+So we must show that $y_{j_n}$ is visible with respect to $y_i$ as well.\\
+Let $(x^*_n, y_{j_n}(x^*_n))$ be the point of intersection of the lines $y_{j_n}$ and $y_{j_{n+1}}$.\\
+By definition, $m_{j_n} < m_{j_{n+1}}$, so $\forall x_n < x^*_n, y_{j_n} (x_n) > y_{j_{n+1}} (x_n)$.\\
+$\therefore y_{j_{1}}(x^*_{1,2}) = y_{j_{2}}(x^*_{1,2}) \geq y_{j_3}(x^*_{1,2}), y_{j_{2}}(x^*_{2,3}) = y_{j_{3}}(x^*_{2,3}) \geq y_{j_4}(x^*_{2,3}), ..., y_{j_{n-1}}(x^*_{n-1,n}) = y_{j_{n}}(x^*_{n-1,n}) \geq y_{j_{n+1}}(x^*_{n-1,n}), ..., y_{j_{k-1}}(x^*_{k-1,k}) = y_{j_{k}}(x^*_{k-1,k}) \geq y_{j_{i}}(x^*_{k-1,k})$\\
+Since $y_{j_n}$ was already in $V$, it is defined to be visible with respect to all other elements.\\
+$\therefore y_{j_n} \in V^+$.
+
 
 \end{document}
