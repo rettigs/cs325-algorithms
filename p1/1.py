@@ -191,8 +191,27 @@ def timeTest():
 
         print "{}\t\t\t{:.3f}s\t{:.3f}s".format(i, a3time, a4time)
 
+def solveTest():
+    testSets = [eval(x) for x in open("solve_these.txt", 'r').readlines()]
+
+    for (i, testSet) in enumerate(testSets):
+        resultSets = []
+        resultSets.append(toLists(a1(testSet[0], testSet[1]))[2])
+        resultSets.append(toLists(a2(testSet[0], testSet[1]))[2])
+        resultSets.append((a3(testSet[0], testSet[1])))
+        resultSets.append(toLists(a4(testSet[0], testSet[1]))[2])
+        for j in xrange(len(resultSets)):
+            if resultSets[j] != resultSets[0]:
+                print "Test Set {}: A{}() result does not match A1() result.".format(i, j+1)
+                print "\tA1() result: {}".format(resultSets[0])
+                print "\tA{}() result: {}".format(j+1, resultSets[j])
+
+    print "Solve test complete."
+
 if __name__ == '__main__':
     if sys.argv[1] == "test":
         correctTest()
     elif sys.argv[1] == "time":
         timeTest()
+    elif sys.argv[1] == "solve":
+        solveTest()
