@@ -208,9 +208,13 @@ def solveTest():
         print resultSets[0]
 
 if __name__ == '__main__':
-    if sys.argv[1] == "test":
+    if len(sys.argv) < 2:
+        print sys.argv[0], "<test|time|solve>"
+    elif sys.argv[1] == "test":
         correctTest()
     elif sys.argv[1] == "time":
         timeTest()
     elif sys.argv[1] == "solve":
         solveTest()
+    else:
+        print sys.argv[0], "<test|time|solve>"
