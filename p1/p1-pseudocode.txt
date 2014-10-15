@@ -44,7 +44,7 @@ else concat the head of index with recurse(tail(index)))
 a3GetVisible(slopes, intercepts)
 	declare visibleSlopes, visibleIntercepts, visibleIndices
 	declare visibility to be false for length(slopes)
-	for i = 0 to i < length(slopes)
+	loop from i = 0 to i < length(slopes)
 		a3ActualWork passing in slopes[i], intercepts[i], visibleSlopes, visibleIntercepts, visibleIndices, visibility, i
 	return visibility
 
@@ -74,7 +74,7 @@ a3ActualWork(slopes, intercepts, visibleSlopes, visibleIntercepts, visibleIndice
 
 	
 a3GetVisible
-	for (i = 0; i < length(array); i ++)
+	loop from i = 0 to i < length(array)
 		possiblyAddToVisibleSet&RemoveCovered(array[i],visible)
 
 
