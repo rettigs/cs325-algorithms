@@ -193,6 +193,7 @@ def timeTest():
 
 def solveTest():
     testSets = [eval(x) for x in open("solve_these.txt", 'r').readlines()]
+    file = open("proj1_grp6.txt", 'w')
 
     for (i, testSet) in enumerate(testSets):
         resultSets = []
@@ -205,7 +206,7 @@ def solveTest():
                 print "Test Set {}: A{}() result does not match A1() result.".format(i, j+1)
                 print "\tA1() result: {}".format(resultSets[0])
                 print "\tA{}() result: {}".format(j+1, resultSets[j])
-        print resultSets[0]
+        file.write(",".join([b.__str__() for b in resultSets[0]])+"\n")
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
