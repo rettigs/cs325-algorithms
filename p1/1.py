@@ -205,8 +205,7 @@ def solveTest():
                 print "Test Set {}: A{}() result does not match A1() result.".format(i, j+1)
                 print "\tA1() result: {}".format(resultSets[0])
                 print "\tA{}() result: {}".format(j+1, resultSets[j])
-
-    print "Solve test complete."
+        print resultSets[0]
 
 if __name__ == '__main__':
     if sys.argv[1] == "test":
