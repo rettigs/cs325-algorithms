@@ -30,13 +30,13 @@ To prove Claim 2, we must prove that each new line $y_i$ is visible at the time 
 
 \subsubsection*{Prove that $y_{i} \in V^+$}
 Let $A^+ = A \cup \{y_i\}$.\\
-Because $m_i > m_n$ for all $n < i$, $y_i$ is visible by the Claim 1 proof in the "Visible Line Notes" handout.\\
+Because $m_i > m_n$ for all $0 < n < i$, $y_i$ is visible by the Claim 1 proof in the "Visible Line Notes" handout.\\
 Since $y_i$ is visible and $y_i \in A^+, y_i$ must also be in $V^+$, the visible subset of $A^+$.
 
 \subsubsection*{Prove that $y_{j_k} \in V^+$}
 Let $(x^*, y_{j_k} (x^*))$ be the point of intersection of the lines $y_{j_k}$ and $y_{j_{k-1}}$.\\
 Since $y_{j_k} (x^*) \geq y_i (x^*)$ by definition, $y_{j_k}$ is visible with respect to $y_i$.\\
-Since $y_{j_k}$ was already in $V$, it is defined to be visible with respect to all other elements.\\
+Since $y_{j_k}$ was already in $V$, it is defined to be visible with respect to all other elements in $V$.\\
 $\therefore y_{j_k} \in V^+$.
 
 \subsubsection*{Prove that $y_{j_n} \in V^+, 0 < n < k$}
@@ -71,7 +71,7 @@ $\therefore y_{j_{1}}(x^*_{2}) = y_{j_{2}}(x^*_{2}) \geq y_{j_3}(x^*_{2}), y_{j_
 In order for $y_{j_p}$ to not be visible in $V^+$, $y_i (x^*_p) > y_p (x^*_p)$ by definition of visible.\\
 %(x^*_{1,2}) = (x^*_2) by our definition
 $\therefore y_{j_{1}}(x^*_{2}) = y_{j_{2}}(x^*_{2}) \geq y_{j_3}(x^*_{2}), y_{j_{2}}(x^*_{3}) = y_{j_{3}}(x^*_{3}) \geq y_{j_4}(x^*_{3}), ..., y_{j_{k-1}}(x^*_{k}) = y_{j_{k}}(x^*_{k}) \geq y_{j_{i}}(x^*_{k}), ..., y_{j_{p-1}}(x^*_{p-1,p}) = y_{j_{p}}(x^*_{p-1,p}) < y_{j_{i}}(x^*_{p-1,p}), ..., y_{j_{t-1}}(x^*_{t}) = y_{j_{t}}(x^*_{t}) < y_{j_{i}}(x^*_{t})$\\
-Since $y_{j_p}$ was already in $V$, it is defined to be visible with respect to all other elements.\\
+Since $y_{j_p}$ was already in $V$, it is defined to be visible with respect to all other elements in $V$.\\
 $\therefore y_{j_p} \notin V^+$.
 \end{comment}
 
@@ -79,7 +79,7 @@ $\therefore y_{j_p} \notin V^+$.
 Let $(x^*_p, y_{j_p}(x^*_p))$ be the point of intersection of the lines $y_{j_{p-1}}$ and $y_{j_{p}}$.\\
 By definition, $m_{j_{p-1}} < m_{j_{p}}$, so $\forall x_{p-1} < x^*_{p-1}, y_{j_{p-1}} (x_{p-1}) > y_{j_{p}} (x_{p-1})$.\\
 $\therefore y_{j_{1}}(x^*_{1,2}) = y_{j_{2}}(x^*_{1,2}) \geq y_{j_3}(x^*_{1,2}), y_{j_{2}}(x^*_{2,3}) = y_{j_{3}}(x^*_{2,3}) \geq y_{j_4}(x^*_{2,3}), ..., y_{j_{p-1}}(x^*_{p-1,p}) = y_{j_{p}}(x^*_{p-1,p}) \geq y_{j_{p+1}}(x^*_{p-1,p}), ..., y_{j_{k-1}}(x^*_{k-1,k}) = y_{j_{k}}(x^*_{k-1,k}) \geq y_{j_{i}}(x^*_{k-1,k})$\\
-Since $y_{j_p}$ was already in $V$, it is defined to be visible with respect to all other elements.\\
+Since $y_{j_p}$ was already in $V$, it is defined to be visible with respect to all other elements in $V$.\\
 $\therefore y_{j_p} \in V^+$.
 
 \subsection*{Proof of Algorithm 3: Direct Proof}
