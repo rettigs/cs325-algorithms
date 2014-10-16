@@ -1,3 +1,5 @@
+Pseudocode
+----------
 getVisibleAlgorithm1(slopes[], intercepts[])
 	visibility[] = True for length(slopes)
 	loop from j = 0 to j < the length(slopes)
