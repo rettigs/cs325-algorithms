@@ -24,7 +24,9 @@ Claim 2: If $\{y_{j_1}, y_{j_2},...,y_{j_{t}}\}$ is the visible subset of $\{y_1
 
 Let $V=\{y_{j_1}, y_{j_2},...,y_{j_{t}}\}$ be the visible subset of $A=\{y_1, y_2,...,y_{i - 1}\}$.
 
-Let $V^+=\{y_{j_1}, y_{j_2},...,y_{j_{k}}, y_i\}$ be the visible subset of $A^+=\{y_1, y_2,...,y_{i}\}$.
+Let $V^+=\{y_{j_1}, y_{j_2},...,y_{j_{k}}, y_i\}$ be the visible subset of $A^+=\{y_1, y_2,...,y_{i}\}$.\\
+
+To prove Claim 2, we must prove that each new line $y_i$ is visible at the time it is added to $V^+$, that each culled line $y_{j_p}$ (where $k < p < i$) was no longer visible due to being covered by $y_i$, and that each remaining line $y_{j_1}$ ... $y_{j_k}$ remains visible in $V^+$.
 
 \subsubsection*{Prove that $y_{i} \in V^+$}
 Let $A^+ = A \cup \{y_i\}$.\\
@@ -81,6 +83,7 @@ Since $y_{j_p}$ was already in $V$, it is defined to be visible with respect to 
 $\therefore y_{j_p} \in V^+$.
 
 \subsection*{Proof of Algorithm 3: Direct Proof}
+As Algorithm 3 is simply an implementation of Claim 2, and Claim 2 was proven above, Algorithm 3 is also proven to be correct.  Our Claim 2 proof shows that each new line $y_i$ is visible at the time it is added to $V^+$, that each culled line $y_{j_p}$ was no longer visible due to being covered by $y_i$, and that each remaining line $y_{j_1}$ ... $y_{j_k}$ remains visible in $V^+$.
 
 \section*{Experimental and Asymptotic Run Time Analysis}
 \subsection*{Experimental Run Time Data}
