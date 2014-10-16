@@ -50,37 +50,15 @@ $\therefore y_{j_n}$ is visible with respect to $y_i$.\\
 $\therefore y_{j_n} \in V^+$.
 
 \subsubsection*{Prove that $y_{j_p} \notin V^+, k < p < i$}
-%Because $y_{j_p} \notin V$, it is defined not to be visible with all other elements.\\
-$y_{j_p} \notin V$ if $t < p < i$ or $y_{j_p} \in V$ if $k < p < t$.\\
-We must show that $y_{j_p}$ is not visible with respect to $y_i$ as well.
-
-\subsubsection{$y_{j_p} \notin V$ if $t < p < i$}
-%I think this is right?
-If $y_{j_p}$ was not visible in $V$ then it cannot be visible in $V^+$ by the Claim 1 proof in the "Visible Line Notes" handout.\\
-
-\subsubsection{$y_{j_p} \in V$ if $k < p \leq t$}
-
-\begin{comment}
-This is what I've been fiddling with for the proof this morning.
 
 %used p & p-1 so that it goes from intersects of k to t, p+1 would go from k+1 to t+1.
 Let $(x^*_p, y_{j_p}(x^*_p))$ be the point of intersection of the lines $y_{j_{p-1}}$ and $y_{j_{p}}$.\\
 By definition, $m_{j_{p-1}} < m_{j_{p}}$, so $\forall x_{p-1} < x^*_{p-1}, y_{j_{p-1}} (x_{p-1}) \geq y_{j_{p}} (x_{p-1})$.\\
-Since $y_{j_p}$ was already in $V$, it is defined to be visible with respect to all other elements.\\
 $\therefore y_{j_{1}}(x^*_{2}) = y_{j_{2}}(x^*_{2}) \geq y_{j_3}(x^*_{2}), y_{j_{2}}(x^*_{3}) = y_{j_{3}}(x^*_{3}) \geq y_{j_4}(x^*_{3}), ..., y_{j_{k-1}}(x^*_{k}) = y_{j_{k}}(x^*_{k}) \geq y_{j_{k+1}}(x^*_{k}), ..., y_{j_{p-1}}(x^*_{p}) = y_{j_{p}}(x^*_{p}) \geq y_{j_{p+1}}(x^*_{p}), ..., y_{j_{t-2}}(x^*_{t-1}) = y_{j_{t-1}}(x^*_{t-1}) \geq y_{j_{t}}(x^*_{t-1})$\\
 In order for $y_{j_p}$ to not be visible in $V^+$, $y_i (x^*_p) > y_p (x^*_p)$ by definition of visible.\\
 %(x^*_{1,2}) = (x^*_2) by our definition
 $\therefore y_{j_{1}}(x^*_{2}) = y_{j_{2}}(x^*_{2}) \geq y_{j_3}(x^*_{2}), y_{j_{2}}(x^*_{3}) = y_{j_{3}}(x^*_{3}) \geq y_{j_4}(x^*_{3}), ..., y_{j_{k-1}}(x^*_{k}) = y_{j_{k}}(x^*_{k}) \geq y_{j_{i}}(x^*_{k}), ..., y_{j_{p-1}}(x^*_{p-1,p}) = y_{j_{p}}(x^*_{p-1,p}) < y_{j_{i}}(x^*_{p-1,p}), ..., y_{j_{t-1}}(x^*_{t}) = y_{j_{t}}(x^*_{t}) < y_{j_{i}}(x^*_{t})$\\
-Since $y_{j_p}$ was already in $V$, it is defined to be visible with respect to all other elements in $V$.\\
 $\therefore y_{j_p} \notin V^+$.
-\end{comment}
-
-%used p & p-1 so that it goes from intersects of k to t, p+1 would go from k+1 to t+1.
-Let $(x^*_p, y_{j_p}(x^*_p))$ be the point of intersection of the lines $y_{j_{p-1}}$ and $y_{j_{p}}$.\\
-By definition, $m_{j_{p-1}} < m_{j_{p}}$, so $\forall x_{p-1} < x^*_{p-1}, y_{j_{p-1}} (x_{p-1}) > y_{j_{p}} (x_{p-1})$.\\
-$\therefore y_{j_{1}}(x^*_{1,2}) = y_{j_{2}}(x^*_{1,2}) \geq y_{j_3}(x^*_{1,2}), y_{j_{2}}(x^*_{2,3}) = y_{j_{3}}(x^*_{2,3}) \geq y_{j_4}(x^*_{2,3}), ..., y_{j_{p-1}}(x^*_{p-1,p}) = y_{j_{p}}(x^*_{p-1,p}) \geq y_{j_{p+1}}(x^*_{p-1,p}), ..., y_{j_{k-1}}(x^*_{k-1,k}) = y_{j_{k}}(x^*_{k-1,k}) \geq y_{j_{i}}(x^*_{k-1,k})$\\
-Since $y_{j_p}$ was already in $V$, it is defined to be visible with respect to all other elements in $V$.\\
-$\therefore y_{j_p} \in V^+$.
 
 \subsection*{Proof of Algorithm 3: Direct Proof}
 As Algorithm 3 is simply an implementation of Claim 2, and Claim 2 was proven above, Algorithm 3 is also proven to be correct.  Our Claim 2 proof shows that each new line $y_i$ is visible at the time it is added to $V^+$, that each culled line $y_{j_p}$ was no longer visible due to being covered by $y_i$, and that each remaining line $y_{j_1}$ ... $y_{j_k}$ remains visible in $V^+$.
