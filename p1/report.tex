@@ -42,7 +42,8 @@ Because $y_{j_n} \in V$, it is defined to be visible with respect to all other e
 So we must show that $y_{j_n}$ is visible with respect to $y_i$ as well.\\
 Let $(x^*_n, y_{j_n}(x^*_n))$ be the point of intersection of the lines $y_{j_n}$ and $y_{j_{n+1}}$.\\
 By definition, $m_{j_n} < m_{j_{n+1}}$, so $\forall x_n < x^*_n, y_{j_n} (x_n) \geq y_{j_{n+1}} (x_n)$.\\
-$\therefore y_{j_{1}}(x^*_{1,2}) = y_{j_{2}}(x^*_{1,2}) \geq y_{j_3}(x^*_{1,2}), y_{j_{2}}(x^*_{2,3}) = y_{j_{3}}(x^*_{2,3}) \geq y_{j_4}(x^*_{2,3}), ..., y_{j_{n-1}}(x^*_{n-1,n}) = y_{j_{n}}(x^*_{n-1,n}) \geq y_{j_{n+1}}(x^*_{n-1,n}), ..., y_{j_{k-1}}(x^*_{k-1,k}) = y_{j_{k}}(x^*_{k-1,k}) \geq y_{j_{i}}(x^*_{k-1,k})$\\
+%(x^*_{1,2}) = (x^*_1) by our definition
+$\therefore y_{j_{1}}(x^*_{1}) = y_{j_{2}}(x^*_{1}) \geq y_{j_3}(x^*_{1}), y_{j_{2}}(x^*_{2}) = y_{j_{3}}(x^*_{2}) \geq y_{j_4}(x^*_{2}), ..., y_{j_{n-1}}(x^*_{n-1}) = y_{j_{n}}(x^*_{n-1}) \geq y_{j_{n+1}}(x^*_{n-1}), ..., y_{j_{k-1}}(x^*_{k-1}) = y_{j_{k}}(x^*_{k-1}) \geq y_{j_{i}}(x^*_{k-1})$\\
 $\therefore y_{j_n}$ is visible with respect to $y_i$.\\
 $\therefore y_{j_n} \in V^+$.
 
@@ -53,13 +54,13 @@ We must show that $y_{j_p}$ is not visible with respect to $y_i$ as well.
 
 \subsubsection{$y_{j_p} \notin V$ if $t < p < i$}
 %I think this is right?
-If $y_{j_p}$ was not visible in $V$ then it cannot be visible in $V^+$ by the Proof of Claim 1 given in class.
+If $y_{j_p}$ was not visible in $V$ then it cannot be visible in $V^+$ by the Claim 1 proof in the "Visible Line Notes" handout.\\
 
 \subsubsection{$y_{j_p} \in V$ if $k < p \leq t$}
 
 %used p & p-1 so that it goes from intersects of k to t, p+1 would go from k+1 to t+1.
 Let $(x^*_p, y_{j_p}(x^*_p))$ be the point of intersection of the lines $y_{j_{p-1}}$ and $y_{j_{p}}$.\\
-By definition, $m_{j_{p-1}} < m_{j_{p}}$, so $\forall x_{p-1} < x^*_{p-1}, y_{j_{p-1}} (x_{p-1}) > y_{j_{p+1}} (x_p)$.\\
+By definition, $m_{j_{p-1}} < m_{j_{p}}$, so $\forall x_{p-1} < x^*_{p-1}, y_{j_{p-1}} (x_{p-1}) > y_{j_{p}} (x_{p-1})$.\\
 $\therefore y_{j_{1}}(x^*_{1,2}) = y_{j_{2}}(x^*_{1,2}) \geq y_{j_3}(x^*_{1,2}), y_{j_{2}}(x^*_{2,3}) = y_{j_{3}}(x^*_{2,3}) \geq y_{j_4}(x^*_{2,3}), ..., y_{j_{p-1}}(x^*_{p-1,p}) = y_{j_{p}}(x^*_{p-1,p}) \geq y_{j_{p+1}}(x^*_{p-1,p}), ..., y_{j_{k-1}}(x^*_{k-1,k}) = y_{j_{k}}(x^*_{k-1,k}) \geq y_{j_{i}}(x^*_{k-1,k})$\\
 Since $y_{j_p}$ was already in $V$, it is defined to be visible with respect to all other elements.\\
 $\therefore y_{j_p} \in V^+$.
