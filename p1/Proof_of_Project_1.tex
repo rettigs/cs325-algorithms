@@ -1,0 +1,99 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{mathtools}
+\usepackage{amssymb}
+
+\usepackage{geometry}
+\geometry{letterpaper, portrait, margin=1in}
+
+\title{CS325 - Project 1}
+\author{Group #6\\
+William Jernigan, Alexander Merrill, Sean Rettig}
+\date{October 2014}
+
+\begin{document}
+
+\maketitle
+
+\section*{Proof of Claim 1}
+
+\begin{quote}
+    Claim 1: $y_i$ is not visible iff $\exists j,k$ such that $j < i < k$ and $y* > m_i x* + b_i$ where $(x*,y*)$ is the intersection of $y_j$ and $j_k$.
+\end{quote}\\
+\\
+$A \equiv y_i$ is not visible\\
+$B \equiv \exists j,k$ such that $j < i < k$ and $y* < m_i x* + b_i$ where $(x*,y*)$ is the intersection of $y_j$ and $y_k$.\\
+$A \Leftrightarrow B$
+
+\subsection*{First Prove $A \Rightarrow B$}
+    \subsubsection*{Direct Proof:}
+    Let $y_i$ be a line that is not visible.\\
+    Then $l < i < n$ because $y_l$ and $y_n$ are always visible.\\
+    Let $k$ be the smallest index greater than $i$ such that $y_k$ is visible.\\
+    e.g. $y_1,y_2,...,y_k,y_{k+1},...,y_{n-1},y_n$\\
+    Let $(x*,y*)$ be the left most point on $y_k$ that is visible.\\
+    Let $j$ be the greatest index such that $y_i$ intersects $y_k$ at $(x*,y*)$ is visible.\\
+    Because $y_i$ through $y_{k-1}$ are not visible (by definition of $k_j$) $j < i < k$.\\
+    Since $x*,y*$ is visible and $y_i$ is not visible, $m_i x + b_i < y*$.
+    
+\subsection*{Prove $B \Rightarrow A$}
+    \subsubsection*{Direct Proof:}
+    Since $m_i < m_k$, the intersection point of $y_i$ and $y_k$ is left of $x*$.\\
+    Since $m_i < m_k$, $m_i x + b_i < m_k x + b_k$ $\forall{x > \bar{x}}$.\\
+    Likewise since $m_i > m_j$, $y_i$ and $y_j$ intersect at $(\bar{\bar{x}}, \bar{\bar{y}})$ right of $x*$ $(\bar{\bar{x}} > x*)$.\\
+    $\therefore m_i x + b_i < m_j x + b_j$; $\forall{x < \bar{\bar{x}}}$.\\
+    $\therefore y_i$ is not visible.\\
+    $y_k + y_j$ intersect at $m_k x + b_k = m_j x + b_j$\\
+    $x = \dfrac{(b_j - b_k)}{(m_k - m_j)}$\\
+    Is $m_j \left( \dfrac{b_j - b_k}{m_k - m_j}\right) + b_j > m_i \left(\dfrac{b_j - b_k}{m_k - m_j}\right) + b_i$\\
+    If $m_k > m_j$ then instead compare $m_j (b_j - b_k) + b_j (m_k - m_j) > m_i (b_j + b_k)$
+
+\section*{Proof of Claim 2}
+
+\begin{quote}
+Claim 2: If $\{y_{j_1}, y_{j_2},...,y_{j_{t}}\}$ is the visible subset of $\{y_1, y_2,...,y_{i - 1}\} (t \leq i - 1)$ then $\{y_{j_1}, y_{j_2},...,y_{j_{k}}, y_i\}$ is the visible subset of $\{y_1, y_2,...,y_{i}\}$ where $y_{j_{k}}$ is the last line such that $y_{j_{k}} (x*) > y_i (x*)$ where $(x*, y_{j_{k}}(x*))$ is the point of intersection of lines $y_{j_{k}}$ and $y_{j_{k - 1}}$.
+\end{quote}
+
+\subsection*{Direct Proof}
+
+\subsection{Prove that $y_{i} \in V^+k$}
+Let $A^+ = A \union \{y_i\}$.\\
+Because $m_i > m_n, n < i, y_i$ is visible by the Claim 1 proof in the "Visible Line Notes" handout.\\
+Since $y_i$ is visible and $y_i \in A^+, y_i$ must also be in $V^+$, the visible subset of $A^+$.
+
+\subsection{Prove that $y_{j_k} \in V^+k$}
+Let $(x^*, y_{j_k} (x^*))$ be the point of intersection of the lines $y_{j_k}$ and $y_{j_{k-1}}$.\\
+Since $y_{j_k} (x^*) \gev y_i (x^*)$ by definition, $y_{j_k}$ is visible with respect to $y_i$.\\
+Since $y_{j_k}$ was already in $V$, it is defined to be visible with respect to all other elements.\\
+$\therefore y_{j_k} \in V^+$.
+
+\subsection{Prove that $y_{j_n} \in V^+, 0 < n < k$}
+Because $y_{j_n} \in V$, it is defined to be visible with all other elements.\\
+So we must show that $y_{j_n}$ is visible with respect to $y_i$ as well.\\
+Let $(x^*_n, y_{j_n}(x^*_n))$ be the point of intersection of the lines $y_{j_n}$ and $y_{j_{n+1}}$.\\
+By definition, $m_{j_n} < m_{j_{n+1}}$, so $\forall x_n < x^*_n, y_{j_n} (x_n) \geq y_{j_{n+1}} (x_n)$.\\
+$\therefore y_{j_{1}}(x^*_{1,2}) = y_{j_{2}}(x^*_{1,2}) \geq y_{j_3}(x^*_{1,2}), y_{j_{2}}(x^*_{2,3}) = y_{j_{3}}(x^*_{2,3}) \geq y_{j_4}(x^*_{2,3}), ..., y_{j_{n-1}}(x^*_{n-1,n}) = y_{j_{n}}(x^*_{n-1,n}) \geq y_{j_{n+1}}(x^*_{n-1,n}), ..., y_{j_{k-1}}(x^*_{k-1,k}) = y_{j_{k}}(x^*_{k-1,k}) \geq y_{j_{i}}(x^*_{k-1,k})$\\
+Since $y_{j_n}$ was already in $V$, it is defined to be visible with respect to all other elements.\\
+$\therefore y_{j_n} \in V^+$.
+
+\subsection{Prove that $y_{j_p} \notin V^+, k < p < i$}
+%Because $y_{j_p} \notin V$, it is defined not to be visible with all other elements.\\
+$y_{j_p} \notin V$ if $t < p < i$ or $y_{j_p} \in V$ if $k < p < t$.\\
+We must show that $y_{j_p}$ is not visible with respect to $y_i$ as well.
+
+\subsubsection{$y_{j_p} \notin V$ if $t < p < i$}
+%I think this is right?
+If $y_{j_p}$ was not visible in $V$ then it cannot be visible in $V^+$ by Proof of Claim 1.
+
+\subsubsection{$y_{j_p} \in V$ if $k < p \leq t$}
+
+
+%used p & p-1 so that it goes from intersects of k to t, p+1 would go from k+1 to t+1.
+Let $(x^*_p, y_{j_p}(x^*_p))$ be the point of intersection of the lines $y_{j_{p-1}}$ and $y_{j_{p}}$.\\
+By definition, $m_{j_{p-1}} < m_{j_{p}}$, so $\forall x_{p-1} < x^*_{p-1}, y_{j_{p-1}} (x_{p-1}) > y_{j_{p+1}} (x_p)$.\\
+$\therefore y_{j_{1}}(x^*_{1,2}) = y_{j_{2}}(x^*_{1,2}) \geq y_{j_3}(x^*_{1,2}), y_{j_{2}}(x^*_{2,3}) = y_{j_{3}}(x^*_{2,3}) \geq y_{j_4}(x^*_{2,3}), ..., y_{j_{p-1}}(x^*_{p-1,p}) = y_{j_{p}}(x^*_{p-1,p}) \geq y_{j_{p+1}}(x^*_{p-1,p}), ..., y_{j_{k-1}}(x^*_{k-1,k}) = y_{j_{k}}(x^*_{k-1,k}) \geq y_{j_{i}}(x^*_{k-1,k})$\\
+Since $y_{j_p}$ was already in $V$, it is defined to be visible with respect to all other elements.\\
+$\therefore y_{j_p} \in V^+$.
+
+
+\end{document}
