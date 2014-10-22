@@ -1,0 +1,41 @@
+algorithm1(lines):
+    for j in lines[0 ... n]:
+        for i in lines[j+1 ... n]:
+            for k in lines[i+1 ... n]:
+                Xjk, Yjk = intersection(j, k)
+                Yi = i.slope * Xjk + i.intercept
+                if Yjk > Yi:
+                    i.visible = False
+    return lines
+
+algorithm2(lines):
+    for j in lines[0 ... n]:
+        for i in lines[j+1 ... n]:
+            for k in lines[i+1 ... n]:
+                if i.visible:
+                    Xjk, Yjk = intersection(j, k)
+                    Yi = i.slope * Xjk + i.intercept
+                    if Yjk > Yi:
+                        i.visible = False
+    return lines
+
+algorithm3(lines):
+    vlines = []
+    for i in lines:
+        vlines.append(i)
+        removeCovered(vlines)
+    return lines
+
+removeCovered(vlines):
+    if len(vlines) < 3: # All lines are visible if there are only 1 or 2.
+        return vlines
+    else:
+        a, b, c = vlines[n-2 ... n]
+        Xab, Yab = intersection(a, b)
+        Yc = c.slope * Xab + c.intercept
+        if Yc > Yab: # If line b is covered, remove it and recurse.
+            b.visible = False
+            vlines.remove(b)
+            return removeCovered(vlines)
+        else: # If line b is still visible, do nothing.
+            return vlines
