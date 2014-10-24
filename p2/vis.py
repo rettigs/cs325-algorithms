@@ -93,7 +93,7 @@ def a4(slopes, intercepts):
 
 def _a4(lines):
     print "a4: lines: {}".format(lines)
-    if len(lines) == 1:
+    if len(lines) <= 1:
         return lines
     else:
         left = _a4(lines[:len(lines)/2])
@@ -104,39 +104,42 @@ def _a4(lines):
 def _mergeVisible(a, b):
     print "Merge: Merging {} and {}".format(a, b)
 
-    if len(a) == 1 and len(b) == 1:
-        print "Merge: Returning {}".format(a + b)
-        return a + b
+    i = 1
+    j = len(b)-2
 
-    i = 0
-    j = len(b)-1
+    checkAs = len(a) > 1
+    checkBs = len(b) > 1
 
-    checkAs = True
-    checkBs = True
-
-    while i < len(a)-1 and j >= 1 and (checkAs or checkBs):
-        if checkAs:
-            intersectionY = a[i].slope * (a[i].intercept - b[j].intercept) + a[i].intercept * (b[j].slope - a[i].slope)
-            testLineY = a[i+1].slope * (a[i].intercept - b[j].intercept) + a[i+1].intercept * (b[j].slope - a[i].slope)
-            print "intersectionY of {} and {}: {}".format(a[i], b[j], intersectionY)
-            print "testLineY of {}: ".format(a[i+1], testLineY)
+    # Keep doing checks as long as
+    while (i < len(a) or j >= 0) and (checkAs or checkBs):
+        print "while"
+        if checkAs and i < len(a):
+            intersectionY = a[i-1].slope * (a[i-1].intercept - b[j+1].intercept) + a[i-1].intercept * (b[j+1].slope - a[i-1].slope)
+            testLineY = a[i].slope * (a[i-1].intercept - b[j+1].intercept) + a[i].intercept * (b[j+1].slope - a[i-1].slope)
+            print "intersectionY of {} and {}: {}".format(a[i-1], b[j+1], intersectionY)
+            print "testLineY of {}: {}".format(a[i], testLineY)
             if intersectionY > testLineY:
+                print "testLine {} is not visible!".format(a[i])
                 checkAs = False
             else:
+                print "testLine {} is visible!".format(a[i])
                 i += 1
 
-        if checkBs:
-            intersectionY = a[i].slope * (a[i].intercept - b[j].intercept) + a[i].intercept * (b[j].slope - a[i].slope)
-            testLineY = b[j-1].slope * (a[i].intercept - b[j].intercept) + b[j-1].intercept * (b[j].slope - a[i].slope)
-            print "intersectionY of {} and {}: {}".format(a[i], b[j], intersectionY)
-            print "testLineY of {}: {}".format(a[j-1], testLineY)
+        if checkBs and j >= 0:
+            intersectionY = a[i-1].slope * (a[i-1].intercept - b[j+1].intercept) + a[i-1].intercept * (b[j+1].slope - a[i-1].slope)
+            testLineY = b[j].slope * (a[i-1].intercept - b[j+1].intercept) + b[j].intercept * (b[j+1].slope - a[i-1].slope)
+            print "intersectionY of {} and {}: {}".format(a[i-1], b[j+1], intersectionY)
+            print "testLineY of {}: {}".format(a[j], testLineY)
             if intersectionY > testLineY:
+                print "testLine {} is not visible!".format(a[j])
                 checkBs = False
             else:
+                print "testLine {} is visible!".format(a[j])
                 j -= 1
 
-    print "Merge: Returning {}".format(a[:i+1] + b[j:])
-    return a[:i+1] + b[j:]
+    vlines = a[:i] + b[j+1:]
+    print "Merge: Returning {}".format(vlines)
+    return vlines
 
 def buildRandomNumbersList(size):
 	return random.sample(range(-9000, 9000), size)	#arbitrary range
@@ -145,8 +148,8 @@ def correctTest():
     testSets = [
 #        [[-1, 0, 1], [3, 0, -1], [True, False, True]],
 #        [[-2, -1, 0, 1, 2], [9, 27, 54, 95, 96], [True, False, False, True, True]],
-        [[-2, -1, 0, 1, 2], [0, 0, 0, 0, 0], [True, True, True, True, True]]
-#        [[-2, -1, 0, 1, 2], [2, 0, 0, -4, -6], [True, False, True, False, True]],
+#        [[-2, -1, 0, 1, 2], [0, 0, 0, 0, 0], [True, True, True, True, True]],
+        [[-2, -1, 0, 1, 2], [2, 0, 0, -4, -6], [True, False, True, False, True]]
 #        [[-2, -1, 0, 1, 2], [2, 1, 0, 1, 2], [True, False, False, False, True]],
 #        [[-2, -1, 1, 2], [2, 1, 1, 2], [True, False, False, True]]
     ]
