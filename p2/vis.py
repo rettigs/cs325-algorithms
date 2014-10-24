@@ -83,16 +83,72 @@ def _removeCovered(vlines):
         else: # If line b is still visible, do nothing.
             return vlines
 
+def a4(slopes, intercepts):
+    lines = toLines(slopes, intercepts, True)
+    vlines = _a4(lines)
+    for line in lines:
+        if line not in vlines:
+            line.visible = False
+    return lines
+
+def _a4(lines):
+    print "a4: lines: {}".format(lines)
+    if len(lines) == 1:
+        return lines
+    else:
+        left = _a4(lines[:len(lines)/2])
+        right = _a4(lines[len(lines)/2:])
+    merged = _mergeVisible(left, right)
+    return merged
+
+def _mergeVisible(a, b):
+    print "Merge: Merging {} and {}".format(a, b)
+
+    if len(a) == 1 and len(b) == 1:
+        print "Merge: Returning {}".format(a + b)
+        return a + b
+
+    i = 0
+    j = len(b)-1
+
+    checkAs = True
+    checkBs = True
+
+    while i < len(a)-1 and j >= 1 and (checkAs or checkBs):
+        if checkAs:
+            intersectionY = a[i].slope * (a[i].intercept - b[j].intercept) + a[i].intercept * (b[j].slope - a[i].slope)
+            testLineY = a[i+1].slope * (a[i].intercept - b[j].intercept) + a[i+1].intercept * (b[j].slope - a[i].slope)
+            print "intersectionY of {} and {}: {}".format(a[i], b[j], intersectionY)
+            print "testLineY of {}: ".format(a[i+1], testLineY)
+            if intersectionY > testLineY:
+                checkAs = False
+            else:
+                i += 1
+
+        if checkBs:
+            intersectionY = a[i].slope * (a[i].intercept - b[j].intercept) + a[i].intercept * (b[j].slope - a[i].slope)
+            testLineY = b[j-1].slope * (a[i].intercept - b[j].intercept) + b[j-1].intercept * (b[j].slope - a[i].slope)
+            print "intersectionY of {} and {}: {}".format(a[i], b[j], intersectionY)
+            print "testLineY of {}: {}".format(a[j-1], testLineY)
+            if intersectionY > testLineY:
+                checkBs = False
+            else:
+                j -= 1
+
+    print "Merge: Returning {}".format(a[:i+1] + b[j:])
+    return a[:i+1] + b[j:]
+
 def buildRandomNumbersList(size):
 	return random.sample(range(-9000, 9000), size)	#arbitrary range
 
 def correctTest():
     testSets = [
-        [[-1, 0, 1], [3, 0, -1], [True, False, True]],
-        [[-2, -1, 0, 1, 2], [9, 27, 54, 95, 96], [True, False, False, True, True]],
-        [[-2, -1, 0, 1, 2], [0, 0, 0, 0, 0], [True, True, True, True, True]],
-        [[-2, -1, 0, 1, 2], [2, 0, 0, -4, -6], [True, False, True, False, True]],
-        [[-2, -1, 0, 1, 2], [2, 1, 0, 1, 2], [True, False, False, False, True]]
+#        [[-1, 0, 1], [3, 0, -1], [True, False, True]],
+#        [[-2, -1, 0, 1, 2], [9, 27, 54, 95, 96], [True, False, False, True, True]],
+        [[-2, -1, 0, 1, 2], [0, 0, 0, 0, 0], [True, True, True, True, True]]
+#        [[-2, -1, 0, 1, 2], [2, 0, 0, -4, -6], [True, False, True, False, True]],
+#        [[-2, -1, 0, 1, 2], [2, 1, 0, 1, 2], [True, False, False, False, True]],
+#        [[-2, -1, 1, 2], [2, 1, 1, 2], [True, False, False, True]]
     ]
 
     for (i, testSet) in enumerate(testSets):
@@ -110,6 +166,11 @@ def correctTest():
         if a3res[2] != testSet[2]:
             print "A3 test {} failed:".format(i)
             print "\tGot {}, should be {}.".format(a3res[2], testSet[2])
+
+        a4res = toLists(a4(testSet[0], testSet[1]))
+        if a4res[2] != testSet[2]:
+            print "A4 test {} failed:".format(i)
+            print "\tGot {}, should be {}.".format(a4res[2], testSet[2])
 
     print "Correctness tests complete."
 
