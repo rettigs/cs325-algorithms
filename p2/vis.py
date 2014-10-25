@@ -172,7 +172,7 @@ def correctTest():
     print "Correctness tests complete."
 
 def timeTest():
-    print "Lines\tA1 Time\tA2 Time\tA3 Time"
+    print "Lines\tA1 Time\tA2 Time\tA3 Time\tA4 Time"
 
     for i in xrange(100, 1000, 100):
         slopes = buildRandomNumbersList(i)
@@ -191,7 +191,11 @@ def timeTest():
         a3res = a3(slopes, intercepts)
         a3time = time.time() - a3start
 
-        print "{}\t{:.3f}\t{:.3f}\t{:.3f}".format(i, a1time, a2time, a3time)
+        a4start = time.time()
+        a4res = a4(slopes, intercepts)
+        a4time = time.time() - a4start
+
+        print "{}\t{:.3f}\t{:.3f}\t{:.3f}\t{:.3f}".format(i, a1time, a2time, a3time, a4time)
 
     for i in xrange(1000, 10000, 1000):
         slopes = buildRandomNumbersList(i)
@@ -202,7 +206,11 @@ def timeTest():
         a3res = a3(slopes, intercepts)
         a3time = time.time() - a3start
 
-        print "{}\t\t\t{:.3f}".format(i, a3time)
+        a4start = time.time()
+        a4res = a4(slopes, intercepts)
+        a4time = time.time() - a4start
+
+        print "{}\t\t\t{:.3f}\t{:.3f}".format(i, a3time)
 
 def solveTest():
     testSets = [eval(x) for x in open("solve_these.txt", 'r').readlines()]
@@ -213,6 +221,7 @@ def solveTest():
         resultSets.append(toLists(a1(testSet[0], testSet[1]))[2])
         resultSets.append(toLists(a2(testSet[0], testSet[1]))[2])
         resultSets.append(toLists(a3(testSet[0], testSet[1]))[2])
+        resultSets.append(toLists(a4(testSet[0], testSet[1]))[2])
         for j in xrange(len(resultSets)):
             if resultSets[j] != resultSets[0]:
                 print "Test Set {}: A{}() result does not match A1() result.".format(i, j+1)
