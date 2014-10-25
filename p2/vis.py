@@ -92,7 +92,6 @@ def a4(slopes, intercepts):
     return lines
 
 def _a4(lines):
-    print "a4: lines: {}".format(lines)
     if len(lines) <= 1:
         return lines
     else:
@@ -102,7 +101,6 @@ def _a4(lines):
     return merged
 
 def _mergeVisible(a, b):
-    print "Merge: Merging {} and {}".format(a, b)
 
     i = 1
     j = len(b)-2
@@ -111,29 +109,20 @@ def _mergeVisible(a, b):
     checkBs = len(b) > 1
 
     while (i < len(a) and checkAs) or (j >= 0 and checkBs):
-        print "while"
         if checkAs and i < len(a):
             intersectionY = a[i-1].slope * (a[i-1].intercept - b[j+1].intercept) + a[i-1].intercept * (b[j+1].slope - a[i-1].slope)
             testLineY = a[i].slope * (a[i-1].intercept - b[j+1].intercept) + a[i].intercept * (b[j+1].slope - a[i-1].slope)
-            print "intersectionY of {} and {}: {}".format(a[i-1], b[j+1], intersectionY)
-            print "testLineY of {}: {}".format(a[i], testLineY)
             if intersectionY > testLineY:
-                print "testLine {} is not visible!".format(a[i])
                 checkAs = False
             else:
-                print "testLine {} is visible!".format(a[i])
                 i += 1
 
         if checkBs and j >= 0:
             intersectionY = a[i-1].slope * (a[i-1].intercept - b[j+1].intercept) + a[i-1].intercept * (b[j+1].slope - a[i-1].slope)
             testLineY = b[j].slope * (a[i-1].intercept - b[j+1].intercept) + b[j].intercept * (b[j+1].slope - a[i-1].slope)
-            print "intersectionY of {} and {}: {}".format(a[i-1], b[j+1], intersectionY)
-            print "testLineY of {}: {}".format(a[j], testLineY)
             if intersectionY > testLineY:
-                print "testLine {} is not visible!".format(a[j])
                 checkBs = False
             else:
-                print "testLine {} is visible!".format(a[j])
                 j -= 1
 
                 # Now we check to make sure that we didn't just cover the last line in 'a'.
@@ -144,7 +133,6 @@ def _mergeVisible(a, b):
                     i -= 1
 
     vlines = a[:i] + b[j+1:]
-    print "Merge: Returning {}".format(vlines)
     return vlines
 
 def buildRandomNumbersList(size):
