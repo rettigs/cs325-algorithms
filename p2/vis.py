@@ -110,8 +110,7 @@ def _mergeVisible(a, b):
     checkAs = len(a) > 1
     checkBs = len(b) > 1
 
-    # Keep doing checks as long as
-    while (i < len(a) or j >= 0) and (checkAs or checkBs):
+    while (i < len(a) and checkAs) or (j >= 0 and checkBs):
         print "while"
         if checkAs and i < len(a):
             intersectionY = a[i-1].slope * (a[i-1].intercept - b[j+1].intercept) + a[i-1].intercept * (b[j+1].slope - a[i-1].slope)
@@ -137,6 +136,13 @@ def _mergeVisible(a, b):
                 print "testLine {} is visible!".format(a[j])
                 j -= 1
 
+                # Now we check to make sure that we didn't just cover the last line in 'a'.
+                intersectionY = a[i-2].slope * (a[i-2].intercept - b[j+1].intercept) + a[i-2].intercept * (b[j+1].slope - a[i-2].slope)
+                testLineY = a[i-1].slope * (a[i-2].intercept - b[j+1].intercept) + a[i-1].intercept * (b[j+1].slope - a[i-2].slope)
+                if intersectionY > testLineY:
+                    checkAs = False
+                    i -= 1
+
     vlines = a[:i] + b[j+1:]
     print "Merge: Returning {}".format(vlines)
     return vlines
@@ -146,12 +152,12 @@ def buildRandomNumbersList(size):
 
 def correctTest():
     testSets = [
-#        [[-1, 0, 1], [3, 0, -1], [True, False, True]],
-#        [[-2, -1, 0, 1, 2], [9, 27, 54, 95, 96], [True, False, False, True, True]],
-#        [[-2, -1, 0, 1, 2], [0, 0, 0, 0, 0], [True, True, True, True, True]],
-        [[-2, -1, 0, 1, 2], [2, 0, 0, -4, -6], [True, False, True, False, True]]
-#        [[-2, -1, 0, 1, 2], [2, 1, 0, 1, 2], [True, False, False, False, True]],
-#        [[-2, -1, 1, 2], [2, 1, 1, 2], [True, False, False, True]]
+        [[-1, 0, 1], [3, 0, -1], [True, False, True]],
+        [[-2, -1, 0, 1, 2], [9, 27, 54, 95, 96], [True, False, False, True, True]],
+        [[-2, -1, 0, 1, 2], [0, 0, 0, 0, 0], [True, True, True, True, True]],
+        [[-2, -1, 0, 1, 2], [2, 0, 0, -4, -6], [True, False, True, False, True]],
+        [[-2, -1, 0, 1, 2], [2, 1, 0, 1, 2], [True, False, False, False, True]],
+        [[-2, -1, 1, 2], [2, 1, 1, 2], [True, False, False, True]]
     ]
 
     for (i, testSet) in enumerate(testSets):
