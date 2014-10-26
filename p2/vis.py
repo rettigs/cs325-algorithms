@@ -119,6 +119,14 @@ def _mergeVisible(a, b):
             else:
                 i += 1
 
+                # Now we check to make sure that we didn't just cover the last line in 'b'.
+                if j + 2 < len(b):
+                    intersectionY = a[i-1].slope * (a[i-1].intercept - b[j+2].intercept) + a[i-1].intercept * (b[j+2].slope - a[i-1].slope)
+                    testLineY = b[j+1].slope * (a[i-1].intercept - b[j+2].intercept) + b[j+1].intercept * (b[j+2].slope - a[i-1].slope)
+                    if intersectionY > testLineY:
+                        checkBs = False
+                        j += 1
+
         if checkBs and j >= 0:
             intersectionY = a[i-1].slope * (a[i-1].intercept - b[j+1].intercept) + a[i-1].intercept * (b[j+1].slope - a[i-1].slope)
             testLineY = b[j].slope * (a[i-1].intercept - b[j+1].intercept) + b[j].intercept * (b[j+1].slope - a[i-1].slope)
@@ -219,7 +227,7 @@ def timeTest():
 
 def solveTest():
     testSets = [eval(x) for x in open("solve_these.txt", 'r').readlines()]
-    file = open("proj1_grp6.txt", 'w')
+    file = open("proj2_grp6.txt", 'w')
 
     for (i, testSet) in enumerate(testSets):
         resultSets = []
