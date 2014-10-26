@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import math
 import random
 import sys
 import time
@@ -95,8 +96,9 @@ def _a4(lines):
     if len(lines) <= 1:
         return lines
     else:
-        left = _a4(lines[:len(lines)/2])
-        right = _a4(lines[len(lines)/2:])
+        n = int(math.ceil(len(lines)/2))
+        left = _a4(lines[:n])
+        right = _a4(lines[n:])
     merged = _mergeVisible(left, right)
     return merged
 
