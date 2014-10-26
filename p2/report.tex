@@ -23,8 +23,21 @@ Claim 3: If $\{z_{1},z_{2},...,z_{t}\}$ and $\{z_{1},z_{2},...,z_{s}^{'}\}$ are 
 \end{quote}
 
 \subsubsection*{Prove that $\{a_{1},...,a_{i}\}$ is visible}
-Because all elements in A were defined to be visible with respect to each other, any covering line $b_{q}$ must be from B.\\
-Given that $m_{a_{t}} < m_{b_{1}}$, a covered line $a_{p}, p = i + 1$,
+    Because all elements in A were defined to be visible with respect to each other, any covering line $b_{q}$ must be from B.\\
+    Given that $m_{a_{t}} < m_{b_{1}}$, a covered line $a_{p} \in A$ has $m_{p} < m_{q}$.
+    
+    \paragraph{Prove that for any covered line  $a_{p}, p = i + 1$, all lines to the right of p in A are also covered:}
+        Because $a_p$ is defined to be invisible, then by Claim 2 in the P1 Visible Lines Handout:\\
+        $y_{a_{p-1}}(x_{a_{p-1}, b_{q}}) > y_{a_{p}}(x_{a_{p-1},b_{q}})$, where $x_{a_{p-1}, b_{q}}$ is the x coordinate where $a_{p-1}$ and $b_q$ intersect.\\
+        Because $a_{p+1}$ is defined to not cover $a_p$, we know that $y_{a_{p}}(x_{a_{p-1}, b_{q}}) > y_{a_{p+1}}(x_{a_{p-1},b_{q}})$.\\
+        For $x < x_{a_{p-1},a_{p}}, a_{p+1}$ is covered by $a_p$.\\
+        We need to show that $a_{p+1}$ is covered for $x \geq x_{a_{p-1},a_{p}}$.\\
+        Because $b_q$ is covering $a_p$, $y_{b_{q}}(x) > y_{a_{q}}(x)$ for $x \geq x_{a_{p-1},b_{q}} \geq x_{a_{p-1},a_{p}}$.\\
+        \therefore $p+1$ is invisible if p is invisible.\\
+        This follows for all p.
+Then let $p = i + 1$. \therefore $\{a_1,...,a_i\}$ is visible and $\{a_p,...,a_t\}$ is invisible.\\
+Do the same thing for set B.
+
 
 \subsection*{Proof of Algorithm 4: Inductive Proof}
 
