@@ -179,23 +179,26 @@ def timeTest():
         intercepts = buildRandomNumbersList(i)
         slopes.sort()
 
-        a1start = time.time()
-        a1res = a1(slopes, intercepts)
-        a1time = time.time() - a1start
+        #a1start = time.time()
+        #a1res = a1(slopes, intercepts)
+        #a1time = time.time() - a1start
 
-        a2start = time.time()
-        a2res = a2(slopes, intercepts)
-        a2time = time.time() - a2start
+        #a2start = time.time()
+        #a2res = a2(slopes, intercepts)
+        #a2time = time.time() - a2start
 
         a3start = time.time()
         a3res = a3(slopes, intercepts)
         a3time = time.time() - a3start
 
+        
+        lines = toLines(slopes, intercepts, True)
         a4start = time.time()
-        a4res = a4(slopes, intercepts)
+        a4res = _a4(lines)
         a4time = time.time() - a4start
 
-        print "{}\t{:.3f}\t{:.3f}\t{:.3f}\t{:.3f}".format(i, a1time, a2time, a3time, a4time)
+        #print "{}\t{:.5f}\t{:.5f}\t{:.5f}\t{:.5f}".format(i, a1time, a2time, a3time, a4time)
+        print "{}\t\t\t{:.5f}\t{:.5f}".format(i, a3time, a4time)
 
     for i in xrange(1000, 10000, 1000):
         slopes = buildRandomNumbersList(i)
@@ -210,7 +213,7 @@ def timeTest():
         a4res = a4(slopes, intercepts)
         a4time = time.time() - a4start
 
-        print "{}\t\t\t{:.3f}\t{:.3f}".format(i, a3time)
+        print "{}\t\t\t{:.5f}\t{:.5f}".format(i, a3time, a4time)
 
 def solveTest():
     testSets = [eval(x) for x in open("solve_these.txt", 'r').readlines()]
