@@ -243,6 +243,21 @@ def solveTest():
                 print "\tA{}() result: {}".format(j+1, resultSets[j])
         file.write(",".join([b.__str__() for b in resultSets[0]])+"\n")
 
+def compareTest():
+    for i in xrange(5, 100):
+        print "comparing with {} lines".format(i)
+        slopes = buildRandomNumbersList(i)
+        intercepts = buildRandomNumbersList(i)
+        slopes.sort()
+        testSet = (slopes, intercepts)
+
+        a3res = toLists(a3(testSet[0], testSet[1]))[2]
+        a4res = toLists(a4(testSet[0], testSet[1]))[2]
+        if a3res != a4res:
+            print "A3() result does not match A4() result."
+            print "\tA3() result: {}".format(a3res)
+            print "\tA4() result: {}".format(a4res)
+
 if __name__ == '__main__':
     if len(sys.argv) < 2:
         print sys.argv[0], "<test|time|solve>"
@@ -252,5 +267,7 @@ if __name__ == '__main__':
         timeTest()
     elif sys.argv[1] == "solve":
         solveTest()
+    elif sys.argv[1] == "compare":
+        compareTest()
     else:
-        print sys.argv[0], "<test|time|solve>"
+        print sys.argv[0], "<test|time|solve|compare>"

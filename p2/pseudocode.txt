@@ -26,16 +26,54 @@ algorithm3(lines):
         removeCovered(vlines)
     return lines
 
-removeCovered(vlines):
-    if len(vlines) < 3: # All lines are visible if there are only 1 or 2.
-        return vlines
+algorithm4(lines):
+    if len(lines) <= 1:
+        return lines
     else:
-        a, b, c = vlines[n-2 ... n]
-        Xab, Yab = intersection(a, b)
-        Yc = c.slope * Xab + c.intercept
-        if Yc > Yab: # If line b is covered, remove it and recurse.
-            b.visible = False
-            vlines.remove(b)
-            return removeCovered(vlines)
-        else: # If line b is still visible, do nothing.
-            return vlines
+        left = algorithm4(first half of lines)
+        right = algorithm4(second half of lines)
+    merged = mergeVisible(left, right)
+    return merged
+
+def mergeVisible(a, b):
+
+    i = 1
+    j = len(b)-2
+
+    checkAs = len(a) > 1
+    checkBs = len(b) > 1
+
+    while checking A's or checking B's:
+        if checkAs and i < len(a):
+            intersectionY = a[i-1].slope * (a[i-1].intercept - b[j+1].intercept) + a[i-1].intercept * (b[j+1].slope - a[i-1].slope)
+            testLineY = a[i].slope * (a[i-1].intercept - b[j+1].intercept) + a[i].intercept * (b[j+1].slope - a[i-1].slope)
+            if intersectionY > testLineY:
+                checkAs = False
+            else:
+                i += 1
+
+                # Now we check to make sure that we didn't just cover the last line in 'b'.
+                if j + 2 < len(b):
+                    intersectionY = a[i-1].slope * (a[i-1].intercept - b[j+2].intercept) + a[i-1].intercept * (b[j+2].slope - a[i-1].slope)
+                    testLineY = b[j+1].slope * (a[i-1].intercept - b[j+2].intercept) + b[j+1].intercept * (b[j+2].slope - a[i-1].slope)
+                    if intersectionY > testLineY:
+                        checkBs = False
+                        j += 1
+
+        if checkBs and j >= 0:
+            intersectionY = a[i-1].slope * (a[i-1].intercept - b[j+1].intercept) + a[i-1].intercept * (b[j+1].slope - a[i-1].slope)
+            testLineY = b[j].slope * (a[i-1].intercept - b[j+1].intercept) + b[j].intercept * (b[j+1].slope - a[i-1].slope)
+            if intersectionY > testLineY:
+                checkBs = False
+            else:
+                j -= 1
+
+                # Now we check to make sure that we didn't just cover the last line in 'a'.
+                intersectionY = a[i-2].slope * (a[i-2].intercept - b[j+1].intercept) + a[i-2].intercept * (b[j+1].slope - a[i-2].slope)
+                testLineY = a[i-1].slope * (a[i-2].intercept - b[j+1].intercept) + a[i-1].intercept * (b[j+1].slope - a[i-2].slope)
+                if intersectionY > testLineY:
+                    checkAs = False
+                    i -= 1
+
+    vlines = a[:i] + b[j+1:]
+    return vlines
