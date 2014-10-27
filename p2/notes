@@ -1,0 +1,4 @@
+for proof:
+    prove that for each line that mergeVisible checks, it correctly determines its visibility (refer to proof from first assignment)
+    prove that each line in the rest of each list is also invisible if an invisible line is found (refer to proof of claim 3)
+    prove that mergevisible is only passed 2 sets of visible lines, since it only works in that situation (this is proven because algorithm 4 only calls mergevisible on lists of length 1 (which are trivially visible) or on the output of mergevisible (which we just proved to be a set of visible lines)
