@@ -136,11 +136,12 @@ def _mergeVisible(a, b):
                 j -= 1
 
                 # Now we check to make sure that we didn't just cover the last line in 'a'.
-                intersectionY = a[i-2].slope * (a[i-2].intercept - b[j+1].intercept) + a[i-2].intercept * (b[j+1].slope - a[i-2].slope)
-                testLineY = a[i-1].slope * (a[i-2].intercept - b[j+1].intercept) + a[i-1].intercept * (b[j+1].slope - a[i-2].slope)
-                if intersectionY > testLineY:
-                    checkAs = False
-                    i -= 1
+                if i - 2 >= 0:
+                    intersectionY = a[i-2].slope * (a[i-2].intercept - b[j+1].intercept) + a[i-2].intercept * (b[j+1].slope - a[i-2].slope)
+                    testLineY = a[i-1].slope * (a[i-2].intercept - b[j+1].intercept) + a[i-1].intercept * (b[j+1].slope - a[i-2].slope)
+                    if intersectionY > testLineY:
+                        checkAs = False
+                        i -= 1
 
     vlines = a[:i] + b[j+1:]
     return vlines
