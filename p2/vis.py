@@ -96,7 +96,7 @@ def _a4(lines):
     if len(lines) <= 1:
         return lines
     else:
-        n = int(math.ceil(len(lines)/2))
+        n = len(lines) // 2
         left = _a4(lines[:n])
         right = _a4(lines[n:])
     merged = _mergeVisible(left, right)
