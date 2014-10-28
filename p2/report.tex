@@ -23,37 +23,40 @@ Claim 3: If $\{z_{1},z_{2},...,z_{t}\}$ and $\{z_{1}',z_{2}',...,z_{s}'\}$ are t
 \end{quote}
 Let $A = \{a_{1},a_{2},...,a_{t}\}$ be the set $\{z_{1},z_{2},...,z_{t}\}$ and let $B = \{b_{1},b_{2},...,b_{s}\}$ be the set $\{z_{1}',z_{2}',...,z_{s}'\}$ for improved clarity.
 
-\subsection*{Prove that $\{a_{1},...,a_{i}\}$ is visible:}
+\subsection*{Prove that $\{a_{1},...,a_{i}\}$ are visible:}
     Because all elements in A were defined to be visible with respect to each other, any covering line $b_{q}$ must be from B.\\
-    Given that $m_{a_{t}} < m_{b_{1}}$, a covered line $a_{p} \in A$ has $m_{a_{p}} < m_{b_{q}}$.
+    Given that $m_{a_{t}} < m_{b_{1}}$, a covered line $a_{p} \in A$ has $m_{a_p} < m_{b_q}$.
     
     \subsubsection*{Prove that for any covered line $a_{p}$, all lines to the right of p in A are also covered:}
-        Because $a_p$ is defined to be invisible, then by Claim 2 in the P1 Visible Lines Handout:\\
-        $y_{a_{p-1}}(x_{a_{p-1}, b_{q}}) > y_{a_{p}}(x_{a_{p-1},b_{q}})$, where $x_{a_{p-1}, b_{q}}$ is the x coordinate where $a_{p-1}$ and $b_q$ intersect.\\
-        Because $a_{p+1}$ is defined to not cover $a_p$, we know that $y_{a_{p}}(x_{a_{p-1}, b_{q}}) > y_{a_{p+1}}(x_{a_{p-1},b_{q}})$.\\
-        For $x < x_{a_{p-1},a_{p}}, a_{p+1}$ is covered by $a_p$.\\
-        We need to show that $a_{p+1}$ is covered for $x \geq x_{a_{p-1},a_{p}}$.\\
-        Because $b_q$ is covering $a_p$, $y_{b_{q}}(x) > y_{a_{q}}(x)$ for $x \geq x_{a_{p-1},b_{q}} \geq x_{a_{p-1},a_{p}}$.\\
-        $\therefore a_{p+1}$ is invisible if $a_{p}$ is invisible.\\
-        This follows for all $p$.\\
+        Because $a_{p+1}$ is defined to not cover $a_p$, we know that $y_{a_{p}}(x_{a_{p-1}, a_{p}}) > y_{a_{p+1}}(x_{a_{p-1}, a_{p}})$.\\
+        Therefore, for $x \leq x_{a_{p-1},a_{p}}, a_{p+1}$ is covered by $a_p$ because $m_{a_p} < m_{a_{p+1}}$.\\
+        We now need to show that $a_{p+1}$ is covered for $x > x_{a_{p-1},a_{p}}$.\\
+        Because $b_q$ is covering $a_p$, $y_{b_{q}}(x) > y_{a_{p}}(x)$ for $x \geq x_{a_{p-1},a_{p}}$.\\
+        This means that $y_{b_{q}}(x_{a_{p-1}, a_{p}}) > y_{a_{p}}(x_{a_{p-1}, a_{p}}) > y_{a_{p+1}}(x_{a_{p-1}, a_{p}})$.  In other words, $b_{q}$ covers both $a_{p}$ and $a_{p+1}$ where $a_{p}$ and $a_{p-1}$ intersect.\\
+        Therefore, for $x > x_{a_{p-1},a_{p}}, a_{p+1}$ is covered by $b_q$ because $m_{b_q} > m_{a_{p+1}}$.\\
+        $\therefore p+1$ is covered for all $x$.\\
+        $\therefore p+1$ is invisible if p is invisible.\\
+        This follows for all p.\\
         Then let $p = i + 1$.\\
-        $\therefore \{a_1,...,a_i\}$ is visible and $\{a_p,...,a_t\}$ is invisible.\\
+        $\therefore \{a_1,...,a_i\}$ are visible and $\{a_p,...,a_t\}$ are invisible.\\
 
-\subsection*{Prove that $\{b_{j},...,b_{s}\}$ is visible}
-    Because all elements in B were defined to be visible with respect to each other, any covering line $a_{o}$ must be from A.\\
-    Given that $m_{a_{t}} < m_{b_{1}}$, a covered line $b_{r} \in B$ has $m_{a_{o}} < m_{b_{r}}$.
+\subsection*{Prove that $\{b_{j},...,b_{s}\}$ are visible}
+    A similar proof can be provided for the lines in B.\\
+    Because all elements in B were defined to be visible with respect to each other, any covering line $a_{q}$ must be from A.\\
+    Given that $m_{a_{t}} < m_{b_{1}}$, a covered line $b_{p} \in B$ has $m_{a_q} < m_{b_p}$.
     
-    \subsubsection*{Prove that for any covered line  $b_{r}, r = s - 1$, all lines to the left of r in B are also covered:}
-        Because $b_r$ is defined to be invisible, then by Claim 2 in the P1 Visible Lines Handout:\\
-        $y_{b_{r+1}}(x_{b_{r+1}, a_{o}}) > y_{b_{r}}(x_{b_{r+1},a_{o}})$, where $x_{b_{r+1}, a_{o}}$ is the x coordinate where $b_{r+1}$ and $a_o$ intersect.\\
-        Because $b_{r-1}$ is defined to not cover $b_r$, we know that $y_{b_{r}}(x_{b_{r+1}, a_{o}}) > y_{b_{r-1}}(x_{b_{r+1},a_{o}})$.\\
-        For $x < x_{b_{r+1},b_{r}}, b_{r-1}$ is covered by $b_r$.\\
-        We need to show that $b_{r-1}$ is covered for $x \geq x_{b_{r+1},b_{r}}$.\\
-        Because $a_o$ is covering $b_r$, $y_{a_{o}}(x) > y_{b_{r}}(x)$ for $x \geq x_{b_{r+1},a_{o}} \geq x_{b_{r+1},b_{r}}$.\\
-        $\therefore b_{r-1}$ is invisible if $b_r$ is invisible.\\
-        This follows for all $r$.\\
-        Then let $r = j - 1$.\\
-        $\therefore$ $\{b_j,...,b_s\}$ is visible and $\{b_1,...,b_{r}\}$ is invisible.\\
+    \subsubsection*{Prove that for any covered line $b_{p}$, all lines to the left of p in B are also covered:}
+        Because $b_{p-1}$ is defined to not cover $b_p$, we know that $y_{b_{p}}(x_{b_{p+1}, b_{p}}) > y_{b_{p-1}}(x_{b_{p+1}, b_{p}})$.\\
+        Therefore, for $x \leq x_{b_{p+1},b_{p}}, b_{p-1}$ is covered by $b_p$ because $m_{b_p} < m_{b_{p-1}}$.\\
+        We now need to show that $b_{p-1}$ is covered for $x > x_{b_{p+1},b_{p}}$.\\
+        Because $a_q$ is covering $b_p$, $y_{a_{q}}(x) > y_{b_{p}}(x)$ for $x \geq x_{b_{p+1},b_{p}}$.\\
+        This means that $y_{a_{q}}(x_{b_{p+1}, b_{p}}) > y_{b_{p}}(x_{b_{p+1}, b_{p}}) > y_{b_{p-1}}(x_{b_{p+1}, b_{p}})$.  In other words, $a_{q}$ covers both $b_{p}$ and $b_{p-1}$ where $b_{p}$ and $b_{p+1}$ intersect.\\
+        Therefore, for $x > x_{b_{p+1},b_{p}}, b_{p-1}$ is covered by $a_q$ because $m_{a_q} > m_{b_{p-1}}$.\\
+        $\therefore p-1$ is covered for all $x$.\\
+        $\therefore p-1$ is invisible if p is invisible.\\
+        This follows for all p.\\
+        Then let $p = j - 1$.\\
+        $\therefore \{b_1,...,b_i\}$ are visible and $\{b_p,...,b_t\}$ are invisible.\\
 
 \section*{Proof of MergeVisible: Direct Proof}
 
@@ -80,19 +83,19 @@ By the proof of Claim 3, we know that if a line in $B$ with index $r$ is invisib
     Therefore, once all subsets of $Y$ have been merged using MergeVisible, we know that the result of the final MergeVisible call is correct.\\
     Therefore, because Algorithm 4 returns this result, we know that Algorithm 4 correctly returns the set of visible lines given any set of lines $Y$.
 
-\section*{Experimental and Asymptotic Run Time Analysis}
-\subsection*{Experimental Run Time Data}
+\part*{Experimental and Asymptotic Run Time Analysis}
+\section*{Experimental Run Time Data}
 \verbatiminput{times.txt}
 
 \pagebreak
 
-\subsection*{Experimental Run Time Plots}
+\section*{Experimental Run Time Plots}
 \centerline{\includegraphics[width=0.75\textwidth]{plot1.png}}
 \centerline{\includegraphics[width=0.75\textwidth]{plot2.png}}
 
 \pagebreak
 
-\subsection*{Experimental Run Time Analysis}
+\section*{Experimental Run Time Analysis}
 Algorithm 1: $y=8 \times 10^{-8}x^{3.0026}$\\
 Algorithm 2: $y=4 \times 10^{-8}x^{2.7892}$\\
 Algorithm 3: $y=1 \times 10^{-6}x^{1.0921}$\\
@@ -100,27 +103,27 @@ Algorithm 4: $y=2 \times 10^{-6}x^{1.1231}$\\
 
 Given these equations, we can use both the slopes and our code to analyze the run times of the algorithms. We can also determine the biggest instance that can be solved with each algorithm in an hour.
 
-\subsection*{Asymptotic Run Time Analysis}
+\section*{Asymptotic Run Time Analysis}
 Algorithm 1: $\Theta(n^3)$\\
 Algorithm 2: $\Theta(n^3)$\\
 Algorithm 3: $O(n^2), \Omega(n)$\\
 Algorithm 4: $O(n\log n), \Omega(\log n)$\\
 
-\subsection*{Extrapolation and Interpretation}
-\subsubsection*{Estimated Number of Lines Per Hour}
+\section*{Extrapolation and Interpretation}
+\subsection*{Estimated Number of Lines Per Hour}
 Algorithm 1: $\sim 3,532$\\
 Algorithm 2: $\sim 8,460$\\
 Algorithm 3: $\sim 562,848,000$\\
 Algorithm 4: $\sim 174,111,000$
 
-\subsubsection*{Discrepancies}
+\subsection*{Discrepancies}
 %The theoretical run-time for Algorithm 4 is theoretically faster than that of Algorithm 3 however the experimental run-time is slower. This is likely due to how Python and the processor handle our code. Since both have linear run-times, it's likely that the constants for Algorithm 4 are largely, which could be due to how our code is handled by the Python compiler or how it's processed. For example, this could be due to Algorithm 4 creating more arrays than Algorithm 3 and creating and tearing down arrays being more time intensive.
 
-We note that the slopes from our experimentally-derived equations are within the asymptotic run-time range of $O(n^2)$, $\Omega(n)$ and $O(n\log n)$, $\Omega(\log n)$.  However, our implementation of Algorithm 4 actually seems to run slightly slower compared to our Algorithm 3, despite Algorithm 4 having smaller minimum and maximum asymptotic runtimes.  This discrepancy has many possible contributing factors, including a small sample size, differences in how the compiler and system performed the operations in each algorithm, and/or the randomness of the input data sets.  This randomness is due to both algorithms not performing a fixed number of operations, but rather changing what operations they run depending on the input lines given.  It is possible that our tests are biased toward data sets that provide an advantage to Algorithm 3 (or a disadvantage to Algorithm 4).  This randomness and compiler/system code handling are likely the primary causes of these differences. In particular, our Algorithm 4 performs a list composition at the end of every call to MergeVisisble, which could be very expensive.
+We note that the slopes from our experimentally-derived equations are within the asymptotic run-time range of $O(n^2)$, $\Omega(n)$ and $O(n\log n)$, $\Omega(\log n)$.  However, our implementation of Algorithm 4 actually seems to run slightly slower compared to our Algorithm 3, despite Algorithm 4 having smaller minimum and maximum asymptotic runtimes.  This discrepancy has many possible contributing factors, including a small sample size, differences in how the compiler and system the operations performed in each algorithm, the randomness of the input data sets.  This randomness is due to both algorithms not performing a fixed number of operations, but rather changing what operations they run depending on the input lines given.  It is possible that our tests are biased toward data sets that provide an advantage to Algorithm 3 (or a disadvantage to Algorithm 4).  This randomness and compiler/system code handling are likely the primary causes of these differences.
 
 \pagebreak
 
-\section*{Pseudocode}
+\part*{Pseudocode}
 \verbatiminput{pseudocode.txt}
 
 \end{document}
