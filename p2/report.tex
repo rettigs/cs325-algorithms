@@ -66,19 +66,21 @@ Let the set A of $\{a_{1},a_{2},...,a_{t}\}$ be the set $\{z_{1},z_{2},...,z_{t}
     \subsubsection*{Base case:}
     If $n \leq 2$, the lines are trivially visible because no two lines exist to cover any single line.
     \subsubsection*{Inductive hypothesis:}
-    Assume for k <= 2
-    Assume for any $n \geq 3$, Algorithm 4 can split $Y$ in half, determine visibility for each half, and then merge them. This means that "calls to" Algorithm 4 will cut input in half until the base case is reached, where $n \leq 2$ and the input is trivially all visible. Then, Algorithm 4 begins merging two sets of lines, each of which contains lines visible with respect to the lines within its own set. This hypothesis states that those sets will successfully be merged with an output of visible lines, meaning that earlier "calls" to Algorithm 4 also receive input of two sets of visible lines. 
+    Assume for any $n \geq 3$, Algorithm 4 can split $Y$ in half, determine visibility for each half, and then merge them.
     \subsubsection*{Applying the axiom of induction:}
-    Let $A$ be the first half of $Y$ and $B$ be the second half of $Y$.\\
-    Recall that all lines in $A$ are visible w.r.t. one another.\\
-    Recall that all lines in $B$ are visible w.r.t. one another.\\
-    Let $V$ be the set of visible lines in $Y$, which trivially includes the first line in $A$ and the last line in $B$ since no line exists with lesser slope or greater slope, respectively.\\
-    Next, take $i$ to be an index of a line in $A$, starting at the second line (if length of A is 1, disregard).\\
-    Also, take $j$ to be an index of a line in $B$, starting at the second to last line (if length of B is 1, disregard).\\
-    We can check if lines $A_{i}$ and $B_{j}$ are visible by testing them with Claim 1 and the lines most recently added to $Y$ from $A$ and $B$.\\
-    If $A_{i}$ (or $B_{j}$) is visible, we will add $A_{i}$ (or $B_{j}$) to $V$, increase $i$ (or decrease $j$), and check the new $A_{i}$ (or $B_{j}$) the same way.\\
-    If the index cannot be incremented, you are done.\\
-    If $A_{i}$ (or $B_{j}$) is not visible, we know by Claim 3 that the rest of the lines to the right of $A_{i}$ (or to the left of $B_{j}$) are not visible, so we will stop checking for visible lines in $A$ (or $B$).
+    The inductive hypothesis means that "calls to" Algorithm 4 will cut input in half until the base case is reached, where $n \leq 2$ and the input is trivially all visible. Then, Algorithm 4 begins merging two sets of lines, each of which contains lines visible with respect to the lines within its own set. This hypothesis states that those sets will successfully be merged with an output of visible lines, meaning that earlier "calls" to Algorithm 4 also receive input of two sets of visible lines.
+    
+    % The following will likely be thrown out??? %
+    %Let $A$ be the first half of $Y$ and $B$ be the second half of $Y$.\\
+    %Recall that all lines in $A$ are visible w.r.t. one another.\\
+    %Recall that all lines in $B$ are visible w.r.t. one another.\\
+    %Let $V$ be the set of visible lines in $Y$, which trivially includes the first line in $A$ and the last line in $B$ since no line exists with lesser slope or greater slope, respectively.\\
+    %Next, take $i$ to be an index of a line in $A$, starting at the second line (if length of A is 1, disregard).\\
+    %Also, take $j$ to be an index of a line in $B$, starting at the second to last line (if length of B is 1, disregard).\\
+    %We can check if lines $A_{i}$ and $B_{j}$ are visible by testing them with Claim 1 and the lines most recently added to $Y$ from $A$ and $B$.\\
+    %If $A_{i}$ (or $B_{j}$) is visible, we will add $A_{i}$ (or $B_{j}$) to $V$, increase $i$ (or decrease $j$), and check the new $A_{i}$ (or $B_{j}$) the same way.\\
+    %If the index cannot be incremented, you are done.\\
+    %If $A_{i}$ (or $B_{j}$) is not visible, we know by Claim 3 that the rest of the lines to the right of $A_{i}$ (or to the left of $B_{j}$) are not visible, so we will stop checking for visible lines in $A$ (or $B$).
 
 
 \section*{Experimental and Asymptotic Run Time Analysis}
