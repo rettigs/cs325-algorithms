@@ -21,6 +21,7 @@
 \begin{quote}
 Claim 3: If $\{z_{1},z_{2},...,z_{t}\}$ and $\{z_{1},z_{2},...,z_{s}^{'}\}$ are two visible sets of lines (each ordered by increasing slope), then the visible subset of $\{z_{1},z_{2},...,z_{t}\}\cup\{z_{1},z_{2},...,z_{s}^{'}\}$ is $\{z_{1},...,z_{i}\}$ for some $i \leq 1$ and $j \leq s$.
 \end{quote}
+Let the set A of $\{a_{1},a_{2},...,a_{t}\}$ be the set $\{z_{1},z_{2},...,z_{t}\}$ and the set B of  $\{b_{1},b_{2},...,b_{s}\}$ be the set $\{z_{1},z_{2},...,z_{s}^{'}\}$ for improved clarity.
 
 \subsubsection*{Prove that $\{a_{1},...,a_{i}\}$ is visible}
     Because all elements in A were defined to be visible with respect to each other, any covering line $b_{q}$ must be from B.\\
@@ -33,18 +34,51 @@ Claim 3: If $\{z_{1},z_{2},...,z_{t}\}$ and $\{z_{1},z_{2},...,z_{s}^{'}\}$ are 
         For $x < x_{a_{p-1},a_{p}}, a_{p+1}$ is covered by $a_p$.\\
         We need to show that $a_{p+1}$ is covered for $x \geq x_{a_{p-1},a_{p}}$.\\
         Because $b_q$ is covering $a_p$, $y_{b_{q}}(x) > y_{a_{q}}(x)$ for $x \geq x_{a_{p-1},b_{q}} \geq x_{a_{p-1},a_{p}}$.\\
-        \therefore $p+1$ is invisible if p is invisible.\\
-        This follows for all p.
-Then let $p = i + 1$. \therefore $\{a_1,...,a_i\}$ is visible and $\{a_p,...,a_t\}$ is invisible.\\
-Do the same thing for set B.
+        $\therefore p+1$ is invisible if p is invisible.\\
+        This follows for all p.\\
+        Then let $p = i + 1$.\\
+        $\therefore \{a_1,...,a_i\}$ is visible and $\{a_p,...,a_t\}$ is invisible.\\
 
+\subsubsection*{Prove that $\{b_{j},...,b_{s}\}$ is visible}
+    Because all elements in B were defined to be visible with respect to each other, any covering line $a_{o}$ must be from A.\\
+    Given that $m_{a_{t}} < m_{b_{1}}$, a covered line $b_{r} \in B$ has $m_{o} < m_{r}$.
+    
+    \paragraph{Prove that for any covered line  $b_{r}, r = s - 1$, all lines to the left of r in B are also covered:}
+        Because $a_p$ is defined to be invisible, then by Claim 2 in the P1 Visible Lines Handout:\\
+        $y_{b_{r+1}}(x_{b_{r+1}, a_{o}}) > y_{b_{r}}(x_{b_{r+1},a_{o}})$, where $x_{b_{r+1}, a_{o}}$ is the x coordinate where $b_{r+1}$ and $a_o$ intersect.\\
+        Because $b_{r-1}$ is defined to not cover $b_r$, we know that $y_{b_{r}}(x_{b_{r+1}, a_{o}}) > y_{b_{r-1}}(x_{b_{r+1},a_{o}})$.\\
+        For $x < x_{b_{r+1},b_{r}}, b_{r-1}$ is covered by $b_r$.\\
+        We need to show that $b_{r-1}$ is covered for $x \geq x_{b_{r+1},b_{r}}$.\\
+        Because $a_q$ is covering $b_r$, $y_{a_{o}}(x) > y_{b_{o}}(x)$ for $x \geq x_{b_{r+1},a_{o}} \geq x_{b_{r+1},b_{r}}$.\\
+        $\therefore r-1$ is invisible if r is invisible.\\
+        This follows for all r.\\
+        Then let $r = j - 1$.\\
+        \therefore $\{b_j,...,b_s\}$ is visible and $\{b_1,...,b_{r}\}$ is invisible.\\
+
+
+\subsection*{What we need to prove}
+    Prove that for each line that mergeVisible checks, it correctly determines its visibility (see proof of Claim 1 in Project 1)
+    Prove that each line in the rest of each list is also invisible if an invisible line is found (see proof of Claim 3)
+    Prove that mergevisible is only passed 2 sets of visible lines, since it only works in that situation (this is proven because algorithm 4 only calls mergevisible on lists of length 1 (which are trivially visible) or on the output of mergevisible (which we just proved to be a set of visible lines)
 
 \subsection*{Proof of Algorithm 4: Inductive Proof}
     Let $Y$ be a list of $n$ lines sorted in ascending order by slope. We claim that Algorithm 4 can determine which lines are visible in the set.
-    \subsubsection*{Base case:} If $n \leq 2$, the lines are trivially visible because no line two lines exist to cover any single line.
-    \subsubsection*{Inductive hypothesis:} For $n \geq 3$, Algorithm 4 can split $Y$ in half, determine visibility for each half, and then merge them.
-    \subsubsection*{Applying the axiom of induction:} Let $A$ be the first half of $Y$ and $B$ be the second half of $Y$. Let all lines in $A$ be visible w.r.t. one another. Let all lines in $B$ be visible w.r.t. one another. Let $V$ be the set of visible lines in $Y$, which trivially includes the first line in $A$ and the last line in $B$ since no line exists with lesser slope or greater slope, respectively. Next, take $i$ to be an index of a line in $A$, starting at the second line (if length of A is 1, disregard). Also, take $j$ to be an index of a line in $B$, starting at the second to last line (if length of B is 1, disregard). 
-    We can check if lines $A_{i}$ and $B_{j}$ are visible by testing them with Claim 1 and the lines most recently added to $Y$ from $A$ and $B$. If $A_{i}$ (or $B_{j}$) is visible, we will add $A_{i}$ (or $B_{j}$) to $V$, increase $i$ (or decrease $j$), and check the new $A_{i}$ (or $B_{j}$) the same way. If the index cannot be incremented, you are done. If $A_{i}$ (or $B_{j}$) is not visible, we know by Claim 3 that the rest of the lines to the right of $A_{i}$ (or to the left of $B_{j}$) are not visible, so we will stop checking for visible lines in $A$ (or $B$).
+    \subsubsection*{Base case:}
+    If $n \leq 2$, the lines are trivially visible because no two lines exist to cover any single line.
+    \subsubsection*{Inductive hypothesis:}
+    Assume for k <= 2
+    Assume for any $n \geq 3$, Algorithm 4 can split $Y$ in half, determine visibility for each half, and then merge them. This means that "calls to" Algorithm 4 will cut input in half until the base case is reached, where $n \leq 2$ and the input is trivially all visible. Then, Algorithm 4 begins merging two sets of lines, each of which contains lines visible with respect to the lines within its own set. This hypothesis states that those sets will successfully be merged with an output of visible lines, meaning that earlier "calls" to Algorithm 4 also receive input of two sets of visible lines. 
+    \subsubsection*{Applying the axiom of induction:}
+    Let $A$ be the first half of $Y$ and $B$ be the second half of $Y$.\\
+    Recall that all lines in $A$ are visible w.r.t. one another.\\
+    Recall that all lines in $B$ are visible w.r.t. one another.\\
+    Let $V$ be the set of visible lines in $Y$, which trivially includes the first line in $A$ and the last line in $B$ since no line exists with lesser slope or greater slope, respectively.\\
+    Next, take $i$ to be an index of a line in $A$, starting at the second line (if length of A is 1, disregard).\\
+    Also, take $j$ to be an index of a line in $B$, starting at the second to last line (if length of B is 1, disregard).\\
+    We can check if lines $A_{i}$ and $B_{j}$ are visible by testing them with Claim 1 and the lines most recently added to $Y$ from $A$ and $B$.\\
+    If $A_{i}$ (or $B_{j}$) is visible, we will add $A_{i}$ (or $B_{j}$) to $V$, increase $i$ (or decrease $j$), and check the new $A_{i}$ (or $B_{j}$) the same way.\\
+    If the index cannot be incremented, you are done.\\
+    If $A_{i}$ (or $B_{j}$) is not visible, we know by Claim 3 that the rest of the lines to the right of $A_{i}$ (or to the left of $B_{j}$) are not visible, so we will stop checking for visible lines in $A$ (or $B$).
 
 
 \section*{Experimental and Asymptotic Run Time Analysis}
