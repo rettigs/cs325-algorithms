@@ -25,7 +25,7 @@ Let $A = \{a_{1},a_{2},...,a_{t}\}$ be the set $\{z_{1},z_{2},...,z_{t}\}$ and l
 
 \subsection*{Prove that $\{a_{1},...,a_{i}\}$ is visible:}
     Because all elements in A were defined to be visible with respect to each other, any covering line $b_{q}$ must be from B.\\
-    Given that $m_{a_{t}} < m_{b_{1}}$, a covered line $a_{p} \in A$ has $m_{p} < m_{q}$.
+    Given that $m_{a_{t}} < m_{b_{1}}$, a covered line $a_{p} \in A$ has $m_{a_{p}} < m_{b_{q}}$.
     
     \subsubsection*{Prove that for any covered line $a_{p}$, all lines to the right of p in A are also covered:}
         Because $a_p$ is defined to be invisible, then by Claim 2 in the P1 Visible Lines Handout:\\
@@ -34,24 +34,24 @@ Let $A = \{a_{1},a_{2},...,a_{t}\}$ be the set $\{z_{1},z_{2},...,z_{t}\}$ and l
         For $x < x_{a_{p-1},a_{p}}, a_{p+1}$ is covered by $a_p$.\\
         We need to show that $a_{p+1}$ is covered for $x \geq x_{a_{p-1},a_{p}}$.\\
         Because $b_q$ is covering $a_p$, $y_{b_{q}}(x) > y_{a_{q}}(x)$ for $x \geq x_{a_{p-1},b_{q}} \geq x_{a_{p-1},a_{p}}$.\\
-        $\therefore p+1$ is invisible if p is invisible.\\
-        This follows for all p.\\
+        $\therefore a_{p+1}$ is invisible if $a_{p}$ is invisible.\\
+        This follows for all $p$.\\
         Then let $p = i + 1$.\\
         $\therefore \{a_1,...,a_i\}$ is visible and $\{a_p,...,a_t\}$ is invisible.\\
 
 \subsection*{Prove that $\{b_{j},...,b_{s}\}$ is visible}
     Because all elements in B were defined to be visible with respect to each other, any covering line $a_{o}$ must be from A.\\
-    Given that $m_{a_{t}} < m_{b_{1}}$, a covered line $b_{r} \in B$ has $m_{o} < m_{r}$.
+    Given that $m_{a_{t}} < m_{b_{1}}$, a covered line $b_{r} \in B$ has $m_{a_{o}} < m_{b_{r}}$.
     
     \subsubsection*{Prove that for any covered line  $b_{r}, r = s - 1$, all lines to the left of r in B are also covered:}
-        Because $a_p$ is defined to be invisible, then by Claim 2 in the P1 Visible Lines Handout:\\
+        Because $b_r$ is defined to be invisible, then by Claim 2 in the P1 Visible Lines Handout:\\
         $y_{b_{r+1}}(x_{b_{r+1}, a_{o}}) > y_{b_{r}}(x_{b_{r+1},a_{o}})$, where $x_{b_{r+1}, a_{o}}$ is the x coordinate where $b_{r+1}$ and $a_o$ intersect.\\
         Because $b_{r-1}$ is defined to not cover $b_r$, we know that $y_{b_{r}}(x_{b_{r+1}, a_{o}}) > y_{b_{r-1}}(x_{b_{r+1},a_{o}})$.\\
         For $x < x_{b_{r+1},b_{r}}, b_{r-1}$ is covered by $b_r$.\\
         We need to show that $b_{r-1}$ is covered for $x \geq x_{b_{r+1},b_{r}}$.\\
-        Because $a_q$ is covering $b_r$, $y_{a_{o}}(x) > y_{b_{o}}(x)$ for $x \geq x_{b_{r+1},a_{o}} \geq x_{b_{r+1},b_{r}}$.\\
-        $\therefore r-1$ is invisible if r is invisible.\\
-        This follows for all r.\\
+        Because $a_o$ is covering $b_r$, $y_{a_{o}}(x) > y_{b_{r}}(x)$ for $x \geq x_{b_{r+1},a_{o}} \geq x_{b_{r+1},b_{r}}$.\\
+        $\therefore b_{r-1}$ is invisible if $b_r$ is invisible.\\
+        This follows for all $r$.\\
         Then let $r = j - 1$.\\
         $\therefore$ $\{b_j,...,b_s\}$ is visible and $\{b_1,...,b_{r}\}$ is invisible.\\
 
