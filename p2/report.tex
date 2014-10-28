@@ -93,27 +93,30 @@ By the proof of Claim 3, we know that if a line in $B$ with index $r$ is invisib
 \pagebreak
 
 \subsection*{Experimental Run Time Analysis}
-Algorithm 3: $y=5 \times 10^{-6}x^{1.0234}$\\
-Algorithm 4: $y=3 \times 10^{-6}x^{1.1695}$\\
+Algorithm 1: $y=8 \times 10^{-8}x^{3.0026}$\\
+Algorithm 2: $y=4 \times 10^{-8}x^{2.7892}$\\
+Algorithm 3: $y=1 \times 10^{-6}x^{1.0921}$\\
+Algorithm 4: $y=2 \times 10^{-6}x^{1.1231}$\\
 
 Given these equations, we can use both the slopes and our code to analyze the run times of the algorithms. We can also determine the biggest instance that can be solved with each algorithm in an hour.
 
 \subsection*{Asymptotic Run Time Analysis}
 Algorithm 1: $\Theta(n^3)$\\
-Algorithm 2: $\bigcirc(n^3)$\\
-Algorithm 3: $\bigcirc(n^2),\Omega(n)$\\
-Algorithm 4: $\bigcirc(nlogn),\Omega(logn)$\\
-\indent Algorithm 4 
+Algorithm 2: $\Theta(n^3)$\\
+Algorithm 3: $O(n^2), \Omega(n)$\\
+Algorithm 4: $O(n\log n), \Omega(\log n)$\\
 
 \subsection*{Extrapolation and Interpretation}
 \subsubsection*{Estimated Number of Lines Per Hour}
-Algorithm 3: $y=5 \times 10^{-6}x^{1.0234}$\\
-Algorithm 4: $y=3 \times 10^{-6}x^{1.1695}$
+Algorithm 1: $\sim 3,532$\\
+Algorithm 2: $\sim 8,460$\\
+Algorithm 3: $\sim 562,848,000$\\
+Algorithm 4: $\sim 174,111,000$
 
 \subsubsection*{Discrepancies}
 %The theoretical run-time for Algorithm 4 is theoretically faster than that of Algorithm 3 however the experimental run-time is slower. This is likely due to how Python and the processor handle our code. Since both have linear run-times, it's likely that the constants for Algorithm 4 are largely, which could be due to how our code is handled by the Python compiler or how it's processed. For example, this could be due to Algorithm 4 creating more arrays than Algorithm 3 and creating and tearing down arrays being more time intensive.
 
-We note that the slopes from our experimentally-derived equations are within the asymptotic run-time range of $\bigcirc(n^2)$, $\Omega(n)$ and $\bigcirc(nlogn)$, $\Omega(logn)$ however Algorithm 4, which is theoretically faster than Algorithm 3 actually runs slower. This discrepancy many have many possible contributing factors, including a small sample size, a low timing resolution (particularly for Algorithm 3), how the compiler and system handle arrays and operations, and randomness in run-time present. This randomness in run-time is due to both Algorithms not performing a fixed number of operations, but rather change what operations they run depending on the input lines given. The randomness and how the compiler and system handle the our code are likely the primary causes of these differences.
+We note that the slopes from our experimentally-derived equations are within the asymptotic run-time range of $O(n^2)$, $\Omega(n)$ and $O(n\log n)$, $\Omega(\log n)$.  However, our implementation of Algorithm 4 actually seems to run slightly slower compared to our Algorithm 3, despite Algorithm 4 having smaller minimum and maximum asymptotic runtimes.  This discrepancy has many possible contributing factors, including a small sample size, differences in how the compiler and system the operations performed in each algorithm, the randomness of the input data sets.  This randomness is due to both algorithms not performing a fixed number of operations, but rather changing what operations they run depending on the input lines given.  It is possible that our tests are biased toward data sets that provide an advantage to Algorithm 3 (or a disadvantage to Algorithm 4).  This randomness and compiler/system code handling are likely the primary causes of these differences.
 
 \pagebreak
 
