@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import getopt
+import itertools
 import math
 import sys
 
@@ -14,7 +15,7 @@ class City(object):
         return str(self.ID)
 
     def dist(self, other):
-        return round(math.sqrt(pow(self.x - other.x, 2) + pow(self.y - other.y, 2)))
+        return int(round(math.sqrt(pow(self.x - other.x, 2) + pow(self.y - other.y, 2))))
 
 # Globals
 debug = 0
@@ -68,7 +69,7 @@ def readFile(infile):
     return [City(*line.split()) for line in infile.readlines()]
 
 def writeFile(outfile, path, length):
-    outfile.write(str(length))
+    outfile.write(str(length)+"\n")
     for city in path:
         outfile.write(str(city)+"\n")
 
@@ -84,25 +85,9 @@ def tsp_order(cities):
 
 def tsp_brute(cities):
     '''Returns the shortest path by brute forcing all possible paths.'''
-    paths = _tsp_brute([], cities)
-    print paths
+    paths = itertools.permutations(cities)
     length_paths = [(getPathLength(path), path) for path in paths]
-    print length_paths
     return min(length_paths)[1]
 
-def _tsp_brute(path, cities):
-    '''Returns all possible paths through the cities by recursively choosing the next city in the path.  Each iteration takes the path so far and the list of unvisited cities.'''
-    if len(cities) is 0:
-        return path
-    else:
-        paths = []
-        for i in xrange(len(cities)):
-            # Copy path and cities lists
-            newcities = list(cities)
-            newpath = list(path)
-
-            newpath.append(newcities.pop(i))
-            paths.append(_tsp_brute(newpath, newcities))
-        
 if __name__ == '__main__':
     main()
