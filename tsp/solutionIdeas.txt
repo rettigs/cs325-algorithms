@@ -1,0 +1,3 @@
+Write manual permutation, then eliminate cases we know cannot be in the final solution:
+- There must be a path between the two cities nearest each other, so eliminate permutations once it is determined they don't contain this path, with the hope computation is reduced.
+- 
