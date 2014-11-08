@@ -1,0 +1,13 @@
+for x = 0..i
+    for y = 0..j
+        left <- A[x-1,y]'s computed total + A[x,y]
+        up <- A[x,y-1]'s computed total + A[x,y]
+        here <- A[x,y]'s cell value
+        currentTotal <- biggest of left, up, here. put currentTotal in A[x,y]'s computed total
+        currentSequence <- sequence required to get biggest of left, up, here.
+        if superTotal is smaller than currentTotal
+            superTotal <- currentTotal
+            superSequence <- currentSequence
+            
+return sequence
+        
