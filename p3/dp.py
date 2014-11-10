@@ -7,8 +7,8 @@ import sys
 
 class Tile(object):
     def __init__(self, value):
-        self.value = value
-        self.maxValue = value
+        self.value = int(value)
+        self.maxValue = int(value)
 
     def __repr__(self):
         return "({}, {}, {})".format(self.value, self.maxValue, self.maxPath)
