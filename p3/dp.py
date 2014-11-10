@@ -45,10 +45,10 @@ def main():
     # Read file
     array = readFile(infile)
 
+    printArray(array)
+
     # Calculate path
     value, path = getMaxPath(array)
-
-    printArray(array)
 
     # Write output
     writeFile(outfile, value, path)
@@ -92,7 +92,6 @@ def getMaxPath(array):
         for x in xrange(w):
             cur = array[y][x]
             print "Checking tile at {}".format(cur.coords)
-            printArray(array)
 
             if y > 0:
                 prev = array[y-1][x]
@@ -117,6 +116,8 @@ def getMaxPath(array):
                 #print "curTile is now new maxTile"
                 maxTile = cur
                 #print "maxTile unchanged"
+
+            printArray(array)
 
     return (maxTile.maxValue, maxTile.maxPath)
 
