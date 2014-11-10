@@ -45,14 +45,10 @@ def main():
     # Read file
     array = readFile(infile)
 
-    for line in array:
-        print line
-
     # Calculate path
     value, path = getMaxPath(array)
 
-    for line in array:
-        print line
+    printArray(array)
 
     # Write output
     writeFile(outfile, value, path)
@@ -82,6 +78,11 @@ def writeFile(outfile, value, path):
     for tileCoord in path:
         outfile.write("{} {}\n".format(*tileCoord))
 
+def printArray(array):
+    for line in array:
+        print line
+    print ""
+
 def getMaxPath(array):
     '''Returns the path through the array with the highest value in the format of (value, path).'''
     h = len(array)
@@ -90,12 +91,13 @@ def getMaxPath(array):
     for y in xrange(h):
         for x in xrange(w):
             cur = array[y][x]
-            print "Checking tile: {}".format(cur)
+            print "Checking tile at {}".format(cur.coords)
+            printArray(array)
 
             if y > 0:
                 prev = array[y-1][x]
                 newMaxValue = prev.maxValue + cur.value
-                print newMaxValue
+                #print newMaxValue
                 if newMaxValue >= maxTile.maxValue:
                     cur.maxValue = newMaxValue
                     cur.maxPath = list(prev.maxPath)
@@ -104,18 +106,17 @@ def getMaxPath(array):
             if x > 0:
                 prev = array[y][x-1]
                 newMaxValue = prev.maxValue + cur.value
-                print newMaxValue
+                #print newMaxValue
                 if newMaxValue >= maxTile.maxValue:
                     cur.maxValue = newMaxValue
                     cur.maxPath = list(prev.maxPath)
                     cur.maxPath.append(cur.coords)
 
-            print "curTile is now: {}".format(cur)
+            #print "curTile is now: {}".format(cur)
             if cur.maxValue > maxTile.maxValue:
-                print "curTile is now new maxTile"
+                #print "curTile is now new maxTile"
                 maxTile = cur
-            else:
-                print "maxTile unchanged"
+                #print "maxTile unchanged"
 
     return (maxTile.maxValue, maxTile.maxPath)
 
