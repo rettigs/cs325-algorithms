@@ -80,7 +80,7 @@ def writeFile(outfile, value, path):
     outfile.write(str(value)+"\n")
     outfile.write(str(len(path))+"\n")
     for tileCoord in path:
-        outfile.write(str(tileCoord)+"\n")
+        outfile.write("{} {}\n".format(*tileCoord))
 
 def getMaxPath(array):
     '''Returns the path through the array with the highest value in the format of (value, path).'''
