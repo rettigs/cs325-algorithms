@@ -108,5 +108,17 @@ def tsp_nn(cities, startIndex=0):
         curCity = minCity
     return path
 
+def tsp_nnbest(cities):
+    '''Returns the best path generated using a greedy nearest-neighbor algorithm from every possible starting city.'''
+    minLength = None
+    minPath = None
+    for i in xrange(len(cities)):
+        path = tsp_nn(cities, i)
+        length = getPathLength(path)
+        if length < minLength or minLength is None:
+            minLength = length
+            minPath = path
+    return minPath
+
 if __name__ == '__main__':
     main()
