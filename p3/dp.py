@@ -9,6 +9,7 @@ class Tile(object):
     def __init__(self, value):
         self.value = int(value)
         self.maxValue = int(value)
+        self.prev = None
 
     def __repr__(self):
         return "({}, {}, {})".format(self.value, self.maxValue, self.maxPath)
@@ -45,11 +46,12 @@ def main():
     # Read file
     array = readFile(infile)
 
-    # Calculate path
-    value, path = getMaxPath(array)
+    # Calculate stuff
+    maxTile = getMaxTile(array)
+    maxPath = getPath(array, maxTile)
 
     # Write output
-    writeFile(outfile, value, path)
+    writeFile(outfile, maxTile.maxValue, maxPath)
 
 def usage():
     print 'Usage: {0} [-h] [-i infile] [-o outfile] [-d]...'.format(sys.argv[0])
@@ -67,7 +69,6 @@ def readFile(infile):
     for y in xrange(h):
         for x in xrange(w):
             array[y][x].coords = (y, x)
-            array[y][x].maxPath = [(y, x)]
     return array
 
 def writeFile(outfile, value, path):
@@ -81,8 +82,8 @@ def printArray(array):
         print line
     print ""
 
-def getMaxPath(array):
-    '''Returns the path through the array with the highest value in the format of (value, path).'''
+def getMaxTile(array):
+    '''Returns the tile with the greatest path through the array.'''
     h = len(array)
     w = len(array[0])
     maxTile = array[0][0]
@@ -95,21 +96,27 @@ def getMaxPath(array):
                 newMaxValue = prev.maxValue + cur.value
                 if newMaxValue >= cur.maxValue:
                     cur.maxValue = newMaxValue
-                    cur.maxPath = list(prev.maxPath)
-                    cur.maxPath.append(cur.coords)
+                    cur.prev = prev
 
             if x > 0:
                 prev = array[y][x-1]
                 newMaxValue = prev.maxValue + cur.value
                 if newMaxValue >= cur.maxValue:
                     cur.maxValue = newMaxValue
-                    cur.maxPath = list(prev.maxPath)
-                    cur.maxPath.append(cur.coords)
+                    cur.prev = prev
 
             if cur.maxValue > maxTile.maxValue and (y == h - 1 or x == w - 1):
                 maxTile = cur
 
-    return (maxTile.maxValue, maxTile.maxPath)
+    return maxTile
+
+def getPath(array, tile):
+    '''Given an array and the coords to a tile, returns the path to that tile.'''
+    path = [tile.coords]
+    while(tile.prev):
+        path.append(tile.coords)
+        tile = tile.prev
+    return path[::-1]
 
 if __name__ == '__main__':
     main()
