@@ -45,10 +45,9 @@ def main():
     # Read file
     array = readFile(infile)
 
-    printArray(array)
-
-    # Calculate path
-    value, path = getMaxPath(array)
+    # Calculate paths
+    calculatePaths(array)
+    value, path = getMaxPathOnEdge(array)
 
     # Write output
     writeFile(outfile, value, path)
@@ -83,21 +82,18 @@ def printArray(array):
         print line
     print ""
 
-def getMaxPath(array):
-    '''Returns the path through the array with the highest value in the format of (value, path).'''
+def calculatePaths(array):
+    '''Calculates the maxValues and maxPaths in the given array, adding them to each Tile.'''
     h = len(array)
     w = len(array[0])
-    maxTile = array[0][0]
     for y in xrange(h):
         for x in xrange(w):
             cur = array[y][x]
-            print "Checking tile at {}".format(cur.coords)
 
             if y > 0:
                 prev = array[y-1][x]
                 newMaxValue = prev.maxValue + cur.value
-                #print newMaxValue
-                if newMaxValue >= maxTile.maxValue:
+                if newMaxValue >= cur.maxValue:
                     cur.maxValue = newMaxValue
                     cur.maxPath = list(prev.maxPath)
                     cur.maxPath.append(cur.coords)
@@ -105,20 +101,23 @@ def getMaxPath(array):
             if x > 0:
                 prev = array[y][x-1]
                 newMaxValue = prev.maxValue + cur.value
-                #print newMaxValue
-                if newMaxValue >= maxTile.maxValue:
+                if newMaxValue >= cur.maxValue:
                     cur.maxValue = newMaxValue
                     cur.maxPath = list(prev.maxPath)
                     cur.maxPath.append(cur.coords)
 
-            #print "curTile is now: {}".format(cur)
-            if cur.maxValue > maxTile.maxValue:
-                #print "curTile is now new maxTile"
-                maxTile = cur
-                #print "maxTile unchanged"
+def getMaxPathOnEdge(array):
+    '''Returns the path through the array that ends at the bottom or right edge with the highest value in the format of (value, path).'''
+    h = len(array)
+    w = len(array[0])
+    tiles = []
+    for y in xrange(h):
+        tiles.append(array[y][w-1])
 
-            printArray(array)
+    for x in xrange(w):
+        tiles.append(array[h-1][x])
 
+    maxTile = max(tiles)
     return (maxTile.maxValue, maxTile.maxPath)
 
 if __name__ == '__main__':
