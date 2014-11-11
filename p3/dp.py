@@ -45,9 +45,8 @@ def main():
     # Read file
     array = readFile(infile)
 
-    # Calculate paths
-    calculatePaths(array)
-    value, path = getMaxPathOnEdge(array)
+    # Calculate path
+    value, path = getMaxPath(array)
 
     # Write output
     writeFile(outfile, value, path)
@@ -82,10 +81,11 @@ def printArray(array):
         print line
     print ""
 
-def calculatePaths(array):
-    '''Calculates the maxValues and maxPaths in the given array, adding them to each Tile.'''
+def getMaxPath(array):
+    '''Returns the path through the array with the highest value in the format of (value, path).'''
     h = len(array)
     w = len(array[0])
+    maxTile = array[0][0]
     for y in xrange(h):
         for x in xrange(w):
             cur = array[y][x]
@@ -106,18 +106,9 @@ def calculatePaths(array):
                     cur.maxPath = list(prev.maxPath)
                     cur.maxPath.append(cur.coords)
 
-def getMaxPathOnEdge(array):
-    '''Returns the path through the array that ends at the bottom or right edge with the highest value in the format of (value, path).'''
-    h = len(array)
-    w = len(array[0])
-    tiles = []
-    for y in xrange(h):
-        tiles.append(array[y][w-1])
+            if cur.maxValue > maxTile.maxValue and (y == h - 1 or x == w - 1):
+                maxTile = cur
 
-    for x in xrange(w):
-        tiles.append(array[h-1][x])
-
-    maxTile = max(tiles)
     return (maxTile.maxValue, maxTile.maxPath)
 
 if __name__ == '__main__':
