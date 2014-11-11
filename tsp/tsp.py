@@ -81,13 +81,32 @@ def getPathLength(path):
 
 def tsp_order(cities):
     '''Returns a path in the order that the cities were given.'''
-    return cities
+    return list(cities)
 
 def tsp_brute(cities):
     '''Returns the shortest path by brute forcing all possible paths.'''
     paths = itertools.permutations(cities)
     length_paths = [(getPathLength(path), path) for path in paths]
     return min(length_paths)[1]
+
+def tsp_nn(cities, startIndex=0):
+    '''Returns a path generated using a greedy nearest-neighbor algorithm from the city at the given starting index.'''
+    remaining = list(cities)
+    curCity = remaining.pop(startIndex)
+    path = [curCity]
+    while len(remaining) > 0:
+        minLength = None
+        minCity = None
+        for i in xrange(len(remaining)):
+            newCity = remaining[i]
+            newLength = curCity.dist(newCity)
+            if newLength < minLength or minLength is None:
+                minLength = newLength
+                minCity = newCity
+        path.append(minCity)
+        remaining.remove(minCity)
+        curCity = minCity
+    return path
 
 if __name__ == '__main__':
     main()
