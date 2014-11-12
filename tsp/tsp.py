@@ -3,6 +3,7 @@
 import getopt
 import itertools
 import math
+import random as rand
 import sys
 
 class City(object):
@@ -25,11 +26,12 @@ def main():
     # Defaults
     infile = sys.stdin
     outfile = sys.stdout
-    alg = tsp_order
+    alg = tsp_nn
+    lengthOnly = False
 
     # Parse arguments
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "di:o:a:h")
+        opts, args = getopt.getopt(sys.argv[1:], "di:o:a:lh")
     except getopt.GetoptError as err:
         # print help information and exit:
         print str(err) # will print something like "option -a not recognized"
@@ -42,7 +44,9 @@ def main():
         elif o == "-o":
             outfile = open(a, 'w')
         elif o == "-a":
-            alg = eval(a)
+            alg = eval("tsp_"+a)
+        elif o == "-l":
+            lengthOnly = True
         else:
             usage()
 
@@ -54,7 +58,7 @@ def main():
     length = getPathLength(path)
 
     # Write output
-    writeFile(outfile, path, length)
+    writeFile(outfile, path, length, lengthOnly)
 
 def usage():
     print 'Usage: {0} [-h] [-i infile] [-o outfile] [-d]...'.format(sys.argv[0])
@@ -62,16 +66,18 @@ def usage():
     print '\t-i\tspecify an input file of cities, defaults to stdin'
     print '\t-o\tspecify an output file for best path, defaults to stdout'
     print '\t-a\tspecify algorithm to use: tsp_order'
+    print '\t-l\tdon\'t write the path, just the length'
     print '\t-d\tenable debug messages; use -dd for more even more messages'
     sys.exit(2)
 
 def readFile(infile):
     return [City(*line.split()) for line in infile.readlines()]
 
-def writeFile(outfile, path, length):
+def writeFile(outfile, path, length, lengthOnly):
     outfile.write(str(length)+"\n")
-    for city in path:
-        outfile.write(str(city)+"\n")
+    if not lengthOnly:
+        for city in path:
+            outfile.write(str(city)+"\n")
 
 def getPathLength(path):
     length = 0
@@ -119,6 +125,45 @@ def tsp_nnbest(cities):
             minLength = length
             minPath = path
     return minPath
+
+def genetic(path, iters=1000, mutations=1):
+    '''Attempts to improve the given path using a genetic algorithm.  Performs up to the given number of mutations per iteration, but always at least 1.'''
+    newPath = list(path) # Copy the path
+    for i in xrange(iters):
+
+        oldLength = getPathLength(newPath)
+
+        # Generate a random number of mutations
+        switches = []
+        for j in xrange(0, rand.randint(1, mutations)):
+            # For each mutation, pick 2 random cities and swap the order in which they are visited
+            nums = range(len(newPath))
+            a = nums.pop(rand.randint(0, len(nums)-1))
+            b = nums.pop(rand.randint(0, len(nums)-1))
+            switches.append((a, b))
+
+        # Perform the mutations
+        for a, b in switches:
+            newPath[a], newPath[b] = newPath[b], newPath[a]
+            #print "Switching cities {} and {}".format(a, b)
+
+        newLength = getPathLength(newPath)
+
+        # If the mutation was detrimental, undo it
+        if newLength > oldLength:
+            #print "New path length {} is greater than {}; undoing mutation".format(newLength, oldLength)
+            for a, b in switches[::-1]:
+                newPath[a], newPath[b] = newPath[b], newPath[a]
+        else:
+            print "New path length {} is less than {}; keeping mutation".format(newLength, oldLength)
+
+    return newPath
+
+def tsp_ordergen(cities, iters=1000, mutations=1):
+    '''Returns a path that begins as the given city order and is then improved by a genetic algorithm.'''
+    path = tsp_order(cities)
+    path = genetic(path)
+    return path
 
 if __name__ == '__main__':
     main()
