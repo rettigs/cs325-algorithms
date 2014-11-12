@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+from __future__ import division
 import getopt
 import itertools
 import math
@@ -197,19 +198,20 @@ def tsp_nncommon(cities):
 
     # Create a new graph with the edges weighted by how common they were.
     edges = {} # Dict of CityPairs (edges) with weights to show the most common paths
-    for p, l in paths:
-        for i in xrange(len(p)):
-            pair = CityPair(p[i-1], p[i])
+    for path, pathLength in paths:
+        for i in xrange(len(path)):
+            pair = CityPair(path[i-1], path[i])
+            pairDist = pair.dist()
             if pair not in edges:
                 edges[pair] = 0
-            edges[pair] -= 1
+            edges[pair] += 1/pairDist
 
     print edges
 
     minLength = None
     minPath = None
     for i in xrange(len(cities)):
-        path = nngraph(cities, edges)
+        path = nngraph(cities, edges, i)
         length = getPathLength(path)
         if length < minLength or minLength is None:
             minLength = length
@@ -218,38 +220,25 @@ def tsp_nncommon(cities):
 
 def nngraph(cities, edges, startIndex=0):
     '''Given a graph as a list of edges, returns a path generated using a greedy nearest-neighbor algorithm from some edge.'''
-    remaining = dict(edges) # Copy the dict of edges and weights
-    cur = cities[startIndex] # Get a city to start at
-    path = []
-
-    # While we still have cities to visit...
+    remaining = list(cities)
+    curCity = remaining.pop(startIndex)
+    path = [curCity]
     while len(remaining) > 0:
-
-        path.append(cur)
-
-        #print "path:", path
-        #print "current city:", cur
-
-        # Find the minimum of the weights of all edges that connect to the current city.
         minLength = None
-        minPair = None
-        for testPair in filter(lambda testPair: cur in testPair.pair, remaining):
-            testLength = testPair.dist()
-            if testLength < minLength or minLength is None:
-                minLength = testLength
-                minPair = testPair
-
-        #print "chosen edge:", minPair
-        #print "remaining:", remaining
-        #print "---"
-
-        for delPair in filter(lambda delPair: cur in delPair.pair, remaining):
-            del remaining[delPair]
-
-        cur, = set(minPair.pair) - set([cur])
-
-    path.append(cur)
-
+        minCity = None
+        for i in xrange(len(remaining)):
+            newCity = remaining[i]
+            newPair = CityPair(curCity, newCity)
+            if newPair in edges:
+                newLength = edges[newPair]
+            else:
+                newLength = 0
+            if newLength > minLength or minLength is None:
+                minLength = newLength
+                minCity = newCity
+        path.append(minCity)
+        remaining.remove(minCity)
+        curCity = minCity
     return path
 
 if __name__ == '__main__':
