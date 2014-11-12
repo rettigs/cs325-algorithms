@@ -204,7 +204,17 @@ def tsp_nncommon(cities):
                 edges[pair] = 0
             edges[pair] -= 1
 
-    return nngraph(cities, edges)
+    print edges
+
+    minLength = None
+    minPath = None
+    for i in xrange(len(cities)):
+        path = nngraph(cities, edges)
+        length = getPathLength(path)
+        if length < minLength or minLength is None:
+            minLength = length
+            minPath = path
+    return minPath
 
 def nngraph(cities, edges, startIndex=0):
     '''Given a graph as a list of edges, returns a path generated using a greedy nearest-neighbor algorithm from some edge.'''
@@ -217,8 +227,8 @@ def nngraph(cities, edges, startIndex=0):
 
         path.append(cur)
 
-        print "path:", path
-        print "current city:", cur
+        #print "path:", path
+        #print "current city:", cur
 
         # Find the minimum of the weights of all edges that connect to the current city.
         minLength = None
@@ -229,9 +239,9 @@ def nngraph(cities, edges, startIndex=0):
                 minLength = testLength
                 minPair = testPair
 
-        print "chosen edge:", minPair
-        print "remaining:", remaining
-        print "---"
+        #print "chosen edge:", minPair
+        #print "remaining:", remaining
+        #print "---"
 
         for delPair in filter(lambda delPair: cur in delPair.pair, remaining):
             del remaining[delPair]
