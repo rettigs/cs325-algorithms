@@ -148,45 +148,6 @@ def tsp_nnbest(cities):
             minPath = path
     return minPath
 
-def genetic(path, iters=1000, mutations=1):
-    '''Attempts to improve the given path using a genetic algorithm.  Performs up to the given number of mutations per iteration, but always at least 1.'''
-    newPath = list(path) # Copy the path
-    for i in xrange(iters):
-
-        oldLength = getPathLength(newPath)
-
-        # Generate a random number of mutations
-        switches = []
-        for j in xrange(0, rand.randint(1, mutations)):
-            # For each mutation, pick 2 random cities and swap the order in which they are visited
-            nums = range(len(newPath))
-            a = nums.pop(rand.randint(0, len(nums)-1))
-            b = nums.pop(rand.randint(0, len(nums)-1))
-            switches.append((a, b))
-
-        # Perform the mutations
-        for a, b in switches:
-            newPath[a], newPath[b] = newPath[b], newPath[a]
-            #print "Switching cities {} and {}".format(a, b)
-
-        newLength = getPathLength(newPath)
-
-        # If the mutation was detrimental, undo it
-        if newLength > oldLength:
-            #print "New path length {} is greater than {}; undoing mutation".format(newLength, oldLength)
-            for a, b in switches[::-1]:
-                newPath[a], newPath[b] = newPath[b], newPath[a]
-        else:
-            print "New path length {} is less than {}; keeping mutation".format(newLength, oldLength)
-
-    return newPath
-
-def tsp_ordergen(cities, iters=1000, mutations=1):
-    '''Returns a path that begins as the given city order and is then improved by a genetic algorithm.'''
-    path = tsp_order(cities)
-    path = genetic(path)
-    return path
-
 def tsp_nncommon(cities):
 
     # Get all the greedy nearest neighbor paths
@@ -239,6 +200,51 @@ def nngraph(cities, edges, startIndex=0):
         path.append(minCity)
         remaining.remove(minCity)
         curCity = minCity
+    return path
+
+def genetic(path, iters=1000, mutations=1):
+    '''Attempts to improve the given path using a genetic algorithm.  Performs up to the given number of mutations per iteration, but always at least 1.'''
+    newPath = list(path) # Copy the path
+    for i in xrange(iters):
+
+        oldLength = getPathLength(newPath)
+
+        # Generate a random number of mutations
+        switches = []
+        for j in xrange(0, rand.randint(1, mutations)):
+            # For each mutation, pick 2 random cities and swap the order in which they are visited
+            nums = range(len(newPath))
+            a = nums.pop(rand.randint(0, len(nums)-1))
+            b = nums.pop(rand.randint(0, len(nums)-1))
+            switches.append((a, b))
+
+        # Perform the mutations
+        for a, b in switches:
+            newPath[a], newPath[b] = newPath[b], newPath[a]
+            #print "Switching cities {} and {}".format(a, b)
+
+        newLength = getPathLength(newPath)
+
+        # If the mutation was detrimental, undo it
+        if newLength > oldLength:
+            #print "New path length {} is greater than {}; undoing mutation".format(newLength, oldLength)
+            for a, b in switches[::-1]:
+                newPath[a], newPath[b] = newPath[b], newPath[a]
+        elif newLength < oldLength:
+            print "New path length {} is less than {}; keeping mutation".format(newLength, oldLength)
+
+    return newPath
+
+def tsp_ordergen(cities, iters=1000000, mutations=3):
+    '''Returns a path that begins as the given city order and is then improved by a genetic algorithm.'''
+    path = tsp_order(cities)
+    path = genetic(path, iters=iters, mutations=mutations)
+    return path
+
+def tsp_nnbestgen(cities, iters=1000000, mutations=3):
+    '''Returns a path that begins as the given city order and is then improved by a genetic algorithm.'''
+    path = tsp_nnbest(cities)
+    path = genetic(path, iters=iters, mutations=mutations)
     return path
 
 if __name__ == '__main__':
