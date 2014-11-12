@@ -12,11 +12,32 @@ class City(object):
         self.x = int(x)
         self.y = int(y)
 
+    def __str__(self):
+        #return "City({})".format(self.ID)
+        return "{}".format(self.ID)
+
     def __repr__(self):
         return str(self.ID)
 
     def dist(self, other):
         return int(round(math.sqrt(pow(self.x - other.x, 2) + pow(self.y - other.y, 2))))
+
+class CityPair(object):
+    def __init__(self, a, b):
+        self.pair = frozenset([a, b])
+
+    def __repr__(self):
+        return "({}, {})".format(*self.pair)
+
+    def __eq__(self, other):
+        return self.pair == other.pair
+
+    def __hash__(self):
+        return hash(self.pair)
+
+    def dist(self):
+        a, b = self.pair
+        return a.dist(b)
 
 # Globals
 debug = 0
@@ -77,7 +98,7 @@ def writeFile(outfile, path, length, lengthOnly):
     outfile.write(str(length)+"\n")
     if not lengthOnly:
         for city in path:
-            outfile.write(str(city)+"\n")
+            outfile.write(repr(city)+"\n")
 
 def getPathLength(path):
     length = 0
@@ -163,6 +184,62 @@ def tsp_ordergen(cities, iters=1000, mutations=1):
     '''Returns a path that begins as the given city order and is then improved by a genetic algorithm.'''
     path = tsp_order(cities)
     path = genetic(path)
+    return path
+
+def tsp_nncommon(cities):
+
+    # Get all the greedy nearest neighbor paths
+    paths = []
+    for i in xrange(len(cities)):
+        path = tsp_nn(cities, i)
+        length = getPathLength(path)
+        paths.append((path, length))
+
+    # Create a new graph with the edges weighted by how common they were.
+    edges = {} # Dict of CityPairs (edges) with weights to show the most common paths
+    for p, l in paths:
+        for i in xrange(len(p)):
+            pair = CityPair(p[i-1], p[i])
+            if pair not in edges:
+                edges[pair] = 0
+            edges[pair] -= 1
+
+    return nngraph(cities, edges)
+
+def nngraph(cities, edges, startIndex=0):
+    '''Given a graph as a list of edges, returns a path generated using a greedy nearest-neighbor algorithm from some edge.'''
+    remaining = dict(edges) # Copy the dict of edges and weights
+    cur = cities[startIndex] # Get a city to start at
+    path = []
+
+    # While we still have cities to visit...
+    while len(remaining) > 0:
+
+        path.append(cur)
+
+        print "path:", path
+        print "current city:", cur
+
+        # Find the minimum of the weights of all edges that connect to the current city.
+        minLength = None
+        minPair = None
+        for testPair in filter(lambda testPair: cur in testPair.pair, remaining):
+            testLength = testPair.dist()
+            if testLength < minLength or minLength is None:
+                minLength = testLength
+                minPair = testPair
+
+        print "chosen edge:", minPair
+        print "remaining:", remaining
+        print "---"
+
+        for delPair in filter(lambda delPair: cur in delPair.pair, remaining):
+            del remaining[delPair]
+
+        cur, = set(minPair.pair) - set([cur])
+
+    path.append(cur)
+
     return path
 
 if __name__ == '__main__':
