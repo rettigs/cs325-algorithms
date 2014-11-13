@@ -1,13 +1,22 @@
-for x = 0..i
-    for y = 0..j
-        left <- A[x-1,y]'s computed total + A[x,y]
-        up <- A[x,y-1]'s computed total + A[x,y]
-        here <- A[x,y]'s cell value
-        currentTotal <- biggest of left, up, here. put currentTotal in A[x,y]'s computed total
-        currentSequence <- sequence required to get biggest of left, up, here.
-        if superTotal is smaller than currentTotal
-            superTotal <- currentTotal
-            superSequence <- currentSequence
-            
-return sequence
-        
+load A[x,y] with values on board
+initialize ybest, xbest, T[x,y] with 0
+initialize P[x,y] with (-1,-1)
+for i = 0 ... y
+	for j = 0 ... x
+		T[i,j] <- A[i,j]
+		if i > 0
+			if T[i-1,j] + A[i,j] > T[i,j]
+				T[i,j] <- T[i-1,j] + A[i,j]
+				P[i,j] <- pointer to A[i-1,j]
+		if j > 0
+			if T[i,j-1] + A[i,j] > T[i,j]
+				T[i,j] <- T[i,j-1] + A[i,j]
+				P[i,j] <- (i,j)
+		if T[i,j] > T[ybest,xbest]
+			ybest <- i
+			xbest <- j
+point.y <- ybest
+point.x <- xbest
+while point.y != -1 AND point.x != -1
+	concat point with path
+	point <- P[point.y,point.x]

@@ -18,20 +18,27 @@ Idea is start in upper left corner i = 0, j = 0
 Run through test to get best path
 
 load A[x,y] with values on board
-initialize ibest, jbest, T[x,y] with 0
+initialize ybest, xbest, T[x,y] with 0
+initialize P[x,y] with (-1,-1)
 for i = 0 ... y
 	for j = 0 ... x
 		T[i,j] <- A[i,j]
 		if i > 0
 			if T[i-1,j] + A[i,j] > T[i,j]
 				T[i,j] <- T[i-1,j] + A[i,j]
+				P[i,j] <- pointer to A[i-1,j]
 		if j > 0
 			if T[i,j-1] + A[i,j] > T[i,j]
 				T[i,j] <- T[i,j-1] + A[i,j]
-		if T[i,j] > T[ibest,jbest]
-			ibest <- i
-			jbest <- j
-
+				P[i,j] <- (i,j)
+		if T[i,j] > T[ybest,xbest]
+			ybest <- i
+			xbest <- j
+point.y <- ybest
+point.x <- xbest
+while point.y != -1 AND point.x != -1
+	concat point with path
+	point <- P[point.y,point.x]
 
 Recursive Pseudocode
 Path (int board[y][x])
