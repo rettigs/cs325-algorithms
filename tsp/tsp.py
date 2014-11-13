@@ -202,6 +202,34 @@ def nngraph(cities, edges, startIndex=0):
         curCity = minCity
     return path
 
+def swap(path):
+    '''Attempts to shorten a path by swapping adjacent cities.'''
+    path = list(path) # Copy the path
+    while True:
+        swapped = False
+        for i in xrange(len(path)):
+            a, b, c, d = path[i-3], path[i-2], path[i-1], path[i]
+            oldLength = a.dist(b) + b.dist(c) + c.dist(d)
+            newLength = a.dist(c) + c.dist(b) + b.dist(d)
+            if newLength < oldLength:
+                path[i-2], path[i-1] = path[i-1], path[i-2]
+                swapped = True
+        if not swapped: # Stop checking if we went through a whole round without swapping.
+            break
+    return path
+
+def tsp_orderswap(cities):
+    '''Returns a path that begins as the given city order and is then improved by the swap algorithm.'''
+    path = tsp_order(cities)
+    path = swap(path)
+    return path
+
+def tsp_nnbestswap(cities):
+    '''Returns a path that begins as the result of the nnbest algorithm and is then improved by the swap algorithm.'''
+    path = tsp_nnbest(cities)
+    path = swap(path)
+    return path
+
 def genetic(path, iters=1000, mutations=1):
     '''Attempts to improve the given path using a genetic algorithm.  Performs up to the given number of mutations per iteration, but always at least 1.'''
     newPath = list(path) # Copy the path
