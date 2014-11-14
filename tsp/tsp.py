@@ -230,6 +230,65 @@ def tsp_nnbestswap(cities):
     path = swap(path)
     return path
 
+def inject(path):
+    '''Attempts to shorten a path by injecting cities into edges.  Similar to the swap algorithm, but doesn't only swap adjacent cities'''
+    path = list(path) # Copy the path
+    for i in xrange(len(path)): # Iterate over edges to be injected
+        a, b = i-1, i # Indices to edge to be injected
+        for j in xrange(len(path)): # Iterate over cities to inject
+            t, u, v = j-2, j-1, j # Indices to city to inject and its neighbors
+            if u != a and u != b:
+                oldLength = path[a].dist(path[b]) + path[t].dist(path[u]) + path[u].dist(path[v])
+                newLength = path[a].dist(path[u]) + path[u].dist(path[b]) + path[t].dist(path[v])
+                if newLength < oldLength:
+                    #print path
+                    #print "putting {} in between {} and {}".format(path[u], path[a], path[b])
+                    path.insert(b, path.pop(u)) # Removes u and inserts it between a and b
+                    #print path
+                    #print "---"
+    return path
+
+def inject2(path):
+    '''Attempts to shorten a path by injecting cities into edges.  Similar to the swap algorithm, but doesn't only swap adjacent cities'''
+    path = list(path) # Copy the path
+    while True:
+        swapped = False
+        for i in xrange(len(path)): # Iterate over edges to be injected
+            a, b = i-1, i # Indices to edge to be injected
+            for j in xrange(len(path)): # Iterate over cities to inject
+                t, u, v = j-2, j-1, j # Indices to city to inject and its neighbors
+                if u != a and u != b:
+                    oldLength = path[a].dist(path[b]) + path[t].dist(path[u]) + path[u].dist(path[v])
+                    newLength = path[a].dist(path[u]) + path[u].dist(path[b]) + path[t].dist(path[v])
+                    oldPathLength = getPathLength(path)
+                    newPath = list(path)
+                    newPath.insert(b, path.pop(u)) # Removes u and inserts it between a and b
+                    newPathLength = getPathLength(newPath)
+                    if newPathLength < oldPathLength:
+                        #print "newLength: {}, oldLength: {}".format(newLength, oldLength)
+                        print "newPathLength: {}, oldPathLength: {}".format(newPathLength, oldPathLength)
+                        path = newPath
+                        #print path
+                        #print "putting {} in between {} and {}".format(path[u], path[a], path[b])
+                        swapped = True
+                if not swapped: # Stop checking if we went through a whole round without swapping.
+                    break
+                        #print path
+                        #print "---"
+    return path
+
+def tsp_orderinject(cities):
+    '''Returns a path that begins as the given city order and is then improved by the inject algorithm.'''
+    path = tsp_order(cities)
+    path = inject(path)
+    return path
+
+def tsp_nnbestinject(cities):
+    '''Returns a path that begins as the given city order and is then improved by the inject algorithm.'''
+    path = tsp_nnbest(cities)
+    path = inject(path)
+    return path
+
 def genetic(path, iters=1000, mutations=1):
     '''Attempts to improve the given path using a genetic algorithm.  Performs up to the given number of mutations per iteration, but always at least 1.'''
     newPath = list(path) # Copy the path
