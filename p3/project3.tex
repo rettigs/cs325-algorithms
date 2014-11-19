@@ -20,11 +20,12 @@
 Given an array with an index starting at 0.\\
 
 \[ T[i,j] = max \left\{ \begin{array}{ll}
-    A[i,j] & \mbox{$\forall i, j$}\\
-    T[i-1,j] + A[i,j] & \mbox{if $i > 0$}\\
-    T[i,j-1] + A[i,j] & \mbox{if $j > 0$}\\\end{array} \right\} \] \\
+    A[i,j]\\
+    T[i-1,j] + A[i,j]\\
+    T[i,j-1] + A[i,j]\\\end{array} \right\} \] \\
 Base Cases:\\
-$A[0,0] = A[i,j]$\\
+$A[-1,j] = NaN$\\
+$A[i,-1] = NaN$
 
 
 \section*{Pseudocode}
