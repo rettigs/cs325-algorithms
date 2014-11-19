@@ -24,8 +24,7 @@ Given an array with an index starting at 0.\\
     T[i-1,j] + A[i,j]\\
     T[i,j-1] + A[i,j]\\\end{array} \right\} \] \\
 Base Cases:\\
-$A[-1,j] = NaN$\\
-$A[i,-1] = NaN$
+$T[i,j] = NaN$ if $i < 0$ OR $j < 0$
 
 
 \section*{Pseudocode}
