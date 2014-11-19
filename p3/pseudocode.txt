@@ -1,6 +1,6 @@
 load A[x,y] with values on board
 initialize ybest, xbest, T[x,y] with 0
-initialize P[x,y] with (-1,-1)
+initialize P[x,y] with pointer to A[x,y]
 for i = 0 ... y
     for j = 0 ... x
         T[i,j] <- A[i,j]
