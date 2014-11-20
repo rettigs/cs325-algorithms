@@ -35,13 +35,14 @@ $X[i,j,n_{row},n_{col}] = NaN$ if $i < n_{row}-1$ AND $j < n_{col}-1$; $\forall 
 
 \[ Z[n_{row},n_{col}] = X[n_{row},n_{col},n_{row},n_{col}] \] \\
 $Z[n_{row},n_{col}]$ returns the score of the optimal solution given an $n_{col} \times n_{row}$ grid A.
+\pagebreak
 
 
 \section*{Pseudocode}
 \verbatiminput{pseudocode.txt}
 
 \section*{Running Time}
-$\Theta(ij)$\\
-Populating the DP table just requires looping over the length and width of the grid, or $i * j$.
+$\Theta(n_{col} * n_{row})$\\
+Populating the DP table just requires looping over the length and width of the grid, or $n_{col} * n_{row}$.
 
 \end{document}
