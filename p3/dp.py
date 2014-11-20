@@ -112,10 +112,11 @@ def getMaxTile(array):
 
 def getPath(array, tile):
     '''Given an array and the coords to a tile, returns the path to that tile.'''
-    path = [tile.coords]
+    path = []
     while(tile.prev):
         path.append(tile.coords)
         tile = tile.prev
+    path.append(tile.coords)
     return path[::-1]
 
 if __name__ == '__main__':
