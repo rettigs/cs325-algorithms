@@ -26,6 +26,16 @@ Given an array with an index starting at 0.\\
 Base Cases:\\
 $T[i,j] = NaN$ if $i < 0$ OR $j < 0$
 
+\[ X[i,j,n_{row},n_{col}] = max \left\{ \begin{array}{ll}
+    T[i,j]\\
+    X[i-1,j,n_{row},n_{col}]\\
+    X[i,j-1,n_{row},n_{col}]\\\end{array} \right\} \] \\
+Base Cases:\\
+$X[i,j,n_{row},n_{col}] = NaN$ if $i < n_{row}-1$ AND $j < n_{col}-1$; $\forall n_{row},n_{col}$
+
+\[ Z[n_{row},n_{col}] = X[n_{row},n_{col},n_{row},n_{col}] \] \\
+$Z[n_{row},n_{col}]$ returns the score of the optimal solution given an $n_{col} \times n_{row}$ grid A.
+
 
 \section*{Pseudocode}
 \verbatiminput{pseudocode.txt}
