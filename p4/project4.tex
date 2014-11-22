@@ -1,0 +1,128 @@
+\documentclass{article}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{mathtools}
+\usepackage{verbatim}
+
+\geometry{letterpaper, portrait, margin=1in}
+
+\title{CS325 - Project 3}
+\author{Group \#6 \\ William Jernigan, Alexander Merrill, Sean Rettig}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\part*{Problem 1: mmmm ... tofu}
+\section*{Mathematical Representation}
+\paragraph*{Variables:\\}
+$u_f$ = working day flavored blocks of tofu\\
+$m_f$ = working day flavored bags of edamame\\
+$p_f$ = working day flavored blocks of tempeh\\
+$u_o$ = overtime flavored blocks of tofu\\
+$m_o$ = overtime flavored bags of edamame\\
+$p_o$ = overtime flavored blocks of tempeh\\
+$u_p$ = plain blocks of tofu\\
+$m_p$ = plain bags of edamame\\
+$p_p$ = plain blocks of tempeh\\
+
+\paragraph*{Objective:}
+max \{$4u_p + 12u_f + 7u_o + 8m_p + 14m_f + 11m_o + 4p_p + 13p_f + 9p_o$\}
+\paragraph*{Set of Constraints:\\}
+$u_f + u_o + u_p \leq 480$\\ %tofu <= 480
+$m_f + m_o + m_p \leq 400$\\ %edamame <= 400
+$p_f + p_o + p_p \leq 230$\\ %tempeh <= 230
+$u_f + m_f + p_f \leq 420$\\ %flavored on reg. time <= 420
+$u_o + m_o + p_o \leq 250$\\ %flavored on overtime <= 250
+$-u_f \leq 0$\\
+$-m_f \leq 0$\\
+$-p_f \leq 0$\\
+$-u_o \leq 0$\\
+$-m_o \leq 0$\\
+$-p_o \leq 0$\\
+$-u_p \leq 0$\\
+$-m_p \leq 0$\\
+$-p_p \leq 0$\\
+
+
+\section*{Matrix Representation}
+
+\[
+\begin{array}{cccc}
+\left[ \begin{array}{ccccccccc}
+1 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0\\
+0 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 0\\
+0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 1\\
+1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0\\
+-1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & -1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & -1 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & -1 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & -1 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & -1 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & -1 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & -1 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -1\\
+\end{array} \right]
+&
+\left[ \begin{array}{c}
+u_f\\
+m_f\\
+p_f\\
+u_o\\
+m_o\\
+p_o\\
+u_p\\
+m_p\\
+p_p 
+\end{array} \right]
+&
+\leq
+&
+\left[ \begin{array}{c}
+480\\
+400\\
+230\\
+420\\
+250\\
+0\\
+0\\
+0\\
+0\\
+0\\
+0\\
+0\\
+0\\
+0 \end{array} \right]
+\\
+"A" & X^T & & "b"
+\end{array}
+\]
+
+\section*{Optimal Solution}
+
+\section*{Environment Used to Solve}
+
+\section*{Code}
+\verbatiminput{pseudocode.txt}
+
+\pagebreak
+
+
+\part*{Problem 2: least squares isn't good enough for me}
+\section*{Linear Program}
+\subsection*{General Problem}
+$L^\infty norm$ \\
+%http://en.wikipedia.org/wiki/Absolute_deviation#Minimization
+%http://en.wikipedia.org/wiki/Uniform_norm
+\subsection*{Specific Problem}
+
+\section*{Plot and Solution}
+
+\section*{Code}
+
+
+\end{document}
