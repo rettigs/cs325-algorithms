@@ -1,0 +1,46 @@
+Problem:    
+Rows:       5
+Columns:    9
+Non-zeros:  15
+Status:     OPTIMAL
+Objective:  obj = 10610 (MAXimum)
+
+   No.   Row name   St   Activity     Lower bound   Upper bound    Marginal
+------ ------------ -- ------------- ------------- ------------- -------------
+     1 c1           NU           480                         480             4 
+     2 c2           NU           400                         400             8 
+     3 c3           NU           230                         230             6 
+     4 c4           NU           420                         420             8 
+     5 c5           NU           250                         250             3 
+
+   No. Column name  St   Activity     Lower bound   Upper bound    Marginal
+------ ------------ -- ------------- ------------- ------------- -------------
+     1 up           B             60             0               
+     2 uf           B            420             0               
+     3 uo           NL             0             0                       < eps
+     4 mp           B            380             0               
+     5 mf           NL             0             0                          -2 
+     6 mo           B             20             0               
+     7 pp           NL             0             0                          -2 
+     8 pf           NL             0             0                          -1 
+     9 po           B            230             0               
+
+Karush-Kuhn-Tucker optimality conditions:
+
+KKT.PE: max.abs.err = 0.00e+000 on row 0
+        max.rel.err = 0.00e+000 on row 0
+        High quality
+
+KKT.PB: max.abs.err = 0.00e+000 on row 0
+        max.rel.err = 0.00e+000 on row 0
+        High quality
+
+KKT.DE: max.abs.err = 1.78e-015 on column 2
+        max.rel.err = 7.11e-017 on column 2
+        High quality
+
+KKT.DB: max.abs.err = 0.00e+000 on row 0
+        max.rel.err = 0.00e+000 on row 0
+        High quality
+
+End of output
