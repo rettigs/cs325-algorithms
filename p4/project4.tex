@@ -129,57 +129,37 @@ GUSEK is an open source Windows GUI which provides a SciTE editor for describing
 min \{t\}
 
 \paragraph*{Subject to:\\}
-$t - ax_i - by_i + c \geq 0$\\
-$-t + ax_i + by_i - c \geq 0$\\
-$ab + ac + bc + a + b + c \geq 0$\\
-$-ab - ac - bc - a - b - c \geq 0$\\
+$-t + ax_i + by_i - c \leq 0$\\
+$t + ax_i + by_i - c \leq 0$\\
 $t \geq 0$\\
-$-t \geq 0$\\
 
 \section*{Best Solution for Specific Problem}
 \paragraph*{Objective:}
 min \{t\}
 
 \paragraph*{Subject to:\\}
-$t - a1 - b3 + c \geq 0$\\
-$-t + a1 + b3 - c \geq 0$\\
-$t - a2 - b5 + c \geq 0$\\
-$-t + a2 + b5 - c \geq 0$\\
-$t - a3 - b7 + c \geq 0$\\
-$-t + a3 + b7 - c \geq 0$\\
-$t - a5 - b11 + c \geq 0$\\
-$-t + a5 + b11 - c \geq 0$\\
-$t - a7 - b14 + c \geq 0$\\
-$-t + a7 + b14 - c \geq 0$\\
-$t - a8 - b15 + c \geq 0$\\
-$-t + a8 + b15 - c \geq 0$\\
-$t - a10 - b19 + c \geq 0$\\
-$-t + a10 + b19 - c \geq 0$\\
-$ab + ac + bc + a + b + c \geq 0$\\
-$-ab - ac - bc - a - b - c \geq 0$\\
-$t \geq 0$\\
-$-t \geq 0$\\
-old\\
-$a1 + b3 - c - t \geq 0$\\
-$-a1 - b3 + c - t \geq 0$\\
-$a2 + b5 - c - t \geq 0$\\
-$-a2 - b5 + c - t \geq 0$\\
-$a3 + b7 - c - t \geq 0$\\
-$-a3 - b7 + c - t \geq 0$\\
-$a5 + b11 - c - t \geq 0$\\
-$-a5 - b11 + c - t \geq 0$\\
-$a7 + b14 - c - t \geq 0$\\
-$-a7 - b14 + c - t \geq 0$\\
-$a8 + b15 - c - t \geq 0$\\
-$-a8 - b15 + c - t \geq 0$\\
-$a10 + b19 - c - t \geq 0$\\
-$-a10 - b19 + c - t \geq 0$\\
-$\dfrac{1} {\sqrt{a^2 + b^2}} \geq 0$
+$t - a1 - b3 + c \leq 0$\\
+$-t + a + 3b - c \leq 0$\\
+$t + a + 3b - c \leq 0$\\
+$-t + 2a + 5b - c \leq 0$\\
+$t + 2a + 5b - c \leq 0$\\
+$-t + 3a + 7b - c \leq 0$\\
+$t + 3a + 7b - c \leq 0$\\
+$-t + 5a + 11b - c \leq 0$\\
+$t + 5a + 11b - c \leq 0$\\
+$-t + 7a + 14b - c \leq 0$\\
+$t + 7a + 14b - c \leq 0$\\
+$-t + 8a + 15b - c \leq 0$\\
+$t + 8a + 15b - c \leq 0$\\
+$-t + 10a + 19b - c \leq 0$\\
+$t + 10a + 19b - c \leq 0$\\
+$-t \leq 0$\\
 
 
 \section*{Plot and Solution}
 
 \section*{Code}
+\verbatiminput{p4_prob2.lp}
 
 
 \end{document}

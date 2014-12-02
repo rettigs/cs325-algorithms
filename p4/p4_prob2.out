@@ -1,18 +1,18 @@
 Problem:    
-Rows:       14
+Rows:       15
 Columns:    4
-Non-zeros:  56
+Non-zeros:  57
 Status:     OPTIMAL
-Objective:  obj = 0 (MAXimum)
+Objective:  obj = 0 (MINimum)
 
    No.   Row name   St   Activity     Lower bound   Upper bound    Marginal
 ------ ------------ -- ------------- ------------- ------------- -------------
-     1 r.4          NU             0                           0           0.7 
+     1 r.4          B              0                           0 
      2 r.5          B              0                           0 
      3 r.6          B              0                           0 
      4 r.7          B              0                           0 
      5 r.8          B              0                           0 
-     6 r.9          NU             0                           0           0.3 
+     6 r.9          B              0                           0 
      7 r.10         B              0                           0 
      8 r.11         B              0                           0 
      9 r.12         B              0                           0 
@@ -21,13 +21,14 @@ Objective:  obj = 0 (MAXimum)
     12 r.15         B              0                           0 
     13 r.16         B              0                           0 
     14 r.17         B              0                           0 
+    15 r.18         B              0                           0 
 
    No. Column name  St   Activity     Lower bound   Upper bound    Marginal
 ------ ------------ -- ------------- ------------- ------------- -------------
-     1 t            B              0             0               
-     2 a            NL             0             0                        -0.2 
-     3 b            B              0             0               
-     4 c            NL             0             0                        -0.4 
+     1 t            NL             0             0                           1 
+     2 a            NL             0             0                       < eps
+     3 b            NL             0             0                       < eps
+     4 c            NL             0             0                       < eps
 
 Karush-Kuhn-Tucker optimality conditions:
 
