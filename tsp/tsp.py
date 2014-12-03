@@ -153,7 +153,7 @@ def g_nnbest(cities):
     minLength = None
     minPath = None
     for i in xrange(len(cities)):
-        path = tsp_nn(cities, i)
+        path = g_nn(cities, i)
         length = getPathLength(path)
         if length < minLength or minLength is None:
             minLength = length
@@ -165,7 +165,7 @@ def g_nncommon(cities):
     # Get all the greedy nearest neighbor paths
     paths = []
     for i in xrange(len(cities)):
-        path = tsp_nn(cities, i)
+        path = g_nn(cities, i)
         length = getPathLength(path)
         paths.append((path, length))
 
