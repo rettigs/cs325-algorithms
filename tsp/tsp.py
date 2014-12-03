@@ -334,5 +334,25 @@ def tsp_nnbestgen(cities, iters=1000000, mutations=3):
     path = genetic(path, iters=iters, mutations=mutations)
     return path
 
+def tsp_growinject(cities):
+    '''Starts with a loop between 3 cities and then injects new cities based on which ones increase the path length the least.'''
+    path = cities[:3]
+    rem = cities[3:]
+
+    while len(rem) > 0:
+        # For each iteration, we add one city by calculating the path increase of injecting each remaining city into each edge in the current path and using the best one.
+        deltas = [] # List of deltas of the form (path length, a index, b index)
+        for i in xrange(len(path)): # For each edge given by a city 'c' and the city before it 'a'...
+            for j in xrange(len(rem)): # For each possible city that could be injected 'b'...
+                # Calculate the increase in path length caused by that injection.
+                a, b, c = path[i-1], rem[j], path[i]
+                ilen = a.dist(c)
+                flen = a.dist(b) + b.dist(c)
+                delta = flen - ilen
+                deltas.append((delta, i, j))
+        _, i, j = min(deltas)
+        path.insert(i, rem.pop(j))
+    return path
+
 if __name__ == '__main__':
     main()
