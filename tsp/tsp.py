@@ -42,31 +42,36 @@ class CityPair(object):
 
 # Globals
 debug = 0
+verbose = 0
 
 def main():
 
     # Defaults
     infile = sys.stdin
     outfile = sys.stdout
-    alg = tsp_nn
+    algs = [g_order]
     lengthOnly = False
 
     # Parse arguments
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "di:o:a:lh")
+        opts, args = getopt.getopt(sys.argv[1:], "dvi:o:a:lh")
     except getopt.GetoptError as err:
         # print help information and exit:
         print str(err) # will print something like "option -a not recognized"
         sys.exit(2)
     for o, a in opts:
         if o == "-d":
+            global debug
             debug += 1
+        elif o == "-v":
+            global verbose
+            verbose += 1
         elif o == "-i":
             infile = open(a, 'r')
         elif o == "-o":
             outfile = open(a, 'w')
         elif o == "-a":
-            alg = eval("tsp_"+a)
+            algs = map(eval, a.split(','))
         elif o == "-l":
             lengthOnly = True
         else:
@@ -76,8 +81,14 @@ def main():
     cities = readFile(infile)
 
     # Calculate path
+    alg = algs[0]
     path = alg(cities)
     length = getPathLength(path)
+    if verbose > 0: sys.stderr.write("{:<28}{}\n".format("Length after "+alg.__name__+": ", length))
+    for alg in algs[1:]:
+        path = alg(path)
+        length = getPathLength(path)
+        if verbose > 0: sys.stderr.write("{:<28}{}\n".format("Length after "+alg.__name__+": ", length))
 
     # Write output
     writeFile(outfile, path, length, lengthOnly)
@@ -87,9 +98,10 @@ def usage():
     print '\t-h\tview this help'
     print '\t-i\tspecify an input file of cities, defaults to stdin'
     print '\t-o\tspecify an output file for best path, defaults to stdout'
-    print '\t-a\tspecify algorithm to use: tsp_order'
+    print '\t-a\tspecify algorithm(s) to use, comma-delimited; must start with generator, which may be followed by any number of filters'
     print '\t-l\tdon\'t write the path, just the length'
     print '\t-d\tenable debug messages; use -dd for more even more messages'
+    print '\t-v\tadds more verbose messages'
     sys.exit(2)
 
 def readFile(infile):
@@ -107,17 +119,17 @@ def getPathLength(path):
         length += path[i-1].dist(path[i])
     return length
 
-def tsp_order(cities):
+def g_order(cities):
     '''Returns a path in the order that the cities were given.'''
     return list(cities)
 
-def tsp_brute(cities):
+def g_brute(cities):
     '''Returns the shortest path by brute forcing all possible paths.'''
     paths = itertools.permutations(cities)
     length_paths = [(getPathLength(path), path) for path in paths]
     return min(length_paths)[1]
 
-def tsp_nn(cities, startIndex=0):
+def g_nn(cities, startIndex=0):
     '''Returns a path generated using a greedy nearest-neighbor algorithm from the city at the given starting index.'''
     remaining = list(cities)
     curCity = remaining.pop(startIndex)
@@ -136,7 +148,7 @@ def tsp_nn(cities, startIndex=0):
         curCity = minCity
     return path
 
-def tsp_nnbest(cities):
+def g_nnbest(cities):
     '''Returns the best path generated using a greedy nearest-neighbor algorithm from every possible starting city.'''
     minLength = None
     minPath = None
@@ -148,7 +160,7 @@ def tsp_nnbest(cities):
             minPath = path
     return minPath
 
-def tsp_nncommon(cities):
+def g_nncommon(cities):
 
     # Get all the greedy nearest neighbor paths
     paths = []
@@ -202,7 +214,7 @@ def nngraph(cities, edges, startIndex=0):
         curCity = minCity
     return path
 
-def swap(path):
+def f_swap(path):
     '''Attempts to shorten a path by swapping adjacent cities.'''
     path = list(path) # Copy the path
     while True:
@@ -218,19 +230,7 @@ def swap(path):
             break
     return path
 
-def tsp_orderswap(cities):
-    '''Returns a path that begins as the given city order and is then improved by the swap algorithm.'''
-    path = tsp_order(cities)
-    path = swap(path)
-    return path
-
-def tsp_nnbestswap(cities):
-    '''Returns a path that begins as the result of the nnbest algorithm and is then improved by the swap algorithm.'''
-    path = tsp_nnbest(cities)
-    path = swap(path)
-    return path
-
-def inject(path):
+def f_inject(path):
     '''Attempts to shorten a path by injecting cities into edges.  Similar to the swap algorithm, but doesn't only swap adjacent cities'''
     path = list(path) # Copy the path
     for i in xrange(len(path)): # Iterate over edges to be injected
@@ -248,7 +248,7 @@ def inject(path):
                     #print "---"
     return path
 
-def inject2(path):
+def f_inject2(path):
     '''Attempts to shorten a path by injecting cities into edges.  Similar to the swap algorithm, but doesn't only swap adjacent cities'''
     path = list(path) # Copy the path
     while True:
@@ -277,19 +277,7 @@ def inject2(path):
                         #print "---"
     return path
 
-def tsp_orderinject(cities):
-    '''Returns a path that begins as the given city order and is then improved by the inject algorithm.'''
-    path = tsp_order(cities)
-    path = inject(path)
-    return path
-
-def tsp_nnbestinject(cities):
-    '''Returns a path that begins as the given city order and is then improved by the inject algorithm.'''
-    path = tsp_nnbest(cities)
-    path = inject(path)
-    return path
-
-def genetic(path, iters=1000, mutations=1):
+def f_genetic(path, iters=100000, mutations=3):
     '''Attempts to improve the given path using a genetic algorithm.  Performs up to the given number of mutations per iteration, but always at least 1.'''
     newPath = list(path) # Copy the path
     for i in xrange(iters):
@@ -322,19 +310,7 @@ def genetic(path, iters=1000, mutations=1):
 
     return newPath
 
-def tsp_ordergen(cities, iters=1000000, mutations=3):
-    '''Returns a path that begins as the given city order and is then improved by a genetic algorithm.'''
-    path = tsp_order(cities)
-    path = genetic(path, iters=iters, mutations=mutations)
-    return path
-
-def tsp_nnbestgen(cities, iters=1000000, mutations=3):
-    '''Returns a path that begins as the given city order and is then improved by a genetic algorithm.'''
-    path = tsp_nnbest(cities)
-    path = genetic(path, iters=iters, mutations=mutations)
-    return path
-
-def tsp_growinject(cities):
+def g_growinject(cities):
     '''Starts with a loop between 3 cities and then injects new cities based on which ones increase the path length the least.'''
     path = cities[:3]
     rem = cities[3:]
