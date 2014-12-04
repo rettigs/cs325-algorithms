@@ -231,7 +231,7 @@ def f_adjacentswap(path):
     return path
 
 def f_swap(path):
-    '''Attempts to shorten a path by injecting cities into edges.  Similar to the adjacent swap algorithm, but doesn't only swap adjacent cities.  Based on genetic.'''
+    '''Attempts to shorten a path by swapping cities.  Similar to the adjacent swap algorithm, but doesn't only swap adjacent cities.  Based on genetic.'''
     newPath = list(path)
     while 1:
         oldPath = list(newPath) # Copy the path
