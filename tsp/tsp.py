@@ -277,6 +277,33 @@ def f_inject2(path):
                         #print "---"
     return path
 
+def f_inject3(path):
+    '''Attempts to shorten a path by injecting cities into edges.  Similar to the swap algorithm, but doesn't only swap adjacent cities, based on genetic'''
+    while (loop = True)
+        oldPath = list(path) # Copy the path
+        for i in xrange(len(path)):
+            newPath = list(path) # Copy the path
+            for j in xrange(i+1, len(path)):
+
+                oldLength = getPathLength(newPath)
+
+                # Perform mutation
+                newPath[i], newPath[j] = newPath[j], newPath[i]
+
+                newLength = getPathLength(newPath)
+
+                # If the mutation was detrimental, undo it
+                if newLength > oldLength:
+                    #print "New path length {} is greater than {}; undoing mutation".format(newLength, oldLength)
+                    newPath[i], newPath[j] = newPath[j], newPath[i]
+                elif newLength < oldLength:
+                    print "New path length {} is less than {}; keeping mutation".format(newLength, oldLength)
+                    
+        if (len(newPath) == len(oldPath))
+            loop = false
+
+    return newPath
+
 def f_genetic(path, iters=100000, mutations=3):
     '''Attempts to improve the given path using a genetic algorithm.  Performs up to the given number of mutations per iteration, but always at least 1.'''
     newPath = list(path) # Copy the path
