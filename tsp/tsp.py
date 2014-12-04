@@ -286,6 +286,10 @@ def f_inject2(path):
             break
     return newPath
 
+def f_injectfunc(path):
+    newPath = list(path) # Copy the path
+    return newPath
+
 def f_geneticswap(path, iters=100000, mutations=3):
     '''Attempts to improve the given path using a genetic algorithm.  Performs up to the given number of mutations per iteration, but always at least 1.'''
     newPath = list(path) # Copy the path
@@ -320,6 +324,7 @@ def f_geneticswap(path, iters=100000, mutations=3):
     return newPath
 
 def f_geneticinject(path, iters=100000, mutations=3):
+    newPath = list(path) # Copy the path
     return newPath
 
 def g_growinject(cities):
