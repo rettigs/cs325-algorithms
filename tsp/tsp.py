@@ -279,10 +279,12 @@ def f_inject2(path):
 
 def f_inject3(path):
     '''Attempts to shorten a path by injecting cities into edges.  Similar to the swap algorithm, but doesn't only swap adjacent cities, based on genetic'''
-    while (loop = True)
-        oldPath = list(path) # Copy the path
+#    oldPath = list(path)
+    newPath = list(path)
+    while 1:
+        oldPath = list(newPath) # Copy the path
+        newPath = list(oldPath) # Copy the path
         for i in xrange(len(path)):
-            newPath = list(path) # Copy the path
             for j in xrange(i+1, len(path)):
 
                 oldLength = getPathLength(newPath)
@@ -299,8 +301,8 @@ def f_inject3(path):
                 elif newLength < oldLength:
                     print "New path length {} is less than {}; keeping mutation".format(newLength, oldLength)
                     
-        if (len(newPath) == len(oldPath))
-            loop = false
+        if (getPathLength(newPath) == getPathLength(oldPath)):
+            break
 
     return newPath
 
