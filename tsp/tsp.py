@@ -191,7 +191,7 @@ def g_nncommon(cities):
             minPath = path
     return minPath
 
-def nngraph(cities, edges, startIndex=0):
+def _nngraph(cities, edges, startIndex=0):
     '''Given a graph as a list of edges, returns a path generated using a greedy nearest-neighbor algorithm from some edge.'''
     remaining = list(cities)
     curCity = remaining.pop(startIndex)
@@ -286,7 +286,7 @@ def f_inject2(path):
             break
     return newPath
 
-def f_injectfunc(path):
+def _inject(path):
     newPath = list(path) # Copy the path
     return newPath
 
