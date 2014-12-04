@@ -276,7 +276,7 @@ def f_inject(path):
                     #print "---"
     return path
 
-def f_inject2(path):
+def f_injectiter(path):
     '''Attempts to shorten a path by injecting cities into edges.  Repeats until injecting fails'''
     newPath = list(path) # Copy the path
     while 1:
@@ -284,10 +284,6 @@ def f_inject2(path):
         newPath = f_inject(oldPath)
         if (getPathLength(newPath) == getPathLength(oldPath)):
             break
-    return newPath
-
-def _inject(path):
-    newPath = list(path) # Copy the path
     return newPath
 
 def f_genswap(path, iters=1000000, mutations=3):
@@ -324,8 +320,34 @@ def f_genswap(path, iters=1000000, mutations=3):
     return newPath
 
 def f_geninject(path, iters=100000, mutations=3):
-    newPath = list(path) # Copy the path
-    return newPath
+    #origLength = getPathLength(path)
+    #print "orig length: {}".format(origLength)
+    #diffLength = 0
+    l = len(path)
+    cityrange = range(l)
+    for i in xrange(iters):
+        i, j = rand.sample(cityrange, 2)
+        a, b = i, (i+1)%l # Indices to edge to be injected
+        t, u, v = j, (j+1)%l, (j+2)%l # Indices to city to inject and its neighbors
+        if u != a and u != b:
+            oldLength = path[a].dist(path[b]) + path[t].dist(path[u]) + path[u].dist(path[v])
+            newLength = path[a].dist(path[u]) + path[u].dist(path[b]) + path[t].dist(path[v])
+            if newLength < oldLength:
+                #print "a, b, t, u, v:", a, b, t, u, v, "\t", path[a], path[b], path[t], path[u], path[v]
+                #oldLength2 = getPathLength(path)
+                #print path
+                path.insert(b, path.pop(u)) # Removes u and inserts it between a and b
+                #print path
+                #newLength2 = getPathLength(path)
+                #print "111 went from {} to {}".format(oldLength, newLength)
+                #print "222 went from {} to {}".format(oldLength2, newLength2)
+                #diffLength = oldLength - newLength
+                #print "111 diff length: {}".format(diffLength)
+                #print "222 diff length: {}".format(oldLength2 - newLength2)
+                #print "-------"
+                #print "New path length {}".format(origLength-diffLength)
+                print "Keeping mutation"
+    return path
 
 def g_growinject(cities):
     '''Starts with a loop between 3 cities and then injects new cities based on which ones increase the path length the least.'''
