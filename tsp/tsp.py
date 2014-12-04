@@ -286,46 +286,7 @@ def f_inject2(path):
             break
     return newPath
 
-def f_inject3(path, mutations):
-    """TODO: merge this functionality into genetic"""
-    '''Attempts to shorten a path by injecting cities into edges.  Similar to the swap algorithm, but doesn't only swap adjacent cities'''
-    newPath = list(path) # Copy the path
-    for i in xrange(len(newPath)): # Iterate over edges to be injected
-        a, b = i-1, i # Indices to edge to be injected
-        for j in xrange(len(newPath)): # Iterate over cities to inject
-            t, u, v = j-2, j-1, j # Indices to city to inject and its neighbors
-            if u != a and u != b:
-                oldLength = newPath[a].dist(newPath[b]) + newPath[t].dist(newPath[u]) + newPath[u].dist(newPath[v])
-                newLength = newPath[a].dist(newPath[u]) + newPath[u].dist(newPath[b]) + newPath[t].dist(newPath[v])
-                if newLength < oldLength:
-                    #print path
-                    #print "putting {} in between {} and {}".format(path[u], path[a], path[b])
-                    newPath.insert(b, newPath.pop(u)) # Removes u and inserts it between a and b
-                    #print path
-                    #print "---"
-            for k in xrange(len(newPath)): # Iterate over cities to inject
-                w, x, y = k-2, k-1, k # Indices to city to inject and its neighbors
-                if u != a and u != b:
-                    oldLength = newPath[a].dist(newPath[b]) + newPath[t].dist(newPath[u]) + newPath[u].dist(newPath[v]) + newPath[v].dist(newPath[w]) + newPath[w].dist(newPath[x]) + newPath[x].dist(newPath[y])
-                    newLength = newPath[a].dist(newPath[u]) + newPath[u].dist(newPath[b]) + newPath[t].dist(newPath[v])
-                    if newLength < oldLength:
-                        #print path
-                        #print "putting {} in between {} and {}".format(path[u], path[a], path[b])
-                        newPath.insert(b, newPath.pop(u)) # Removes u and inserts it between a and b
-                        #print path
-                        #print "---"
-            if u != a and u != b:
-                oldLength = newPath[a].dist(newPath[b]) + newPath[t].dist(newPath[u]) + newPath[u].dist(newPath[v])
-                newLength = newPath[a].dist(newPath[u]) + newPath[u].dist(newPath[b]) + newPath[t].dist(newPath[v])
-                if newLength < oldLength:
-                    #print path
-                    #print "putting {} in between {} and {}".format(path[u], path[a], path[b])
-                    newPath.insert(b, newPath.pop(u)) # Removes u and inserts it between a and b
-                    #print path
-                    #print "---"
-    return path
-
-def f_genetic(path, iters=100000, mutations=3):
+def f_geneticswap(path, iters=100000, mutations=3):
     '''Attempts to improve the given path using a genetic algorithm.  Performs up to the given number of mutations per iteration, but always at least 1.'''
     newPath = list(path) # Copy the path
     for i in xrange(iters):
@@ -356,6 +317,9 @@ def f_genetic(path, iters=100000, mutations=3):
         elif newLength < oldLength:
             print "New path length {} is less than {}; keeping mutation".format(newLength, oldLength)
 
+    return newPath
+
+def f_geneticinject(path, iters=100000, mutations=3):
     return newPath
 
 def g_growinject(cities):
