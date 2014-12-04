@@ -94,14 +94,14 @@ def main():
     writeFile(outfile, path, length, lengthOnly)
 
 def usage():
-    print 'Usage: {0} [-h] [-i infile] [-o outfile] [-d]...'.format(sys.argv[0])
+    print 'Usage: {0} [-h] [-i infile] [-o outfile] [-v] [-d]...'.format(sys.argv[0])
     print '\t-h\tview this help'
     print '\t-i\tspecify an input file of cities, defaults to stdin'
     print '\t-o\tspecify an output file for best path, defaults to stdout'
     print '\t-a\tspecify algorithm(s) to use, comma-delimited; must start with generator, which may be followed by any number of filters'
     print '\t-l\tdon\'t write the path, just the length'
+    print '\t-v\tenable more verbose messages'
     print '\t-d\tenable debug messages; use -dd for more even more messages'
-    print '\t-v\tadds more verbose messages'
     sys.exit(2)
 
 def readFile(infile):
@@ -358,6 +358,31 @@ def g_growinject(cities):
         _, i, j = min(deltas)
         path.insert(i, rem.pop(j))
     return path
+
+def g_gcm(cities):
+    '''"Greedy Cluster Merge"; always connects the closest two groups of cities until they are all connected.'''
+    paths = [[city] for city in cities]
+    while len(paths) > 1:
+        if debug > 0: print paths
+        distances = [] # List of distances of the format (distance, source path, destination path, source city index, destination city index)
+        for s in paths:
+            for d in paths:
+                if s is not d:
+                    for i in xrange(-1, 1):
+                        for j in xrange(-1, 1):
+                            distance = s[i].dist(d[j])
+                            distances.append((distance, s, d, i, j))
+                            if debug > 1: print "distance between {} and {}: {}".format(s[i], d[j], distance)
+        _, s, d, i, j = min(distances)
+        if debug > 0: print "min is between {} and {}".format(s, d)
+        if debug > 1: print "--------------------"
+        if i == 0:
+            s.reverse()
+        if j == -1:
+            d.reverse()
+        s.extend(d)
+        paths.remove(d)
+    return paths[0]
 
 if __name__ == '__main__':
     main()
