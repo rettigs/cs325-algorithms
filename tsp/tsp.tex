@@ -36,7 +36,17 @@ We got this idea from group 14. Cities which are closest together are clustered.
 \section*{Injection}%inject
 This filter takes a city, breaks it's existing edges and connects those two cities together, then injects the now free city it in an edge between two other points. Then the new path length is compared to the old path length and if it's shorter, the new path is kept. We iterate over every edge with every city until we cannot make any improvements in a full cycle.
 
-\section*{}
+\section*{Swap}%swap
+Swap takes two cities in a path, swaps their order, then checks whether the resulting path is shorter and to be kept. Initially we did this by swapping neighbors, that is to say in the path a,b,c,d we swap a and b to get b,a,c,d, and iterating over the entire path. Once we got that working, we implemented this genetically (explained later) then iteratively where every point is checked against every other point until there is no path improvement in an entire cycle. Swap is fundimentally a subset of Injection and has been less effective in the sample sets.
+
+\section*{Genetic Swap}%geneticswap
+
+
+\section*{Genetic Injection}%geneticinject
+
+
+\section*{Grow Inject}%growinject
+
 
 \part*{Other filters}
 
