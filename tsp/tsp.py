@@ -290,7 +290,7 @@ def _inject(path):
     newPath = list(path) # Copy the path
     return newPath
 
-def f_genswap(path, iters=100000, mutations=3):
+def f_genswap(path, iters=1000000, mutations=3):
     '''Attempts to improve the given path using a genetic algorithm.  Performs up to the given number of mutations per iteration, but always at least 1.'''
     newPath = list(path) # Copy the path
     for i in xrange(iters):
@@ -299,7 +299,7 @@ def f_genswap(path, iters=100000, mutations=3):
 
         # Generate a random number of mutations
         switches = []
-        for j in xrange(0, rand.randint(1, mutations)):
+        for j in xrange(rand.randint(1, mutations+1)):
             # For each mutation, pick 2 random cities and swap the order in which they are visited
             nums = range(len(newPath))
             a = nums.pop(rand.randint(0, len(nums)-1))
