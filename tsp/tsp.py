@@ -184,7 +184,7 @@ def g_nncommon(cities):
     minLength = None
     minPath = None
     for i in xrange(len(cities)):
-        path = nngraph(cities, edges, i)
+        path = _nngraph(cities, edges, i)
         length = getPathLength(path)
         if length < minLength or minLength is None:
             minLength = length
@@ -290,7 +290,7 @@ def _inject(path):
     newPath = list(path) # Copy the path
     return newPath
 
-def f_geneticswap(path, iters=100000, mutations=3):
+def f_genswap(path, iters=100000, mutations=3):
     '''Attempts to improve the given path using a genetic algorithm.  Performs up to the given number of mutations per iteration, but always at least 1.'''
     newPath = list(path) # Copy the path
     for i in xrange(iters):
@@ -323,7 +323,7 @@ def f_geneticswap(path, iters=100000, mutations=3):
 
     return newPath
 
-def f_geneticinject(path, iters=100000, mutations=3):
+def f_geninject(path, iters=100000, mutations=3):
     newPath = list(path) # Copy the path
     return newPath
 
