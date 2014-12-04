@@ -43,7 +43,7 @@ Swap takes two cities in a path, swaps their order, then checks whether the resu
 Genetic algorithms take existing functions and apply them randomly to a dataset created by a generator to try to come up with better solutions. It ends up being functional and resulting in better paths but it's ultimately non-deterministic and therefore not optimal. We made genetic implementations of both our swap function and our injection function.
 
 \section*{Grow Inject}%growinject
-This takes the raw cities and 
+We start with a set of three connected cities, the smallest complete circuit that doesn't loop back on itself.We then go through a series of iterations in order to add every city to the path. For each iteration, we add one city by calculating the path increase of injecting each remaining city into each edge in the current path and using the best one.
 
 \part*{Other filters}
 
