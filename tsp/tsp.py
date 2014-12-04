@@ -214,7 +214,7 @@ def nngraph(cities, edges, startIndex=0):
         curCity = minCity
     return path
 
-def f_swap(path):
+def f_adjacentswap(path):
     '''Attempts to shorten a path by swapping adjacent cities.'''
     path = list(path) # Copy the path
     while True:
@@ -230,8 +230,8 @@ def f_swap(path):
             break
     return path
 
-def f_swap2(path):
-    '''Attempts to shorten a path by injecting cities into edges.  Similar to the swap algorithm, but doesn't only swap adjacent cities, based on genetic'''
+def f_swap(path):
+    '''Attempts to shorten a path by injecting cities into edges.  Similar to the adjacent swap algorithm, but doesn't only swap adjacent cities.  Based on genetic.'''
     newPath = list(path)
     while 1:
         oldPath = list(newPath) # Copy the path
@@ -259,7 +259,7 @@ def f_swap2(path):
     return newPath
 
 def f_inject(path):
-    '''Attempts to shorten a path by injecting cities into edges.  Similar to the swap algorithm, but doesn't only swap adjacent cities'''
+    '''Attempts to shorten a path by injecting cities into edges.'''
     path = list(path) # Copy the path
     for i in xrange(len(path)): # Iterate over edges to be injected
         a, b = i-1, i # Indices to edge to be injected
@@ -277,35 +277,6 @@ def f_inject(path):
     return path
 
 def f_inject2(path):
-    '''Attempts to shorten a path by injecting cities into edges.  Similar to the swap algorithm, but doesn't only swap adjacent cities'''
-    path = list(path) # Copy the path
-    while True:
-        swapped = False
-        for i in xrange(len(path)): # Iterate over edges to be injected
-            a, b = i-1, i # Indices to edge to be injected
-            for j in xrange(len(path)): # Iterate over cities to inject
-                t, u, v = j-2, j-1, j # Indices to city to inject and its neighbors
-                if u != a and u != b:
-                    oldLength = path[a].dist(path[b]) + path[t].dist(path[u]) + path[u].dist(path[v])
-                    newLength = path[a].dist(path[u]) + path[u].dist(path[b]) + path[t].dist(path[v])
-                    oldPathLength = getPathLength(path)
-                    newPath = list(path)
-                    newPath.insert(b, path.pop(u)) # Removes u and inserts it between a and b
-                    newPathLength = getPathLength(newPath)
-                    if newPathLength < oldPathLength:
-                        #print "newLength: {}, oldLength: {}".format(newLength, oldLength)
-                        print "newPathLength: {}, oldPathLength: {}".format(newPathLength, oldPathLength)
-                        path = newPath
-                        #print path
-                        #print "putting {} in between {} and {}".format(path[u], path[a], path[b])
-                        swapped = True
-                if not swapped: # Stop checking if we went through a whole round without swapping.
-                    break
-                        #print path
-                        #print "---"
-    return path
-
-def f_inject3(path):
     '''Attempts to shorten a path by injecting cities into edges.  Repeats until injecting fails'''
     newPath = list(path) # Copy the path
     while 1:
@@ -315,7 +286,8 @@ def f_inject3(path):
             break
     return newPath
 
-def f_inject4(path, mutations):
+def f_inject3(path, mutations):
+    """TODO: merge this functionality into genetic"""
     '''Attempts to shorten a path by injecting cities into edges.  Similar to the swap algorithm, but doesn't only swap adjacent cities'''
     newPath = list(path) # Copy the path
     for i in xrange(len(newPath)): # Iterate over edges to be injected
