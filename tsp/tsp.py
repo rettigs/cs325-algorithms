@@ -50,11 +50,12 @@ def main():
     infile = sys.stdin
     outfile = sys.stdout
     algs = [g_order]
+    pickupMode = False
     lengthOnly = False
 
     # Parse arguments
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "dvi:o:a:lh")
+        opts, args = getopt.getopt(sys.argv[1:], "dvi:o:a:plh")
     except getopt.GetoptError as err:
         # print help information and exit:
         print str(err) # will print something like "option -a not recognized"
@@ -72,6 +73,8 @@ def main():
             outfile = open(a, 'w')
         elif o == "-a":
             algs = map(eval, a.split(','))
+        elif o == "-p":
+            pickupMode = True
         elif o == "-l":
             lengthOnly = True
         else:
@@ -91,27 +94,35 @@ def main():
         if verbose > 0: sys.stderr.write("{:<28}{}\n".format("Length after "+alg.__name__+": ", length))
 
     # Write output
-    writeFile(outfile, path, length, lengthOnly)
+    if pickupMode:
+        writeInputFile(outfile, path)
+    else:
+        writeOutputFile(outfile, path, length, lengthOnly)
 
 def usage():
-    print 'Usage: {0} [-h] [-i infile] [-o outfile] [-v] [-d]...'.format(sys.argv[0])
+    print 'Usage: {0} [-h] [-i infile] [-o outfile] [-a alg(s)] [-p] [-l] [-v]... [-d]...'.format(sys.argv[0])
     print '\t-h\tview this help'
     print '\t-i\tspecify an input file of cities, defaults to stdin'
     print '\t-o\tspecify an output file for best path, defaults to stdout'
     print '\t-a\tspecify algorithm(s) to use, comma-delimited; must start with generator, which may be followed by any number of filters'
+    print '\t-p\twrite the output file using input format to allow "picking up where it left off"'
     print '\t-l\tdon\'t write the path, just the length'
-    print '\t-v\tenable more verbose messages'
+    print '\t-v\tenable more verbose messages; use -vv for more even more messages'
     print '\t-d\tenable debug messages; use -dd for more even more messages'
     sys.exit(2)
 
 def readFile(infile):
     return [City(*line.split()) for line in infile.readlines()]
 
-def writeFile(outfile, path, length, lengthOnly):
+def writeOutputFile(outfile, path, length, lengthOnly):
     outfile.write(str(length)+"\n")
     if not lengthOnly:
         for city in path:
             outfile.write(repr(city)+"\n")
+
+def writeInputFile(outfile, path):
+    for city in path:
+        outfile.write("{} {} {}\n".format(city.ID, city.x, city.y))
 
 def getPathLength(path):
     length = 0
@@ -261,10 +272,11 @@ def f_swap(path):
 def f_inject(path):
     '''Attempts to shorten a path by injecting cities into edges.'''
     path = list(path) # Copy the path
+    l = len(path)
     for i in xrange(len(path)): # Iterate over edges to be injected
-        a, b = i-1, i # Indices to edge to be injected
+        a, b = i, (i+1)%l # Indices to edge to be injected
         for j in xrange(len(path)): # Iterate over cities to inject
-            t, u, v = j-2, j-1, j # Indices to city to inject and its neighbors
+            t, u, v = j, (j+1)%l, (j+2)%l # Indices to city to inject and its neighbors
             if u != a and u != b:
                 oldLength = path[a].dist(path[b]) + path[t].dist(path[u]) + path[u].dist(path[v])
                 newLength = path[a].dist(path[u]) + path[u].dist(path[b]) + path[t].dist(path[v])
@@ -286,7 +298,7 @@ def f_injectiter(path):
             break
     return newPath
 
-def f_genswap(path, iters=1000000, mutations=3):
+def f_genswap(path, iters=100000, mutations=3):
     '''Attempts to improve the given path using a genetic algorithm.  Performs up to the given number of mutations per iteration, but always at least 1.'''
     newPath = list(path) # Copy the path
     for i in xrange(iters):
@@ -319,13 +331,10 @@ def f_genswap(path, iters=1000000, mutations=3):
 
     return newPath
 
-def f_geninject(path, iters=100000, mutations=3):
-    #origLength = getPathLength(path)
-    #print "orig length: {}".format(origLength)
-    #diffLength = 0
+def f_geninject(path, iters=100000):
     l = len(path)
     cityrange = range(l)
-    for i in xrange(iters):
+    for x in xrange(iters):
         i, j = rand.sample(cityrange, 2)
         a, b = i, (i+1)%l # Indices to edge to be injected
         t, u, v = j, (j+1)%l, (j+2)%l # Indices to city to inject and its neighbors
@@ -333,20 +342,41 @@ def f_geninject(path, iters=100000, mutations=3):
             oldLength = path[a].dist(path[b]) + path[t].dist(path[u]) + path[u].dist(path[v])
             newLength = path[a].dist(path[u]) + path[u].dist(path[b]) + path[t].dist(path[v])
             if newLength < oldLength:
-                #print "a, b, t, u, v:", a, b, t, u, v, "\t", path[a], path[b], path[t], path[u], path[v]
-                #oldLength2 = getPathLength(path)
-                #print path
                 path.insert(b, path.pop(u)) # Removes u and inserts it between a and b
-                #print path
-                #newLength2 = getPathLength(path)
-                #print "111 went from {} to {}".format(oldLength, newLength)
-                #print "222 went from {} to {}".format(oldLength2, newLength2)
-                #diffLength = oldLength - newLength
-                #print "111 diff length: {}".format(diffLength)
-                #print "222 diff length: {}".format(oldLength2 - newLength2)
-                #print "-------"
-                #print "New path length {}".format(origLength-diffLength)
-                print "Keeping mutation"
+                if verbose > 1: print "Keeping mutation"
+    return path
+
+def f_geninjectmulti(path, iters=100000):
+    l = len(path)
+    cityrange = range(l)
+    for x in xrange(iters):
+        oldLength = getPathLength(path)
+
+        # Generate a random number of mutations
+        randf = rand.random()
+        if randf > 0.9:
+            m = 3
+        elif randf > 0.6:
+            m = 2
+        else:
+            m = 1
+        mutations = [rand.sample(cityrange, 2) for m in xrange(m)]
+
+        # Perform the mutations
+        for i, j in mutations:
+            path.insert(i, path.pop(j))
+            if debug > 1: print "Injecting city {} before city {}".format(j, i)
+
+        newLength = getPathLength(path)
+
+        # If the mutation was detrimental, undo it
+        if newLength > oldLength:
+            #print "New path length {} is greater than {}; undoing mutation".format(newLength, oldLength)
+            for i, j in mutations[::-1]:
+                path.insert(j, path.pop(i))
+        elif newLength < oldLength:
+            if verbose > 1: print "New path length {} is less than {}; keeping mutation".format(newLength, oldLength)
+
     return path
 
 def g_growinject(cities):
