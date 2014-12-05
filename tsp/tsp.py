@@ -359,12 +359,10 @@ def f_geninject(path, iters=100000):
                 if verbose > 1: print "Keeping mutation"
     return path
 
-def f_geninjectmulti(path, iters=10000):
+def f_geninjectmulti(path, iters=100000):
     l = len(path)
     cityrange = range(l)
     for x in xrange(iters):
-        oldLength = getPathLength(path)
-
         # Generate a random number of mutations
         randf = rand.random()
         if randf > 0.9:
@@ -376,19 +374,21 @@ def f_geninjectmulti(path, iters=10000):
         mutations = [rand.sample(cityrange, 2) for m in xrange(m)]
 
         # Perform the mutations
+        lengthDiff = 0
         for i, j in mutations:
-            path.insert(i, path.pop(j))
-            if debug > 1: print "Injecting city {} before city {}".format(j, i)
-
-        newLength = getPathLength(path)
-
-        # If the mutation was detrimental, undo it
-        if newLength > oldLength:
-            #print "New path length {} is greater than {}; undoing mutation".format(newLength, oldLength)
-            for i, j in mutations[::-1]:
-                path.insert(j, path.pop(i))
-        elif newLength < oldLength:
-            if verbose > 1: print "New path length {} is less than {}; keeping mutation".format(newLength, oldLength)
+            a, b = i, (i+1)%l # Indices to edge to be injected
+            t, u, v = j, (j+1)%l, (j+2)%l # Indices to city to inject and its neighbors
+            if u != a and u != b:
+                oldLength = path[a].dist(path[b]) + path[t].dist(path[u]) + path[u].dist(path[v])
+                newLength = path[a].dist(path[u]) + path[u].dist(path[b]) + path[t].dist(path[v])
+                lengthDiff += newLength - oldLength
+        if lengthDiff < 0:
+            for i, j in mutations:
+                a, b = i, (i+1)%l # Indices to edge to be injected
+                t, u, v = j, (j+1)%l, (j+2)%l # Indices to city to inject and its neighbors
+                if u != a and u != b:
+                    path.insert(b, path.pop(u))
+                    if verbose > 1: print "Injecting city {} before city {}".format(j, i)
 
     return path
 
