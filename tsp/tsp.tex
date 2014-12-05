@@ -189,16 +189,17 @@ of a given path, but either of those injections individually would cause the
 path length to temporarily increase. To remedy this, we decided to perform
 multiple inject operations before checking if the new path length is shorter.
 However, calculating every possible combination of injections would increase
-the asymptotic runtime of the Injection Iterator algorithm significantly, so rather than checking every possible combination, we
-elected to perform randomized combinations using a genetic algorithm over a
-fixed set of iterations $m$. Each iteration performs 2 or more random
-injections and evaluates the change in path length. If the resulting path is
-shorter, then the mutation is kept. Otherwise, the mutation is undone. The
-algorithm stops iterating once a predefined number of iterations have occurred.
-Due to the random nature of this algorithm, we decided not to use it as it
-often produces different paths for the same input data when run multiple
-times.\\Asymptotic runtime: $\Theta (m)$, where $m$ is the number of iterations
-the algorithm performs. This is currently set to 100,000.
+the asymptotic runtime of the Injection Iterator algorithm significantly, so
+rather than checking every possible combination, we elected to perform
+randomized combinations using a genetic algorithm over a fixed set of
+iterations $m$. Each iteration performs 1-3 random injections and evaluates the
+change in path length. If the resulting path is shorter, then the mutation is
+kept. Otherwise, the mutation is undone. The algorithm stops iterating once a
+predefined number of iterations have occurred.  Due to the random nature of
+this algorithm, we decided not to use it as it often produces different paths
+for the same input data when run multiple times.\\Asymptotic runtime: $\Theta
+(m)$, where $m$ is the number of iterations the algorithm performs. This is
+currently set to 100,000.
 
 \section*{Results}
 
