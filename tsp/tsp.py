@@ -203,8 +203,6 @@ def g_nncommon(cities):
                 edges[pair] = 0
             edges[pair] += 1/pairDist
 
-    print edges
-
     minLength = None
     minPath = None
     for i in xrange(len(cities)):
