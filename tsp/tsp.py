@@ -109,7 +109,8 @@ def main():
     else:
         writeOutputFile(outfile, path, length, lengthOnly)
     outfile.close()
-    os.rename(outfilename+".tmp", outfilename)
+    if outfilename is not None:
+        os.rename(outfilename+".tmp", outfilename)
 
 def usage():
     print 'Usage: {0} [-h] [-i infile] [-o outfile] [-a alg(s)] [-p] [-l] [-v]... [-d]...'.format(sys.argv[0])
