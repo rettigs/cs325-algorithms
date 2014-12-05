@@ -4,6 +4,7 @@ from __future__ import division
 import getopt
 import itertools
 import math
+import os
 import random as rand
 import sys
 
@@ -49,6 +50,8 @@ def main():
     # Defaults
     infile = sys.stdin
     outfile = sys.stdout
+    infilename = None
+    outfilename = None
     algs = [g_order]
     pickupMode = False
     lengthOnly = False
@@ -68,9 +71,9 @@ def main():
             global verbose
             verbose += 1
         elif o == "-i":
-            infile = open(a, 'r')
+            infilename = a
         elif o == "-o":
-            outfile = open(a, 'w')
+            outfilename = a
         elif o == "-a":
             algs = map(eval, a.split(','))
         elif o == "-p":
@@ -81,7 +84,12 @@ def main():
             usage()
 
     # Read file
+    if pickupMode and os.path.isfile(outfilename):
+        infile = open(outfilename, 'r')
+    elif infilename is not None:
+        infile = open(infilename, 'r')
     cities = readFile(infile)
+    infile.close()
 
     # Calculate path
     alg = algs[0]
@@ -94,10 +102,14 @@ def main():
         if verbose > 0: sys.stderr.write("{:<28}{}\n".format("Length after "+alg.__name__+": ", length))
 
     # Write output
+    if outfilename is not None:
+        outfile = open(outfilename+".tmp", 'w')
     if pickupMode:
         writeInputFile(outfile, path)
     else:
         writeOutputFile(outfile, path, length, lengthOnly)
+    outfile.close()
+    os.rename(outfilename+".tmp", outfilename)
 
 def usage():
     print 'Usage: {0} [-h] [-i infile] [-o outfile] [-a alg(s)] [-p] [-l] [-v]... [-d]...'.format(sys.argv[0])
@@ -105,7 +117,7 @@ def usage():
     print '\t-i\tspecify an input file of cities, defaults to stdin'
     print '\t-o\tspecify an output file for best path, defaults to stdout'
     print '\t-a\tspecify algorithm(s) to use, comma-delimited; must start with generator, which may be followed by any number of filters'
-    print '\t-p\twrite the output file using input format to allow "picking up where it left off"'
+    print '\t-p\t"pickup mode"; write outfile using input format and read it back again if it exists'
     print '\t-l\tdon\'t write the path, just the length'
     print '\t-v\tenable more verbose messages; use -vv for more even more messages'
     print '\t-d\tenable debug messages; use -dd for more even more messages'
@@ -346,7 +358,7 @@ def f_geninject(path, iters=100000):
                 if verbose > 1: print "Keeping mutation"
     return path
 
-def f_geninjectmulti(path, iters=100000):
+def f_geninjectmulti(path, iters=10000):
     l = len(path)
     cityrange = range(l)
     for x in xrange(iters):
