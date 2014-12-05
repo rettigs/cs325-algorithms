@@ -340,7 +340,7 @@ def f_genswap(path, iters=100000, mutations=3):
             for a, b in switches[::-1]:
                 newPath[a], newPath[b] = newPath[b], newPath[a]
         elif newLength < oldLength:
-            print "New path length {} is less than {}; keeping mutation".format(newLength, oldLength)
+            if verbose > 1: print "New path length {} is less than {}; keeping mutation".format(newLength, oldLength)
 
     return newPath
 
